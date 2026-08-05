@@ -42,7 +42,9 @@ public class FireworkRocketItem extends Item implements ProjectileItem {
                     context.getClickedPos().getX() + 0.5D,
                     context.getClickedPos().getY() + BLOCK_LAUNCH_HEIGHT,
                     context.getClickedPos().getZ() + 0.5D);
-            launchVertically(level, launchPos, context.getPlayer());
+            if (!launchVertically(level, launchPos, context.getPlayer())) {
+                return InteractionResult.FAIL;
+            }
             context.getItemInHand().consume(1, context.getPlayer());
             if (context.getPlayer() != null) {
                 context.getPlayer().awardStat(Stats.ITEM_USED.get(this));
@@ -56,7 +58,9 @@ public class FireworkRocketItem extends Item implements ProjectileItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            launchVertically(level, new Vec3(player.getX(), player.getEyeY(), player.getZ()), player);
+            if (!launchVertically(level, new Vec3(player.getX(), player.getEyeY(), player.getZ()), player)) {
+                return InteractionResultHolder.fail(stack);
+            }
             stack.consume(1, player);
             player.awardStat(Stats.ITEM_USED.get(this));
         }
@@ -77,10 +81,10 @@ public class FireworkRocketItem extends Item implements ProjectileItem {
                 .build();
     }
 
-    private void launchVertically(Level level, Vec3 pos, @Nullable Entity owner) {
+    private boolean launchVertically(Level level, Vec3 pos, @Nullable Entity owner) {
         GrandFireworkRocketEntity rocket =
                 new GrandFireworkRocketEntity(level, pos.x, pos.y, pos.z, owner, this.style);
         rocket.launchVertically();
-        level.addFreshEntity(rocket);
+        return level.addFreshEntity(rocket);
     }
 }

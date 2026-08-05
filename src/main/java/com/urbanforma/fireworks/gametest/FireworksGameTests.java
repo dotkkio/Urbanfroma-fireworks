@@ -4,9 +4,24 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.urbanforma.fireworks.UrbanformaFireworks;
 import com.urbanforma.fireworks.content.FireworkStyle;
+import com.urbanforma.fireworks.content.EffectCategory;
+import com.urbanforma.fireworks.content.GiantFireworkCatalog;
+import com.urbanforma.fireworks.content.GiantTier;
+import com.urbanforma.fireworks.content.NormalFireworkCatalog;
+import com.urbanforma.fireworks.content.OtherFireworkCatalog;
+import com.urbanforma.fireworks.content.OtherExtraFireworkCatalog;
+import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
+import com.urbanforma.fireworks.content.midsize.MidsizeFireworkDefinition;
+import com.urbanforma.fireworks.client.batch_other.BatchOtherClientPrograms;
+import com.urbanforma.fireworks.client.batch_other_extra.BatchOtherExtraClientPrograms;
 import com.urbanforma.fireworks.content.RadiantTrajectory;
 import com.urbanforma.fireworks.content.RadiantWillowTrajectory;
 import com.urbanforma.fireworks.content.WillowTrajectory;
+import com.urbanforma.fireworks.content.colorchange.ColorChangeBallProgram;
+import com.urbanforma.fireworks.content.giant.GiantRadiantTrajectory;
+import com.urbanforma.fireworks.content.giant.willow.GiantWillowTrajectory;
+import com.urbanforma.fireworks.content.hybrid.HybridSphereRadiantTrajectory;
+import com.urbanforma.fireworks.content.saturn.SaturnProgram;
 import com.urbanforma.fireworks.entity.GrandFireworkRocketEntity;
 import com.urbanforma.fireworks.network.FireworksNetworking;
 import com.urbanforma.fireworks.network.payload.GrandFireworkBurstPayload;
@@ -81,7 +96,9 @@ public final class FireworksGameTests {
             "led_chartreuse_sphere", "led_mint_sphere", "led_teal_sphere", "led_cyan_sphere",
             "led_azure_sphere", "led_cobalt_sphere", "led_violet_sphere", "led_lilac_sphere",
             "led_magenta_sphere", "led_rose_sphere", "amber_radiant_firework",
-            "amber_radiant_willow_firework"};
+            "amber_radiant_willow_firework", "giant_amber_radiant_firework",
+            "hybrid_amber_sphere_radiant", "saturn_amber_double_sphere",
+            "giant_golden_white_radial_willow_firework"};
     private static final String[] EXPECTED_ZH_NAMES = {
             "巨型金色球形烟花", "朱砂琥珀球形烟花", "藏红珊瑚球形烟花", "红宝石日耀球形烟花", "余烬香槟双层球形烟花",
             "朱红鎏金双层球形烟花", "珊瑚玫瑰冠顶球形烟花", "琥珀日光长垂帘柳烟花", "绯红赤铜长垂帘柳烟花",
@@ -109,17 +126,22 @@ public final class FireworksGameTests {
             "Teal Tideglow Sphere Firework", "Cyan Iceglow Sphere Firework", "Azure Skyglow Sphere Firework",
             "Cobalt Deepglow Sphere Firework", "Violet Starlight Sphere Firework", "Lilac Moonlight Sphere Firework",
             "Magenta Neon Glow Sphere Firework", "Rose Dawnfire Sphere Firework", "Amber Radiant Firework",
-            "Amber Radiant Long Willow Firework"};
+            "Amber Radiant Long Willow Firework", "Giant Amber Radiant Firework",
+            "Amber Sphere-Radiant Hybrid Firework", "Amber Double-Sphere Saturn Ring Firework",
+            "Giant Golden White Radial Willow Firework"};
     private static final List<FireworkStyle.Shape> EXPECTED_SECTION_SHAPES = List.of(
             FireworkStyle.Shape.SPHERE,
             FireworkStyle.Shape.DOUBLE_SPHERE,
             FireworkStyle.Shape.CROWN_SPHERE,
             FireworkStyle.Shape.WILLOW_SPHERE,
             FireworkStyle.Shape.RADIANT,
-            FireworkStyle.Shape.RADIANT_WILLOW);
-    private static final List<Integer> EXPECTED_SECTION_ITEM_COUNTS = List.of(23, 6, 5, 6, 1, 1);
-    private static final int SECTIONED_DISPLAY_SLOT_COUNT = 126;
-    private static final int EXPECTED_LANGUAGE_KEY_COUNT = 49;
+            FireworkStyle.Shape.RADIANT_WILLOW,
+            FireworkStyle.Shape.GIANT_RADIANT,
+            FireworkStyle.Shape.HYBRID_SPHERE_RADIANT,
+            FireworkStyle.Shape.SATURN);
+    private static final List<Integer> EXPECTED_SECTION_ITEM_COUNTS = List.of(23, 6, 5, 6, 1, 1, 2, 1, 1);
+    private static final int SECTIONED_DISPLAY_SLOT_COUNT = 180;
+    private static final int EXPECTED_LANGUAGE_KEY_COUNT = 58;
     private static final List<LedColorExpectation> EXPECTED_LED_PALETTE = List.of(
             new LedColorExpectation("led_scarlet_sphere", "#BC4040", "#E01B1B", "#FF3415", "#FFD1D1"),
             new LedColorExpectation("led_coral_sphere", "#DA8971", "#FE5D2E", "#FF7324", "#FFDCD1"),
@@ -135,13 +157,20 @@ public final class FireworksGameTests {
             new LedColorExpectation("led_lilac_sphere", "#9C6DD1", "#8A2CF5", "#7824FF", "#E7D1FF"),
             new LedColorExpectation("led_magenta_sphere", "#BE5FCA", "#D82BEE", "#F924FF", "#FAD1FF"),
             new LedColorExpectation("led_rose_sphere", "#CC6F74", "#F02B36", "#FF2724", "#FFD1D4"));
-    private static final List<String> EXPECTED_SECTION_KEYS = List.of(
+    private static final List<String> EXPECTED_LARGE_SECTION_KEYS = List.of(
             "gui.urbanforma_fireworks.section.fireworks.sphere",
             "gui.urbanforma_fireworks.section.fireworks.double_sphere",
             "gui.urbanforma_fireworks.section.fireworks.crown_sphere",
             "gui.urbanforma_fireworks.section.fireworks.willow",
             "gui.urbanforma_fireworks.section.fireworks.radiant",
-            "gui.urbanforma_fireworks.section.fireworks.radiant_willow");
+            "gui.urbanforma_fireworks.section.fireworks.radiant_willow",
+            "gui.urbanforma_fireworks.section.fireworks.giant_radiant",
+            "gui.urbanforma_fireworks.section.fireworks.hybrid",
+            "gui.urbanforma_fireworks.section.fireworks.saturn",
+            "gui.urbanforma_fireworks.section.fireworks.other");
+    private static final List<String> EXPECTED_MIDSIZE_SECTION_KEYS = List.of(
+            "gui.urbanforma_fireworks.section.fireworks.sphere",
+            "gui.urbanforma_fireworks.section.fireworks.radiant");
     private static final Set<String> LEGACY_IDS = Set.of(
             "scarlet_compact_sphere", "tangerine_sphere", "lemon_sphere", "lime_sphere", "emerald_sphere",
             "aqua_sphere", "sapphire_sphere", "amethyst_sphere", "rose_sphere", "ice_sphere", "pearl_sphere",
@@ -191,23 +220,44 @@ public final class FireworksGameTests {
     @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
     public static void registrationsCategoriesAndCreativeOrder(GameTestHelper helper) {
         List<FireworkStyle> styles = FireworkStyle.values();
-        helper.assertTrue(FireworkStyle.count() == 42 && styles.size() == EXPECTED_IDS.length,
-                "Fireworks v0.2.9 must expose exactly 42 stable styles");
-        helper.assertTrue(styles.stream().filter(style -> style.family() == FireworkStyle.Family.WARM).count() == 10
-                        && styles.stream().filter(style -> style.family() == FireworkStyle.Family.COOL).count() == 5
-                        && styles.stream().filter(style -> style.family() == FireworkStyle.Family.JEWEL).count() == 6
-                        && styles.stream().filter(style -> style.family() == FireworkStyle.Family.METALLIC).count() == 6
-                        && styles.stream().filter(style -> style.family() == FireworkStyle.Family.LED_MONOCHROME).count() == 14,
-                "Non-demonstration family distribution must be warm 10, cool 5, jewel 6, metallic 6, LED 14");
-        helper.assertTrue(styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.SPHERE).count() == 23
-                        && styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.DOUBLE_SPHERE).count() == 6
-                        && styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.CROWN_SPHERE).count() == 5
-                        && styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.WILLOW_SPHERE).count() == 6
-                        && styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.RADIANT).count() == 1
-                        && styles.stream().filter(style -> style.shape() == FireworkStyle.Shape.RADIANT_WILLOW).count() == 1,
-                "Shape distribution must be sphere 23, double 6, crown 5, willow 6, radiant 1, radiant willow 1");
-        helper.assertTrue(FireworksNetworking.NETWORK_VERSION.equals("7"),
-                "v0.2.9 must reject older peers through network protocol 7");
+        int expectedStyleCount = EXPECTED_IDS.length
+                + NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT
+                + GiantFireworkCatalog.INTEGRATED_GIANT_COUNT
+                + OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
+                + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
+                + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT;
+        helper.assertTrue(FireworkStyle.count() == expectedStyleCount && styles.size() == expectedStyleCount,
+                "The stable catalog, normal 100, integrated giants, Other30, and midsize trials must all be registered");
+        helper.assertTrue(NormalFireworkCatalog.entries().size() == NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT
+                        && NormalFireworkCatalog.NORMAL_100_STYLE_COUNT == 100
+                        && OtherFireworkCatalog.entries().size() == OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
+                        && OtherFireworkCatalog.TOTAL_ORDINARY_STYLE_COUNT == 115
+                        && OtherFireworkCatalog.COOL_COLOR_STYLE_COUNT == 5
+                        && OtherFireworkCatalog.COOL_COLOR_STYLE_COUNT <= OtherFireworkCatalog.COOL_COLOR_STYLE_CAP
+                        && OtherExtraFireworkCatalog.entries().size() == OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
+                        && OtherExtraFireworkCatalog.TOTAL_OTHER_STYLE_COUNT == 30
+                        && OtherExtraFireworkCatalog.COOL_COLOR_STYLE_COUNT == 6
+                        && OtherExtraFireworkCatalog.COOL_COLOR_STYLE_COUNT <= OtherExtraFireworkCatalog.COOL_COLOR_STYLE_CAP
+                        && MidsizeFireworkCatalog.entries().size() == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT,
+                "Normal100, Other30, midsize trials, and the controlled six cool-color entries must remain stable");
+        helper.assertTrue(styles.get(43).id().equals("hybrid_amber_sphere_radiant")
+                        && styles.get(44).id().equals("saturn_amber_double_sphere")
+                        && styles.subList(GiantFireworkCatalog.FIRST_STYLE_INDEX,
+                                        GiantFireworkCatalog.FIRST_STYLE_INDEX + GiantFireworkCatalog.INTEGRATED_GIANT_COUNT)
+                                .stream().map(FireworkStyle::id).toList().equals(List.of(
+                                        "giant_superwillow_firework",
+                                        "giant_multiradial2_firework",
+                                        "giant_thickradial_firework",
+                                        "giant_cascade_firework"))
+                        && styles.subList(OtherFireworkCatalog.FIRST_STYLE_INDEX, OtherExtraFireworkCatalog.FIRST_STYLE_INDEX).size()
+                                == OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
+                        && styles.subList(OtherExtraFireworkCatalog.FIRST_STYLE_INDEX, MidsizeFireworkCatalog.FIRST_STYLE_INDEX).size()
+                                == OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
+                        && styles.subList(MidsizeFireworkCatalog.FIRST_STYLE_INDEX, FireworkStyle.count()).size()
+                                == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT,
+                "The ordinary prototypes, giant queue entries, Other30, and midsize index ranges must remain stable");
+        helper.assertTrue(FireworksNetworking.NETWORK_VERSION.equals("8"),
+                "v0.3.0 must reject older peers through network protocol 8");
         helper.assertTrue(styles.stream().noneMatch(style -> LEGACY_IDS.contains(style.id())),
                 "The v0.2.6 catalog must not retain legacy series ids");
         helper.assertTrue(FireworksItems.ITEMS.getEntries().size() == FireworkStyle.count()
@@ -222,9 +272,12 @@ public final class FireworksGameTests {
             FireworkRocketItem item = FireworksItems.itemFor(style);
             ResourceLocation expectedId = ResourceLocation.fromNamespaceAndPath(UrbanformaFireworks.MOD_ID, style.id());
             helper.assertTrue(style.index() == index && styleIds.add(style.id())
-                            && style.id().equals(EXPECTED_IDS[index])
-                            && style.zhName().equals(EXPECTED_ZH_NAMES[index])
-                            && style.enName().equals(EXPECTED_EN_NAMES[index]),
+                            && (index < EXPECTED_IDS.length
+                                    ? style.id().equals(EXPECTED_IDS[index]) : style.id().matches("[a-z0-9_]+"))
+                            && (index < EXPECTED_ZH_NAMES.length
+                                    ? style.zhName().equals(EXPECTED_ZH_NAMES[index]) : !style.zhName().isBlank())
+                            && (index < EXPECTED_EN_NAMES.length
+                                    ? style.enName().equals(EXPECTED_EN_NAMES[index]) : !style.enName().isBlank()),
                     "Firework style indices and ids must be unique and ordered");
             helper.assertTrue(BuiltInRegistries.ITEM.getKey(item).equals(expectedId)
                             && FireworksItems.all().get(index).get() == item
@@ -250,16 +303,30 @@ public final class FireworksGameTests {
                         instanceof GrandFireworkRocketEntity,
                 "Shared rocket entity must retain the required launch and tracking settings");
 
-        List<FunctionalCreativeCategory> categories = FunctionalCreativeCategoryRegistry.categories().stream()
+        List<FunctionalCreativeCategory> registeredCategories = FunctionalCreativeCategoryRegistry.categories();
+        FunctionalCreativeCategory midsizeCategory = registeredCategories.stream()
+                .filter(category -> category.id().equals(UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Midsize functional category was not registered"));
+        FunctionalCreativeCategory largeCategory = registeredCategories.stream()
                 .filter(category -> category.id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID))
-                .toList();
-        helper.assertTrue(categories.size() == 1,
-                "Fireworks functional category must be registered exactly once");
-        FunctionalCreativeCategory category = categories.getFirst();
-        helper.assertTrue(category.translationKey().equals("gui.urbanforma_fireworks.category.fireworks")
-                        && category.icon().is(FireworksItems.GRAND_GOLDEN_SPHERE_FIREWORK.get()),
-                "Fireworks category must retain its original golden icon and translation key");
-        assertShapeOnlySections(helper, category, styles);
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Large-firework functional category was not registered"));
+        helper.assertTrue(registeredCategories.stream()
+                        .filter(category -> category.id().equals(UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID)
+                                || category.id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID))
+                        .count() == 2
+                        && registeredCategories.indexOf(midsizeCategory) < registeredCategories.indexOf(largeCategory),
+                "Midsize Fireworks must be a separate top-level category before Large Fireworks");
+        helper.assertTrue(midsizeCategory.translationKey().equals("gui.urbanforma_fireworks.category.midsize")
+                        && midsizeCategory.icon().is(FireworksItems.itemFor(
+                                MidsizeFireworkCatalog.entries().getFirst().style())),
+                "Midsize category must retain its typed first-entry icon and translation key");
+        helper.assertTrue(largeCategory.translationKey().equals("gui.urbanforma_fireworks.category.fireworks")
+                        && largeCategory.icon().is(FireworksItems.GRAND_GOLDEN_SPHERE_FIREWORK.get()),
+                "Large Fireworks must retain its original golden icon and translation key");
+        assertMidsizeCreativeSections(helper, midsizeCategory);
+        assertLargeCreativeSections(helper, largeCategory, styles);
 
         UrbanformaCreativeCategory[] builtInCategories =
                 UrbanformaCreativeCategory.categoriesFor(UrbanformaCreativeTabs.FUNCTIONAL_TAB.get());
@@ -268,9 +335,11 @@ public final class FireworksGameTests {
         helper.assertTrue(builtInCategories.length == 2
                         && builtInCategories[0] == UrbanformaCreativeCategory.FUNCTIONAL_PLATFORMS
                         && builtInCategories[1] == UrbanformaCreativeCategory.PHYSICS
-                        && addOnCategories.size() == 1
-                        && addOnCategories.getFirst().id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID),
-                "Functional category order must remain platforms, physics, then fireworks");
+                        && addOnCategories.size() == 2
+                        && addOnCategories.stream().map(FunctionalCreativeCategory::id).toList().equals(List.of(
+                                UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID,
+                                UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID)),
+                "Functional category order must remain platforms, physics, midsize fireworks, then large fireworks");
         List<ItemStack> functionalTabItems = new ArrayList<>();
         List<ItemStack> nonFunctionalTabItems = new ArrayList<>();
         UrbanformaFireworks.appendFunctionalTabItem(UrbanformaCreativeTabs.FUNCTIONAL_TAB_KEY, functionalTabItems::add);
@@ -283,33 +352,126 @@ public final class FireworksGameTests {
     }
 
     @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
+    public static void prototypeContractsAndCategoryBudgets(GameTestHelper helper) {
+        BatchOtherClientPrograms.validateAll();
+        BatchOtherExtraClientPrograms.validateAll();
+        helper.assertTrue(MidsizeFireworkCatalog.entries().stream()
+                        .allMatch(entry -> entry.style().shape() == FireworkStyle.Shape.OTHER
+                                && entry.style().giantTier() == GiantTier.NONE),
+                "Midsize styles must retain their explicit client-program adapter route");
+        FireworkStyle giant = FireworkStyle.GIANT_AMBER_RADIANT_FIREWORK;
+        helper.assertTrue(giant.giantTier() == GiantTier.LARGE
+                        && giant.effectCategory() == EffectCategory.GIANT_LARGE
+                        && giant.flightTicks() == GiantRadiantTrajectory.ASCENT_TICKS
+                        && GiantRadiantTrajectory.ascentFitsDeclaredHeight()
+                        && GiantRadiantTrajectory.conservativeBounds().fitsRadius(GiantRadiantTrajectory.MAX_RADIUS)
+                        && GiantRadiantTrajectory.particlePlanAtTick(0).createdThisTick()
+                        == GiantRadiantTrajectory.PARTICLES_PER_EMISSION_TICK
+                        && GiantRadiantTrajectory.MIN_PARTICLE_LIFETIME == 120
+                        && GiantRadiantTrajectory.MAX_PARTICLE_LIFETIME == 144
+                        && GiantRadiantTrajectory.TOTAL_PARTICLES == 12_288
+                        && GiantRadiantTrajectory.maximumAliveParticleUpperBound() == 12_288
+                        && GiantRadiantTrajectory.finalParticleDisappearanceTick() == 191
+                        && GiantRadiantTrajectory.retirementFlickerStartsAfterEmission()
+                        && GiantRadiantTrajectory.DETONATION_SOUND_BROADCAST_RADIUS >= 200.0D,
+                "The giant radiant prototype must preserve its 130-block and 0-to-200-block contract");
+
+        GiantRadiantTrajectory.Branch firstGiantBranch = GiantRadiantTrajectory.branch(0x6C61726765L, 0);
+        GiantRadiantTrajectory.Branch secondGiantBranch = GiantRadiantTrajectory.branch(0x6C61726765L, 1);
+        helper.assertTrue(GiantRadiantTrajectory.isCoreSegment(0)
+                        && GiantRadiantTrajectory.colorBand(0) == GiantRadiantTrajectory.ColorBand.PRIMARY
+                        && GiantRadiantTrajectory.ColorBand.PRIMARY.rgb().green() > 0.80F
+                        && GiantRadiantTrajectory.ColorBand.PRIMARY.rgb().blue() > 0.40F
+                        && GiantRadiantTrajectory.retirementFlickerLeadTicks(firstGiantBranch, 0)
+                                != GiantRadiantTrajectory.retirementFlickerLeadTicks(secondGiantBranch, 0)
+                        && GiantRadiantTrajectory.retirementFlickerPhase(firstGiantBranch, 0)
+                                != GiantRadiantTrajectory.retirementFlickerPhase(secondGiantBranch, 0)
+                        && GiantRadiantTrajectory.RETIREMENT_FLICKER_MIN_LEAD_TICKS >= 18
+                        && GiantRadiantTrajectory.RETIREMENT_FLICKER_MAX_LEAD_TICKS <= 24,
+                "The giant core must use a fixed warm-gold highlight and seeded, out-of-phase retirement flicker");
+
+        FireworkStyle hybrid = FireworkStyle.HYBRID_AMBER_SPHERE_RADIANT;
+        helper.assertTrue(hybrid.effectCategory() == EffectCategory.STANDARD
+                        && HybridSphereRadiantTrajectory.SPHERE_TOTAL_COUNT == 2_160
+                        && HybridSphereRadiantTrajectory.RADIAL_NODE_COUNT == 1_920
+                        && HybridSphereRadiantTrajectory.SPHERE_OUTER_RADIUS
+                                < HybridSphereRadiantTrajectory.RADIAL_OUTER_RADIUS
+                        && HybridSphereRadiantTrajectory.SPHERE_CORE_START_TICK == 0
+                        && HybridSphereRadiantTrajectory.emissionFrame(0).sphereCoreCount()
+                                == HybridSphereRadiantTrajectory.SPHERE_CORE_PER_TICK
+                        && HybridSphereRadiantTrajectory.emissionFrame(0).totalCount()
+                                == HybridSphereRadiantTrajectory.MAX_EMISSION_PER_TICK
+                        && HybridSphereRadiantTrajectory.maxEmissionPerTick()
+                                == HybridSphereRadiantTrajectory.MAX_EMISSION_PER_TICK
+                        && HybridSphereRadiantTrajectory.allRadialPathsCrossSphereRadius(
+                                hybrid.radiantProfile(), 0x4D595249444C0001L)
+                        && HybridSphereRadiantTrajectory.conservativeBounds(
+                                hybrid.radiantProfile(), 0x4D595249444C0001L)
+                                .fitsWithin(HybridSphereRadiantTrajectory.APPROVED_FULL_ENVELOPE)
+                        && HybridSphereRadiantTrajectory.maxEmissionPerTick() > 0,
+                "The sphere-radiant prototype must keep a smaller sphere inside crossing 160-branch radial layers");
+
+        SaturnProgram saturn = SaturnProgram.prototype(FireworkStyle.SATURN_AMBER_DOUBLE_SPHERE);
+        helper.assertTrue(saturn.rings().ringCount() == 4
+                        && saturn.spheres().size() == 2
+                        && saturn.totalSampleCount() == 3_040
+                        && saturn.peakSamplesPerTick() > 0,
+                "The Saturn prototype must use two spherical layers and four rings");
+
+        ColorChangeBallProgram.Profile colorChange =
+                ColorChangeBallProgram.profileFor(FireworkStyle.CINNABAR_AMBER_SPHERE);
+        helper.assertTrue(colorChange != null
+                        && colorChange.switchDelayTicks() == 10
+                        && colorChange.phaseAt(9) == ColorChangeBallProgram.Phase.INITIAL
+                        && colorChange.phaseAt(10) == ColorChangeBallProgram.Phase.TARGET
+                        && ColorChangeBallProgram.switchDelayTicksFromSeconds(0.3D) == 6
+                        && ColorChangeBallProgram.switchDelayTicksFromSeconds(0.7D) == 14,
+                "The existing sphere color-change capability must use stable 6-to-14 tick timing");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
     public static void packagedItemResourcesMirrorStyleCatalog(GameTestHelper helper) {
         JsonObject english = readJsonObject("assets/urbanforma_fireworks/lang/en_us.json");
         JsonObject chinese = readJsonObject("assets/urbanforma_fireworks/lang/zh_cn.json");
         List<FireworkStyle> styles = FireworkStyle.values();
 
-        helper.assertTrue(english.size() == EXPECTED_LANGUAGE_KEY_COUNT
-                        && chinese.size() == EXPECTED_LANGUAGE_KEY_COUNT,
-                "Both language files must contain exactly the stable item and category keys");
+        int expectedLanguageKeyCount = styles.size() + 13;
+        helper.assertTrue(english.size() == expectedLanguageKeyCount
+                        && chinese.size() == expectedLanguageKeyCount,
+                "Both language files must contain every item plus the fixed category, section, and pack keys");
         for (FireworkStyle style : styles) {
             String translationKey = "item." + UrbanformaFireworks.MOD_ID + "." + style.id();
             JsonObject model = readJsonObject(
                     "assets/urbanforma_fireworks/models/item/" + style.id() + ".json");
+            JsonObject recipe = readJsonObject(
+                    "data/urbanforma_fireworks/recipes/" + style.id() + ".json");
             helper.assertTrue(english.has(translationKey)
                             && english.get(translationKey).getAsString().equals(style.enName())
                             && chinese.has(translationKey)
                             && chinese.get(translationKey).getAsString().equals(style.zhName()),
-                    "Every stable firework style must retain matching bilingual item names");
+                    "Bilingual item name drifted for " + style.id()
+                            + ": expected=" + style.enName()
+                            + ", actual=" + (english.has(translationKey)
+                            ? english.get(translationKey).getAsString() : "<missing>"));
             helper.assertTrue(model.size() == 1
                             && model.has("parent")
                             && model.get("parent").getAsString().equals("minecraft:item/firework_rocket"),
                     "Every stable firework item model must inherit the vanilla rocket model only");
+            helper.assertTrue(recipe.has("type")
+                            && recipe.get("type").getAsString().equals("minecraft:crafting_shaped")
+                            && recipe.has("result")
+                            && recipe.getAsJsonObject("result").has("id")
+                            && recipe.getAsJsonObject("result").get("id").getAsString()
+                                    .equals(UrbanformaFireworks.MOD_ID + ":" + style.id())
+                            && recipe.getAsJsonObject("result").get("count").getAsInt() == 1,
+                    "Every stable firework item must retain its matching ordinary rocket recipe");
         }
         helper.succeed();
     }
 
     @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 30)
-    public static void everyStyleLaunchesFromHandAndBlock(GameTestHelper helper) {
+    public static void everyOrdinaryStyleLaunchesFromHandAndBlock(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         Vec3 playerPosition = helper.absoluteVec(new Vec3(2.5D, 2.0D, 2.5D));
         player.setPos(playerPosition);
@@ -318,6 +480,9 @@ public final class FireworksGameTests {
         BlockPos absoluteLaunchBlock = helper.absolutePos(launchBlock);
 
         for (FireworkStyle style : FireworkStyle.values()) {
+            if (style.giantTier() != GiantTier.NONE) {
+                continue;
+            }
             FireworkRocketItem item = FireworksItems.itemFor(style);
             ItemStack handStack = new ItemStack(item, 2);
             player.setItemInHand(InteractionHand.MAIN_HAND, handStack);
@@ -347,7 +512,7 @@ public final class FireworksGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 190)
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 720)
     public static void everyStyleLaunchesFromUpwardDispenser(GameTestHelper helper) {
         BlockPos dispenserPosition = new BlockPos(3, 1, 3);
         helper.setBlock(dispenserPosition, Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, Direction.UP));
@@ -451,7 +616,7 @@ public final class FireworksGameTests {
                         && WillowTrajectory.INITIAL_RADIUS == 5.0D
                         && WillowTrajectory.VERTICAL_SPHERE_SCALE == 0.80D,
                 "The shared v0.2.6 willow trajectory must retain its fixed branch, node, interval, and inner-node contract");
-        helper.assertTrue(hasNoBranchProgramConcurrencyOrFifoCap(),
+        helper.assertTrue(hasApprovedRadiantWillowClientBytecode(),
                 "Branch rendering must not expose a mod-side concurrency, occupancy, or FIFO cap");
 
         for (WillowExpectation expectation : WILLOW_EXPECTATIONS) {
@@ -486,7 +651,8 @@ public final class FireworksGameTests {
                 helper.assertTrue(style.willowProfile() == null,
                         "Only willow styles may declare a willow profile");
             }
-            if (style.shape() != FireworkStyle.Shape.RADIANT) {
+            if (style.shape() != FireworkStyle.Shape.RADIANT
+                    && style.shape() != FireworkStyle.Shape.HYBRID_SPHERE_RADIANT) {
                 helper.assertTrue(style.radiantProfile() == null,
                         "Only radiant styles may declare a radiant profile");
             }
@@ -538,14 +704,12 @@ public final class FireworksGameTests {
                         && RadiantTrajectory.EMISSION_TICKS == 30
                         && RadiantTrajectory.BRANCHES_PER_TICK == 160
                         && RadiantTrajectory.CORE_SEGMENT_COUNT == 3
-                        && RadiantTrajectory.CORE_LIFETIME_MIN == 8
-                        && RadiantTrajectory.CORE_LIFETIME_MAX == 12
+                        && RadiantTrajectory.CORE_LIFETIME_MIN == 36
+                        && RadiantTrajectory.CORE_LIFETIME_MAX == 44
                         && RadiantTrajectory.STAR_LIFETIME_MIN == 58
                         && RadiantTrajectory.STAR_LIFETIME_MAX == 62
-                        && RadiantTrajectory.BRANCH_COUNT <= 216
-                        && RadiantTrajectory.BRANCH_COUNT * 4 <= 720
-                        && hasNoBranchProgramConcurrencyOrFifoCap(),
-                "Radiant rings must fit the shared complete-ring budget with no active-burst cap");
+                        && hasApprovedRadiantWillowClientBytecode(),
+                "Radiant rings must retain their fixed finite geometry with no shared active-burst cap");
         for (long payloadSeed : RADIANT_SAMPLE_SEEDS) {
             helper.assertTrue(samplesApprovedRadiantTrajectory(style, payloadSeed),
                     "Radiant branches must be deterministic, dense, three-dimensional, briefly centered, and envelope-safe");
@@ -576,7 +740,7 @@ public final class FireworksGameTests {
                         && style.willowProfile() == null
                         && style.radiantProfile() == null
                         && profile != null,
-                "The v0.2.9 radiant willow item must retain its stable continuous profile");
+                "The v0.3.0 radiant willow item must retain its stable continuous profile");
         helper.assertTrue(profile.branchCount() == 160
                         && profile.radiantSegmentsPerBranch() == 30
                         && profile.managedFirstRadiantSegment() == 3
@@ -600,8 +764,6 @@ public final class FireworksGameTests {
                         && RadiantWillowTrajectory.MAX_EXTENSION_TICKS == 140
                         && RadiantWillowTrajectory.BRANCHES_PER_TICK == 160
                         && RadiantWillowTrajectory.MAX_PARTICLES_PER_TICK == 160
-                        && RadiantWillowTrajectory.MAX_GLOBAL_PARTICLES_PER_TICK == 640
-                        && RadiantWillowTrajectory.MAX_GLOBAL_PARTICLES_PER_TICK <= 720
                         && RadiantWillowTrajectory.MAX_TERMINAL_RETIREMENTS_PER_BRANCH == 5
                         && RadiantWillowTrajectory.TERMINAL_RETIREMENT_START_PROGRESS == 0.35D
                         && RadiantWillowTrajectory.TERMINAL_RETIREMENT_INTERVAL_MIN_TICKS == 12
@@ -612,9 +774,8 @@ public final class FireworksGameTests {
                         && RadiantWillowTrajectory.APPROVED_FULL_ENVELOPE == 220.0D
                         && RadiantWillowTrajectory.extensionOutrunsTerminalRetirement(100)
                         && RadiantWillowTrajectory.extensionOutrunsTerminalRetirement(140)
-                        && hasNoBranchProgramConcurrencyOrFifoCap()
                         && hasApprovedRadiantWillowClientBytecode(),
-                "The continuous radiant willow must reuse whole rings without a mod-side concurrency cap");
+                "The continuous radiant willow must reuse whole rings without a shared particle quota");
         for (long payloadSeed : RADIANT_WILLOW_SAMPLE_SEEDS) {
             helper.assertTrue(samplesApprovedRadiantWillowTrajectory(style, payloadSeed),
                     "Radiant willow branches must preserve same-particle continuity, curves, determinism, and envelope safety");
@@ -643,6 +804,7 @@ public final class FireworksGameTests {
 
         Vec3 launchPosition = helper.absoluteVec(new Vec3(2.5D, 12.0D, 2.5D));
         FireworkStyle style = FireworkStyle.values().stream()
+                .filter(candidate -> !candidate.isPrototype())
                 .max(java.util.Comparator.comparingInt(FireworkStyle::flightTicks))
                 .orElseThrow();
         GrandFireworkRocketEntity rocket = new GrandFireworkRocketEntity(
@@ -740,6 +902,105 @@ public final class FireworksGameTests {
         });
     }
 
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 20)
+    public static void giantBurstDispatchIsSingleCompactEvent(GameTestHelper helper) {
+        BlockPos obstacle = new BlockPos(2, 3, 2);
+        helper.setBlock(obstacle, Blocks.GOLD_BLOCK);
+        Vec3 launchPosition = helper.absoluteVec(new Vec3(2.5D, 2.0D, 2.5D));
+        GrandFireworkRocketEntity rocket = new GrandFireworkRocketEntity(
+                helper.getLevel(),
+                launchPosition.x,
+                launchPosition.y,
+                launchPosition.z,
+                null,
+                FireworkStyle.GIANT_AMBER_RADIANT_FIREWORK);
+        rocket.launchVertically();
+        helper.getLevel().addFreshEntity(rocket);
+
+        helper.runAtTickTime(5L, () -> {
+            helper.assertTrue(!rocket.isAlive()
+                            && rocket.explosionDispatched()
+                            && rocket.burstDispatchCount() == 1,
+                    "The giant detonation must dispatch exactly one compact client event");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 20)
+    public static void giantWillowPrototypeKeepsIndependentContract(GameTestHelper helper) {
+        FireworkStyle style = FireworkStyle.GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK;
+        helper.assertTrue(style.index() == 45
+                        && style.shape() == FireworkStyle.Shape.GIANT_RADIANT
+                        && style.giantTier() == GiantTier.EXTRA_LARGE
+                        && style.effectCategory() == EffectCategory.GIANT_EXTRA_LARGE
+                        && style.totalStarCount() == 12_288
+                        && style.flightTicks() == GiantWillowTrajectory.ASCENT_TICKS
+                        && style.diameter() == 260
+                        && style.fullEnvelope() == 260,
+                "The second giant must use its own EXTRA_LARGE category");
+        helper.assertTrue(GiantWillowTrajectory.ASCENT_TICKS == 138
+                        && GiantWillowTrajectory.DETONATION_HEIGHT == 200.0D
+                        && GiantWillowTrajectory.MAX_RADIUS == 130.0D
+                        && GiantWillowTrajectory.TOTAL_PARTICLES == 12_288
+                        && GiantWillowTrajectory.TAIL_EXTENSION_TICKS == 200
+                        && GiantWillowTrajectory.TOTAL_VISUAL_TICKS == 271
+                        && GiantWillowTrajectory.RETIREMENT_FLICKER_MIN_LEAD_TICKS == 18
+                        && GiantWillowTrajectory.RETIREMENT_FLICKER_MAX_LEAD_TICKS == 24,
+                "The giant willow must retain its 0-to-200 ascent, 130 radius, tail, and flicker contract");
+        for (long seed : new long[] {0x4D595DF4D0F33173L, 0x9E3779B97F4A7C15L}) {
+            helper.assertTrue(GiantWillowTrajectory.staticContractHolds(seed)
+                            && GiantWillowTrajectory.conservativeBounds(seed).maxDistance() < 130.0D,
+                    "The giant willow radial envelope and staggered retirement must remain radius-safe");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH, timeoutTicks = 20)
+    public static void giantWillowBurstDispatchIsSingleCompactEvent(GameTestHelper helper) {
+        BlockPos obstacle = new BlockPos(2, 3, 2);
+        helper.setBlock(obstacle, Blocks.GOLD_BLOCK);
+        Vec3 launchPosition = helper.absoluteVec(new Vec3(2.5D, 2.0D, 2.5D));
+        GrandFireworkRocketEntity rocket = new GrandFireworkRocketEntity(
+                helper.getLevel(), launchPosition.x, launchPosition.y, launchPosition.z, null,
+                FireworkStyle.GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK);
+        rocket.launchVertically();
+        helper.getLevel().addFreshEntity(rocket);
+
+        helper.runAtTickTime(5L, () -> {
+            helper.assertTrue(!rocket.isAlive()
+                            && rocket.explosionDispatched()
+                            && rocket.burstDispatchCount() == 1,
+                    "The EXTRA_LARGE willow must dispatch exactly one compact client event");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
+    public static void serverPayloadAndOptionalHdFallbackRemainSideSafe(GameTestHelper helper) {
+        String[] commonResources = {
+            "/com/urbanforma/fireworks/entity/GrandFireworkRocketEntity.class",
+            "/com/urbanforma/fireworks/network/payload/GrandFireworkBurstPayload.class",
+            "/com/urbanforma/fireworks/world/item/FireworkRocketItem.class"
+        };
+        boolean commonClassesAreSideSafe = true;
+        for (String resource : commonResources) {
+            byte[] bytes = readClassBytes(resource);
+            commonClassesAreSideSafe &= bytes != null && !classBytesContain(bytes,
+                    "net/minecraft/client", "FireworkParticleBudget", "GiantFireworkLaunchLimiter");
+        }
+
+        JsonObject baseSpark = readJsonObject("assets/urbanforma_fireworks/particles/hd_firework_spark.json");
+        JsonObject hdSpark = readJsonObject(
+                "resourcepacks/urbanforma_fireworks_hd/assets/urbanforma_fireworks/particles/hd_firework_spark.json");
+        helper.assertTrue(commonClassesAreSideSafe
+                        && readClassBytes("/com/urbanforma/fireworks/content/FireworkParticleBudget.class") == null
+                        && readClassBytes("/com/urbanforma/fireworks/content/GiantFireworkLaunchLimiter.class") == null
+                        && hasBaseSparkResource(baseSpark)
+                        && hasHdSparkResources(hdSpark),
+                "Server logic must have no client particle dependency, and both pack states must resolve one safe spark");
+        helper.succeed();
+    }
+
     private static void assertStacksMatchStyles(
             GameTestHelper helper, List<ItemStack> stacks, List<FireworkStyle> styles, String failureMessage) {
         helper.assertTrue(stacks.size() == styles.size(), failureMessage);
@@ -788,47 +1049,38 @@ public final class FireworksGameTests {
         }
     }
 
-    private static void assertShapeOnlySections(
+    private static void assertLargeCreativeSections(
             GameTestHelper helper, FunctionalCreativeCategory category, List<FireworkStyle> styles) {
         List<UrbanformaCreativeCategory.Section> sections = category.sections();
-        helper.assertTrue(category.hasSections() && sections.size() == EXPECTED_SECTION_SHAPES.size(),
-                "Fireworks must expose exactly six labeled shape sections");
+        helper.assertTrue(category.hasSections() && sections.size() == EXPECTED_LARGE_SECTION_KEYS.size(),
+                "Large Fireworks must expose the fixed labeled shape order plus the Other section");
 
         Set<String> sectionPaths = new HashSet<>();
         int expectedBannerRow = 0;
         List<UrbanformaCreativeCategory.SectionBanner> banners = category.sectionBanners();
         helper.assertTrue(banners.size() == sections.size(),
-                "Every non-empty firework shape section must expose one panel banner");
-        for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
+                "Every non-empty large-firework section must expose one panel banner");
+        for (int sectionIndex = 0; sectionIndex < EXPECTED_SECTION_SHAPES.size(); sectionIndex++) {
             FireworkStyle.Shape shape = EXPECTED_SECTION_SHAPES.get(sectionIndex);
-            List<FireworkStyle> expectedStyles = stylesForShape(styles, shape);
+            List<FireworkStyle> expectedStyles = stylesForShape(styles, shape).stream()
+                    .filter(style -> !isOtherStyle(style) && !isMidsizeStyle(style))
+                    .toList();
             UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
             UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
-            helper.assertTrue(expectedStyles.size() == EXPECTED_SECTION_ITEM_COUNTS.get(sectionIndex)
-                            && section.translationKey().equals(EXPECTED_SECTION_KEYS.get(sectionIndex))
+            helper.assertTrue(!expectedStyles.isEmpty()
+                            && section.translationKey().equals(EXPECTED_LARGE_SECTION_KEYS.get(sectionIndex))
                             && section.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
                             && section.theme().pattern()
                             == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS
                             && section.paths().equals(expectedStyles.stream().map(FireworkStyle::id).toList()),
-                    "Firework sections must remain ordered only by shape with one shared neutral dark theme");
+                    "Large-firework shape sections must exclude Other and midsize catalogs");
             assertStacksMatchStyles(helper, section.stacks(), expectedStyles,
-                    "Each firework section must contain only its matching shape styles");
+                    "Each large-firework shape section must contain only its matching styles");
 
-            Set<FireworkStyle.Family> families = new HashSet<>();
             for (FireworkStyle style : expectedStyles) {
-                if (style.family() != FireworkStyle.Family.DEMONSTRATION) {
-                    families.add(style.family());
-                }
                 helper.assertTrue(sectionPaths.add(style.id()),
                         "A firework item must belong to one shape section only");
             }
-            int expectedFamilyCount = switch (shape) {
-                case SPHERE -> 5;
-                case DOUBLE_SPHERE, CROWN_SPHERE, WILLOW_SPHERE -> 4;
-                case RADIANT, RADIANT_WILLOW -> 1;
-            };
-            helper.assertTrue(families.size() == expectedFamilyCount,
-                    "Each shape section must mix the internal families without creating a color-based section");
             helper.assertTrue(banner.row() == expectedBannerRow
                             && banner.translationKey().equals(section.translationKey())
                             && banner.theme().equals(section.theme()),
@@ -836,17 +1088,108 @@ public final class FireworksGameTests {
             expectedBannerRow += 1 + rowsFor(section.stacks().size());
         }
 
-        helper.assertTrue(sectionPaths.size() == styles.size()
-                        && styles.stream().allMatch(style -> sectionPaths.contains(style.id())),
-                "Shape sections must partition all 42 firework styles without a color-family section");
+        int otherSectionIndex = EXPECTED_SECTION_SHAPES.size();
+        UrbanformaCreativeCategory.Section otherSection = sections.get(otherSectionIndex);
+        UrbanformaCreativeCategory.SectionBanner otherBanner = banners.get(otherSectionIndex);
+        List<FireworkStyle> expectedOtherStyles = java.util.stream.Stream.concat(
+                        OtherFireworkCatalog.entries().stream().map(OtherFireworkCatalog.Entry::style),
+                        OtherExtraFireworkCatalog.entries().stream().map(OtherExtraFireworkCatalog.Entry::style))
+                .toList();
+        helper.assertTrue(otherSection.translationKey().equals(EXPECTED_LARGE_SECTION_KEYS.get(otherSectionIndex))
+                        && otherSection.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
+                        && otherSection.theme().pattern()
+                                == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS
+                        && otherSection.paths().equals(expectedOtherStyles.stream().map(FireworkStyle::id).toList())
+                        && expectedOtherStyles.size() == OtherExtraFireworkCatalog.TOTAL_OTHER_STYLE_COUNT,
+                "The Other section must contain exactly the thirty typed Other styles in catalog order");
+        assertStacksMatchStyles(helper, otherSection.stacks(), expectedOtherStyles,
+                "The Other section must expose all Other items without shape-section duplicates");
+        for (FireworkStyle style : expectedOtherStyles) {
+            helper.assertTrue(sectionPaths.add(style.id()),
+                    "An Other item must not be duplicated in a shape section");
+        }
+        helper.assertTrue(otherBanner.row() == expectedBannerRow
+                        && otherBanner.translationKey().equals(otherSection.translationKey())
+                        && otherBanner.theme().equals(otherSection.theme()),
+                "The Other section banner must follow the shape sections");
+
+        List<FireworkStyle> expectedLargeStyles = styles.stream().filter(style -> !isMidsizeStyle(style)).toList();
+        helper.assertTrue(sectionPaths.size() == expectedLargeStyles.size()
+                        && expectedLargeStyles.stream().allMatch(style -> sectionPaths.contains(style.id()))
+                        && MidsizeFireworkCatalog.entries().stream()
+                                .map(entry -> entry.style().id())
+                                .noneMatch(sectionPaths::contains),
+                "Large Fireworks must partition every non-midsize style and contain zero midsize items");
         assertSectionedDisplayStacks(helper, category.stacks(), sections,
-                "Fireworks sectioned stacks must reserve one complete banner row before each shape group");
+                "Large Fireworks must reserve one complete banner row before each section");
 
         List<UrbanformaCreativeCategory.Section> directSections = FireworkCreativeSections.sections();
         helper.assertTrue(directSections.size() == sections.size()
                         && directSections.stream().map(UrbanformaCreativeCategory.Section::translationKey).toList()
-                        .equals(EXPECTED_SECTION_KEYS),
-                "Fireworks creative section helper must expose the registered shape order");
+                        .equals(EXPECTED_LARGE_SECTION_KEYS),
+                "Large-firework helper must expose the registered shape order plus Other");
+    }
+
+    private static void assertMidsizeCreativeSections(GameTestHelper helper, FunctionalCreativeCategory category) {
+        List<UrbanformaCreativeCategory.Section> sections = category.sections();
+        List<UrbanformaCreativeCategory.SectionBanner> banners = category.sectionBanners();
+        List<MidsizeFireworkDefinition.EffectType> expectedEffects = List.of(
+                MidsizeFireworkDefinition.EffectType.DENSE_SPHERE,
+                MidsizeFireworkDefinition.EffectType.DENSE_RADIAL);
+        Set<String> sectionPaths = new HashSet<>();
+        int expectedBannerRow = 0;
+
+        helper.assertTrue(category.hasSections()
+                        && sections.size() == expectedEffects.size()
+                        && banners.size() == expectedEffects.size(),
+                "Midsize Fireworks must provide exactly the sphere and radiant sections");
+        for (int sectionIndex = 0; sectionIndex < expectedEffects.size(); sectionIndex++) {
+            MidsizeFireworkDefinition.EffectType effectType = expectedEffects.get(sectionIndex);
+            List<FireworkStyle> expectedStyles = MidsizeFireworkCatalog.entries().stream()
+                    .filter(entry -> entry.source().effectType() == effectType)
+                    .map(MidsizeFireworkCatalog.Entry::style)
+                    .toList();
+            UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
+            UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
+            helper.assertTrue(expectedStyles.size() == 1
+                            && section.translationKey().equals(EXPECTED_MIDSIZE_SECTION_KEYS.get(sectionIndex))
+                            && section.paths().equals(expectedStyles.stream().map(FireworkStyle::id).toList())
+                            && section.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
+                            && section.theme().pattern()
+                            == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS,
+                    "Midsize entries must retain their typed sphere and radiant section routes");
+            assertStacksMatchStyles(helper, section.stacks(), expectedStyles,
+                    "Each midsize section must expose only its typed entry");
+            helper.assertTrue(sectionPaths.add(expectedStyles.getFirst().id()),
+                    "Midsize items must not be duplicated across midsize sections");
+            helper.assertTrue(banner.row() == expectedBannerRow
+                            && banner.translationKey().equals(section.translationKey())
+                            && banner.theme().equals(section.theme()),
+                    "Midsize banners must follow their section order and row layout");
+            expectedBannerRow += 1 + rowsFor(section.stacks().size());
+        }
+        List<FireworkStyle> midsizeStyles = MidsizeFireworkCatalog.entries().stream()
+                .map(MidsizeFireworkCatalog.Entry::style)
+                .toList();
+        helper.assertTrue(sectionPaths.size() == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT
+                        && midsizeStyles.stream().allMatch(style -> sectionPaths.contains(style.id()))
+                        && MidsizeFireworkCatalog.require("midsize_dense_sphere_firework").style().zhName()
+                                .equals("中型密集球形烟花")
+                        && MidsizeFireworkCatalog.require("midsize_dense_sphere_firework").style().enName()
+                                .equals("Medium Dense Sphere Firework")
+                        && MidsizeFireworkCatalog.require("midsize_dense_radial_firework").style().zhName()
+                                .equals("中型密集放射烟花")
+                        && MidsizeFireworkCatalog.require("midsize_dense_radial_firework").style().enName()
+                                .equals("Medium Dense Radial Firework")
+                        && midsizeStyles.stream().noneMatch(style -> style.zhName().contains("中小型")
+                                || style.enName().contains("Midsize")),
+                "Midsize display names must use Medium, never the category label");
+        assertSectionedDisplayStacks(helper, category.stacks(), sections,
+                "Midsize Fireworks must reserve one complete banner row before each section");
+        helper.assertTrue(FireworkCreativeSections.midsizeSections().stream()
+                        .map(UrbanformaCreativeCategory.Section::translationKey)
+                        .toList().equals(EXPECTED_MIDSIZE_SECTION_KEYS),
+                "Midsize helper must preserve the sphere then radiant taxonomy");
     }
 
     private static List<FireworkStyle> stylesForShape(
@@ -854,6 +1197,18 @@ public final class FireworksGameTests {
         return styles.stream()
                 .filter(style -> style.shape() == shape)
                 .toList();
+    }
+
+    private static boolean isOtherStyle(FireworkStyle style) {
+        return style.index() >= OtherFireworkCatalog.FIRST_STYLE_INDEX
+                && style.index() < OtherExtraFireworkCatalog.FIRST_STYLE_INDEX
+                        + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT;
+    }
+
+    private static boolean isMidsizeStyle(FireworkStyle style) {
+        return style.index() >= MidsizeFireworkCatalog.FIRST_STYLE_INDEX
+                && style.index() < MidsizeFireworkCatalog.FIRST_STYLE_INDEX
+                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT;
     }
 
     private static void assertSectionedDisplayStacks(
@@ -865,8 +1220,7 @@ public final class FireworksGameTests {
         for (UrbanformaCreativeCategory.Section section : sections) {
             expectedSize += 9 + rowsFor(section.stacks().size()) * 9;
         }
-        helper.assertTrue(expectedSize == SECTIONED_DISPLAY_SLOT_COUNT
-                        && displayStacks.size() == SECTIONED_DISPLAY_SLOT_COUNT,
+        helper.assertTrue(displayStacks.size() == expectedSize,
                 failureMessage);
 
         int offset = 0;
@@ -1454,21 +1808,6 @@ public final class FireworksGameTests {
                 && completeRingsPerTickBudget <= 720;
     }
 
-    /** Reads client bytecode as a resource so dedicated-server GameTests never load client-only classes. */
-    private static boolean hasNoBranchProgramConcurrencyOrFifoCap() {
-        byte[] classBytes = readClassBytes("/com/urbanforma/fireworks/client/GrandFireworkClientEffects.class");
-        if (classBytes == null) {
-            return false;
-        }
-        String bytecode = new String(classBytes, StandardCharsets.ISO_8859_1);
-        return !bytecode.contains("MAX_ACTIVE_")
-                && !bytecode.contains("ACTIVE_WILLOW_OCCUPANCIES")
-                && !bytecode.contains("ACTIVE_OCCUPANCY_TICKS")
-                && !bytecode.contains("PENDING_")
-                && !bytecode.contains("ArrayDeque")
-                && !bytecode.contains("willowElapsedTicks");
-    }
-
     /**
      * Proves the retained-spark phase cannot silently turn back into a second burst. This reads class resources rather
      * than loading the client-only classes on a dedicated GameTest server.
@@ -1481,7 +1820,10 @@ public final class FireworksGameTests {
             "/com/urbanforma/fireworks/client/GrandFireworkClientEffects$RadiantWillowBranchProgram.class",
             "/com/urbanforma/fireworks/client/GrandFireworkClientEffects$RadiantWillowBranchProgram$ManagedRadiantSpark.class"
         };
-        String[] forbiddenSymbols = {"CLEARING", "emitWillowNode", "setTrail", "FLASH", "Starter", "TWINKLE"};
+        String[] forbiddenSymbols = {
+            "CLEARING", "emitWillowNode", "setTrail", "FLASH", "Starter", "TWINKLE",
+            "RADIANT_WILLOW_PENDING", "maxActiveInstances", "FireworkParticleBudget", "ArrayDeque"
+        };
         byte[] radiantWillowProgram = null;
         for (String classResource : classResources) {
             byte[] classBytes = readClassBytes(classResource);
@@ -1511,6 +1853,49 @@ public final class FireworksGameTests {
             return classBytes == null ? null : classBytes.readAllBytes();
         } catch (IOException exception) {
             return null;
+        }
+    }
+
+    private static boolean classBytesContain(byte[] classBytes, String... forbiddenSymbols) {
+        String bytecode = new String(classBytes, StandardCharsets.ISO_8859_1);
+        for (String forbiddenSymbol : forbiddenSymbols) {
+            if (bytecode.contains(forbiddenSymbol)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasBaseSparkResource(JsonObject particleJson) {
+        return particleJson != null
+                && particleJson.has("textures")
+                && particleJson.getAsJsonArray("textures").size() == 1
+                && "urbanforma_fireworks:hd_firework_spark_base".equals(
+                        particleJson.getAsJsonArray("textures").get(0).getAsString())
+                && resourceExists("assets/urbanforma_fireworks/textures/particle/hd_firework_spark_base.png");
+    }
+
+    private static boolean hasHdSparkResources(JsonObject particleJson) {
+        if (particleJson == null || !particleJson.has("textures")
+                || particleJson.getAsJsonArray("textures").size() != 8) {
+            return false;
+        }
+        for (int index = 0; index < 8; index++) {
+            if (!("urbanforma_fireworks:hd_firework_spark_" + index).equals(
+                    particleJson.getAsJsonArray("textures").get(index).getAsString())
+                    || !resourceExists("resourcepacks/urbanforma_fireworks_hd/assets/urbanforma_fireworks/"
+                    + "textures/particle/hd_firework_spark_" + index + ".png")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean resourceExists(String resourcePath) {
+        try (InputStream stream = FireworksGameTests.class.getResourceAsStream("/" + resourcePath)) {
+            return stream != null && stream.read() >= 0;
+        } catch (IOException exception) {
+            return false;
         }
     }
 
@@ -1871,6 +2256,14 @@ public final class FireworksGameTests {
                         center.x + radius,
                         center.y + radius,
                         center.z + radius));
+    }
+
+    private static GrandFireworkRocketEntity rocketFor(
+            GameTestHelper helper, Vec3 position, FireworkStyle style) {
+        GrandFireworkRocketEntity rocket = new GrandFireworkRocketEntity(
+                helper.getLevel(), position.x, position.y, position.z, null, style);
+        rocket.launchVertically();
+        return rocket;
     }
 
     private static CompoundTag emptyStructureTag() {

@@ -1,3 +1,1 @@
-{
-  "parent": "minecraft:item/firework_rocket"
-}
+{"parent":"minecraft:item/firework_rocket","textures":{"layer0":"urbanforma_fireworks:item/polar_silver_willow"}}

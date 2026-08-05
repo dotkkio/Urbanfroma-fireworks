@@ -38,7 +38,8 @@ public record FireworkStyle(
         float twinkleChanceMax,
         WillowProfile willowProfile,
         RadiantProfile radiantProfile,
-        RadiantWillowProfile radiantWillowProfile) {
+        RadiantWillowProfile radiantWillowProfile,
+        GiantTier giantTier) {
     public enum Family {
         DEMONSTRATION,
         WARM,
@@ -54,7 +55,11 @@ public record FireworkStyle(
         CROWN_SPHERE,
         WILLOW_SPHERE,
         RADIANT,
-        RADIANT_WILLOW
+        RADIANT_WILLOW,
+        GIANT_RADIANT,
+        HYBRID_SPHERE_RADIANT,
+        SATURN,
+        OTHER
     }
 
     /** Launch-tail budgets; all non-golden styles use the 10/12/14 and 22/24/26 approved tiers. */
@@ -550,7 +555,108 @@ public record FireworkStyle(
             0.60F,
             radiantWillowProfile(radiantProfile(3.5D, 48.0D, 0.94D, 0.38D, 0.46D, 9.0D)));
 
-    private static final List<FireworkStyle> VALUES = List.of(
+    public static final FireworkStyle GIANT_AMBER_RADIANT_FIREWORK = style(
+            42,
+            "giant_amber_radiant_firework",
+            "巨型琥珀放射烟花",
+            "Giant Amber Radiant Firework",
+            Family.WARM,
+            Shape.GIANT_RADIANT,
+            "#FF2919",
+            "#FF9E1A",
+            "#FFF0A8",
+            138,
+            260,
+            260,
+            0,
+            12_288,
+            new LayerShares(167, 667, 166),
+            256,
+            TrailTier.GRAND,
+            116,
+            104,
+            96,
+            0.35F,
+            0.60F,
+            GiantTier.LARGE);
+
+    public static final FireworkStyle HYBRID_AMBER_SPHERE_RADIANT = style(
+            43,
+            "hybrid_amber_sphere_radiant",
+            "琥珀球形放射结合烟花",
+            "Amber Sphere-Radiant Hybrid Firework",
+            Family.JEWEL,
+            Shape.HYBRID_SPHERE_RADIANT,
+            "#FF6B19",
+            "#FFA424",
+            "#FFE1A6",
+            100,
+            112,
+            112,
+            0,
+            4_080,
+            new LayerShares(470, 410, 120),
+            340,
+            TrailTier.GRAND,
+            102,
+            84,
+            68,
+            0.35F,
+            0.60F,
+            radiantProfile(3.5D, 48.0D, 0.94D, 0.38D, 0.46D, 9.0D));
+
+    public static final FireworkStyle SATURN_AMBER_DOUBLE_SPHERE = style(
+            44,
+            "saturn_amber_double_sphere",
+            "琥珀双球土星环烟花",
+            "Amber Double-Sphere Saturn Ring Firework",
+            Family.METALLIC,
+            Shape.SATURN,
+            "#FF7A1A",
+            "#4FD4D0",
+            "#FFF0B5",
+            110,
+            144,
+            144,
+            0,
+            3_040,
+            new LayerShares(570, 300, 130),
+            192,
+            TrailTier.GRAND,
+            104,
+            88,
+            72,
+            0.35F,
+            0.60F);
+
+    /** The second giant prototype uses the independent EXTRA_LARGE willow queue. */
+    public static final FireworkStyle GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK = style(
+            45,
+            "giant_golden_white_radial_willow_firework",
+            "\u5de8\u578b\u91d1\u767d\u7eaf\u653e\u5c04\u5782\u67f3\u70df\u82b1",
+            "Giant Golden White Radial Willow Firework",
+            Family.METALLIC,
+            Shape.GIANT_RADIANT,
+            "#FFF2C7",
+            "#FFD15A",
+            "#FFFDF0",
+            138,
+            260,
+            260,
+            0,
+            12_288,
+            new LayerShares(167, 667, 166),
+            256,
+            TrailTier.GRAND,
+            252,
+            236,
+            236,
+            0.35F,
+            0.60F,
+            GiantTier.EXTRA_LARGE);
+
+    /** The 46 stable pre-expansion styles retain their persisted network indices without renumbering. */
+    private static final List<FireworkStyle> BASE_VALUES = List.of(
             GRAND_GOLDEN_SPHERE,
             CINNABAR_AMBER_SPHERE,
             SAFFRON_CORAL_SPHERE,
@@ -592,21 +698,31 @@ public record FireworkStyle(
             LED_MAGENTA_SPHERE,
             LED_ROSE_SPHERE,
             AMBER_RADIANT_FIREWORK,
-            AMBER_RADIANT_WILLOW_FIREWORK);
+            AMBER_RADIANT_WILLOW_FIREWORK,
+            GIANT_AMBER_RADIANT_FIREWORK,
+            HYBRID_AMBER_SPHERE_RADIANT,
+            SATURN_AMBER_DOUBLE_SPHERE,
+            GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK);
+    /** Integrated ordinary and giant styles are append-only so the stable 46 indices remain compatible. */
+    private static final List<FireworkStyle> VALUES = appendIntegratedStyles();
     private static final Map<String, FireworkStyle> BY_ID = indexById();
 
     public FireworkStyle {
         if (index < 0 || id == null || id.isBlank() || flightTicks <= 0 || diameter <= 0 || fullEnvelope <= 0
-                || (shape == Shape.RADIANT_WILLOW ? fullEnvelope > 220 : fullEnvelope > 120)
+                || ((shape == Shape.RADIANT_WILLOW ? fullEnvelope > 220
+                        : shape == Shape.GIANT_RADIANT ? fullEnvelope > 260
+                        : shape == Shape.SATURN ? fullEnvelope > 160 : fullEnvelope > 130))
                 || diameter > fullEnvelope || phaseDelayTicks < 0 || totalStarCount <= 0
-                || starsPerTick <= 0 || starsPerTick > 216 || outerLifetime <= 0 || innerLifetime <= 0
+                || starsPerTick <= 0 || starsPerTick > 340 || outerLifetime <= 0 || innerLifetime <= 0
                 || accentLifetime <= 0 || twinkleChanceMin < 0.0F || twinkleChanceMax > 1.0F
                 || twinkleChanceMin > twinkleChanceMax) {
             throw new IllegalArgumentException("Invalid firework style " + id);
         }
         if ((shape == Shape.WILLOW_SPHERE) != (willowProfile != null)
-                || (shape == Shape.RADIANT) != (radiantProfile != null)
+                || (shape == Shape.RADIANT || shape == Shape.HYBRID_SPHERE_RADIANT) != (radiantProfile != null)
                 || (shape == Shape.RADIANT_WILLOW) != (radiantWillowProfile != null)
+                || (shape == Shape.GIANT_RADIANT) != (giantTier != GiantTier.NONE)
+                || (shape != Shape.GIANT_RADIANT && giantTier != GiantTier.NONE)
                 || (willowProfile != null ? 1 : 0)
                         + (radiantProfile != null ? 1 : 0)
                         + (radiantWillowProfile != null ? 1 : 0) > 1) {
@@ -621,10 +737,30 @@ public record FireworkStyle(
         Objects.requireNonNull(accentColor, "accentColor");
         Objects.requireNonNull(layerShares, "layerShares");
         Objects.requireNonNull(trailTier, "trailTier");
+        Objects.requireNonNull(giantTier, "giantTier");
     }
 
     public static List<FireworkStyle> values() {
         return VALUES;
+    }
+
+    private static List<FireworkStyle> appendIntegratedStyles() {
+        if (BASE_VALUES.size() != NormalFireworkCatalog.FIRST_STYLE_INDEX) {
+            throw new IllegalStateException("The normal batch must append after the stable 46-style baseline");
+        }
+        java.util.ArrayList<FireworkStyle> styles = new java.util.ArrayList<>(
+                BASE_VALUES.size() + NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT
+                        + GiantFireworkCatalog.INTEGRATED_GIANT_COUNT
+                        + OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
+                        + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
+                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT);
+        styles.addAll(BASE_VALUES);
+        styles.addAll(NormalFireworkCatalog.stylesFrom(BASE_VALUES.size()));
+        styles.addAll(GiantFireworkCatalog.stylesFrom(styles.size()));
+        styles.addAll(OtherFireworkCatalog.stylesFrom(styles.size()));
+        styles.addAll(OtherExtraFireworkCatalog.stylesFrom(styles.size()));
+        styles.addAll(MidsizeFireworkCatalog.stylesFrom(styles.size()));
+        return List.copyOf(styles);
     }
 
     public static int count() {
@@ -670,6 +806,21 @@ public record FireworkStyle(
         return "item.urbanforma_fireworks." + this.id;
     }
 
+    public EffectCategory effectCategory() {
+        if (this.giantTier != GiantTier.NONE) {
+            return this.giantTier.effectCategory();
+        }
+        return this.shape == Shape.RADIANT_WILLOW
+                ? EffectCategory.RADIANT_WILLOW
+                : EffectCategory.STANDARD;
+    }
+
+    public boolean isPrototype() {
+        return this.shape == Shape.GIANT_RADIANT
+                || this.shape == Shape.HYBRID_SPHERE_RADIANT
+                || this.shape == Shape.SATURN;
+    }
+
     private static FireworkStyle style(
             int index,
             String id,
@@ -694,14 +845,21 @@ public record FireworkStyle(
             float twinkleChanceMin,
             float twinkleChanceMax,
             Object... branchProfiles) {
-        if (branchProfiles.length > 1) {
-            throw new IllegalArgumentException("A firework style may define at most one branch profile");
+        if (branchProfiles.length > 2) {
+            throw new IllegalArgumentException("A firework style may define at most one branch profile and one giant tier");
         }
         WillowProfile willowProfile = null;
         RadiantProfile radiantProfile = null;
         RadiantWillowProfile radiantWillowProfile = null;
-        if (branchProfiles.length == 1) {
-            Object profile = branchProfiles[0];
+        GiantTier giantTier = GiantTier.NONE;
+        for (Object profile : branchProfiles) {
+            if (profile instanceof GiantTier tier) {
+                if (giantTier != GiantTier.NONE) {
+                    throw new IllegalArgumentException("A firework style may define only one giant tier");
+                }
+                giantTier = tier;
+                continue;
+            }
             if (profile instanceof WillowProfile willow) {
                 willowProfile = willow;
             } else if (profile instanceof RadiantProfile radiant) {
@@ -737,7 +895,8 @@ public record FireworkStyle(
                 twinkleChanceMax,
                 willowProfile,
                 radiantProfile,
-                radiantWillowProfile);
+                radiantWillowProfile,
+                giantTier);
     }
 
     private static WillowProfile willowProfile(int horizontalReach, int rise, int drop) {
@@ -805,7 +964,8 @@ public record FireworkStyle(
                 0.60F,
                 null,
                 null,
-                null);
+                null,
+                GiantTier.NONE);
     }
 
     private static Map<String, FireworkStyle> indexById() {

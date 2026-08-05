@@ -19,10 +19,10 @@ public final class RadiantTrajectory {
     public static final int EMISSION_TICKS = SEGMENTS_PER_BRANCH;
     public static final int BRANCHES_PER_TICK = BRANCH_COUNT;
 
-    /** The short-lived break center uses ordinary first branch nodes, never a persistent core particle type. */
+    /** The first three branch rings form a visible center without adding a separate particle type. */
     public static final int CORE_SEGMENT_COUNT = 3;
-    public static final int CORE_LIFETIME_MIN = 8;
-    public static final int CORE_LIFETIME_MAX = 12;
+    public static final int CORE_LIFETIME_MIN = 36;
+    public static final int CORE_LIFETIME_MAX = 44;
     public static final int STAR_LIFETIME_MIN = 58;
     public static final int STAR_LIFETIME_MAX = 62;
 
@@ -259,7 +259,7 @@ public final class RadiantTrajectory {
         return segmentIndex <= 23 ? ColorBand.SECONDARY : ColorBand.ACCENT;
     }
 
-    /** The first three ordinary branch rings form a brief break center before disappearing. */
+    /** The first three branch rings form the persistent early center while the shell expands. */
     public static boolean isCoreSegment(int segmentIndex) {
         validateSegmentIndex(segmentIndex);
         return segmentIndex < CORE_SEGMENT_COUNT;

@@ -5,9 +5,9 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Common-side deterministic deformation for the continuous radiant-willow firework.
  *
- * <p>All 4,800 sparks are created by the original radiant shell. Its three short-lived center rings naturally
- * disappear, while the remaining 4,320 sparks are repositioned along their own branches for the whole willow
- * extension. There is deliberately no continuation-node program and no clear-delay between the two appearances.</p>
+ * <p>All 4,800 sparks are created by the original radiant shell. Its three early center rings remain visible through
+ * the opening of the shell, while the remaining 4,320 sparks are repositioned along their own branches for the whole
+ * willow extension. There is deliberately no continuation-node program and no clear-delay between the two appearances.</p>
  */
 public final class RadiantWillowTrajectory {
     public static final int BRANCH_COUNT = RadiantTrajectory.BRANCH_COUNT;
@@ -26,7 +26,6 @@ public final class RadiantWillowTrajectory {
     public static final int MAX_EXTENSION_TICKS = 140;
     public static final int MAX_COMPLETE_RINGS_PER_TICK = 4;
     public static final int MAX_PARTICLES_PER_TICK = BRANCH_COUNT;
-    public static final int MAX_GLOBAL_PARTICLES_PER_TICK = MAX_COMPLETE_RINGS_PER_TICK * BRANCH_COUNT;
     public static final int MAX_TERMINAL_RETIREMENTS_PER_BRANCH = 5;
     public static final double TERMINAL_RETIREMENT_START_PROGRESS = 0.35D;
     public static final int TERMINAL_RETIREMENT_INTERVAL_MIN_TICKS = 12;
@@ -546,7 +545,7 @@ public final class RadiantWillowTrajectory {
                 || profile.bendStartMax() != 0.42D
                 || profile.terminalDrop() != 66.0D
                 || profile.maximumLateralSway() != 7.5D) {
-            throw new IllegalArgumentException("RadiantWillowTrajectory requires the fixed v0.2.9 profile");
+            throw new IllegalArgumentException("RadiantWillowTrajectory requires the fixed v0.3.0 profile");
         }
     }
 

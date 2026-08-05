@@ -1,0 +1,85 @@
+{
+  "schema": "urbanforma_fireworks.batch_manifest.v1",
+  "batch": "batch03",
+  "thread_id": "019fcb83-84de-7682-9eba-e68b14dbf31d",
+  "scope": "ordinary",
+  "count": 20,
+  "theme": "sphere plus radiant ordinary variants",
+  "global_registry_id": "reserved_by_integration_thread",
+  "global_numeric_ids": "none",
+  "ordinary_cold_color_budget": {
+    "green_blue_cyan_limit": 20,
+    "baseline_occupied": 1,
+    "baseline_item": "saturn_amber_double_sphere",
+    "baseline_color": "#4FD4D0",
+    "remaining_for_all_new_batches": 19,
+    "batch03_entries_with_green_blue_cyan": 0,
+    "remaining_after_batch03": 19,
+    "purple_is_excluded_from_cold_count": true
+  },
+  "color_change_policy": "reuse existing capability only; no independent batch03 series",
+  "effect_contract": {
+    "effect_type": "sphere_radiant_hybrid",
+    "shape": "HYBRID_SPHERE_RADIANT",
+    "effect_category": "STANDARD",
+    "trajectory": "com.urbanforma.fireworks.content.hybrid.HybridSphereRadiantTrajectory",
+    "client_program": "com.urbanforma.fireworks.client.hybrid.HybridSphereRadiantParticleProgram",
+    "particle_type": "urbanforma_fireworks:hd_firework_spark",
+    "sphere_outer_particles": 1920,
+    "sphere_core_particles": 240,
+    "radial_branch_count": 160,
+    "radial_ring_count": 12,
+    "emission_ticks": 12,
+    "max_particles_per_tick": 460,
+    "max_owned_particles": 4080,
+    "core_radius_blocks": 13.0,
+    "outer_sphere_radius_blocks": 30.0,
+    "radial_conservative_radius_blocks": 52.65,
+    "full_envelope_blocks": 112.0,
+    "active_queue_limit": "none; STANDARD category",
+    "radiant_willow_queue_unchanged": true,
+    "giant_queue_unchanged": true
+  },
+  "resource_contract": {
+    "item_model_parent": "minecraft:item/firework_rocket",
+    "creative_target": "gui.urbanforma_fireworks.section.fireworks.hybrid",
+    "recipe_template": {
+      "type": "minecraft:crafting_shaped",
+      "pattern": [" P ", "FGF", " P "],
+      "ingredients": {
+        "P": "minecraft:paper",
+        "F": "minecraft:firework_star",
+        "G": "minecraft:gunpowder"
+      }
+    }
+  },
+  "art_direction": {
+    "reference_image": "external-reference-not-shipped",
+    "require_non_color_visual_difference": true,
+    "required_structural_axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"],
+    "adjacent_duplicate_policy": "same structural signature and same palette signature are forbidden",
+    "integration_requirement": "preserve at least one declared non-color distinction in the registered visual program"
+  },
+  "items": [
+    {"sequence": 1, "id": "hybrid_crimson_crown_radiant", "zh_name": "朱红金冠球放射烟花", "en_name": "Crimson Gold-Crown Sphere-Radiant Firework", "colors": ["#E31B23", "#F7B32B", "#FFF2C6"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "crown_shell", "core": "pinpoint_gold_core", "trail": "short_sunray_tail", "layering": "outer crown around an amber hub", "cadence": "simultaneous flare", "density": "dense rim"}},
+    {"sequence": 2, "id": "hybrid_amber_annular_radiant", "zh_name": "琥珀环层球放射烟花", "en_name": "Amber Annular Sphere-Radiant Firework", "colors": ["#F47C20", "#F9C74F", "#FFF4CA"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "annular_shell", "core": "pearl_core", "trail": "segmented_ray_tail", "layering": "concentric bands expand from a pearl center", "cadence": "core-led aperture", "density": "medium dense"}},
+    {"sequence": 3, "id": "hybrid_saffron_sunburst_radiant", "zh_name": "藏红日芒球放射烟花", "en_name": "Saffron Sunburst Sphere-Radiant Firework", "colors": ["#FF8C00", "#FFD23F", "#FFF7D1"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "sunburst_shell", "core": "solar_disc_core", "trail": "needle_ray_tail", "layering": "two-stage radial halo", "cadence": "fast outer release", "density": "open high density"}},
+    {"sequence": 4, "id": "hybrid_coral_champagne_radiant", "zh_name": "珊瑚香槟球放射烟花", "en_name": "Coral Champagne Sphere-Radiant Firework", "colors": ["#FF6F61", "#F6BD60", "#FFF0D8"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "champagne_bubble_shell", "core": "warm_white_core", "trail": "soft_comet_tail", "layering": "wide shell then pale inner ring", "cadence": "slow inner reveal", "density": "airy"}},
+    {"sequence": 5, "id": "hybrid_vermilion_gold_radiant", "zh_name": "朱砂鎏金球放射烟花", "en_name": "Vermilion Gold Sphere-Radiant Firework", "colors": ["#D72631", "#F9C74F", "#FFF6D5"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "gilded_chrysanthemum_shell", "core": "ember_core", "trail": "forked_gold_tail", "layering": "crimson shell above gold stamen", "cadence": "staggered bloom", "density": "dense"}},
+    {"sequence": 6, "id": "hybrid_ruby_peony_radiant", "zh_name": "红宝牡丹球放射烟花", "en_name": "Ruby Peony Sphere-Radiant Firework", "colors": ["#C91F37", "#FF9F1C", "#FFE8B0"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "peony_shell", "core": "ruby_bead_core", "trail": "curved_petal_tail", "layering": "round peony shell with a tight core", "cadence": "pulse outward", "density": "medium"}},
+    {"sequence": 7, "id": "hybrid_mandarin_pearl_radiant", "zh_name": "橘霞珍珠球放射烟花", "en_name": "Mandarin Pearl Sphere-Radiant Firework", "colors": ["#F15A24", "#FFD6A5", "#FFF4E0"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "lantern_shell", "core": "pearl_seed_core", "trail": "draped_spark_tail", "layering": "orange shell framed by a pearl center", "cadence": "soft delayed center", "density": "medium"}},
+    {"sequence": 8, "id": "hybrid_copper_rose_radiant", "zh_name": "赤铜玫瑰球放射烟花", "en_name": "Copper Rose Sphere-Radiant Firework", "colors": ["#B7410E", "#E86A92", "#FFE5C2"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "rose_shell", "core": "copper_nucleus", "trail": "twist_ray_tail", "layering": "rose ring around a copper heat core", "cadence": "spiral release", "density": "compact"}},
+    {"sequence": 9, "id": "hybrid_garnet_lantern_radiant", "zh_name": "石榴灯火球放射烟花", "en_name": "Garnet Lantern Sphere-Radiant Firework", "colors": ["#A4161A", "#F4A261", "#FFE7BA"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "lantern_burst_shell", "core": "garnet_core", "trail": "long_stamen_tail", "layering": "dark red bowl with amber spokes", "cadence": "core-to-shell", "density": "dense"}},
+    {"sequence": 10, "id": "hybrid_persimmon_spark_radiant", "zh_name": "柿橙星火球放射烟花", "en_name": "Persimmon Spark Sphere-Radiant Firework", "colors": ["#F05D23", "#FFB347", "#FFF2D6"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "persimmon_ring_shell", "core": "star_seed_core", "trail": "flicker_tail", "layering": "orange ring with scattered inner sparks", "cadence": "staccato wave", "density": "open"}},
+    {"sequence": 11, "id": "hybrid_topaz_solar_radiant", "zh_name": "黄玉日耀球放射烟花", "en_name": "Topaz Solar Sphere-Radiant Firework", "colors": ["#D97706", "#FBBF24", "#FFF8D0"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "topaz_halo_shell", "core": "sun_core", "trail": "long_straight_tail", "layering": "yellow halo with a white inner disc", "cadence": "broad crescendo", "density": "medium"}},
+    {"sequence": 12, "id": "hybrid_magenta_orchid_radiant", "zh_name": "洋红兰辉球放射烟花", "en_name": "Magenta Orchid Sphere-Radiant Firework", "colors": ["#D6288A", "#F77FBE", "#FFE0F4"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "orchid_shell", "core": "pink_lantern_core", "trail": "feather_tail", "layering": "pink petals beneath a magenta outer spray", "cadence": "double pulse", "density": "medium"}},
+    {"sequence": 13, "id": "hybrid_violet_gold_radiant", "zh_name": "紫罗金辉球放射烟花", "en_name": "Violet Gold Sphere-Radiant Firework", "colors": ["#6F2DBD", "#F6C453", "#FFF0C8"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "violet_crown_shell", "core": "gold_pip_core", "trail": "diamond_tail", "layering": "violet crown over a gold core", "cadence": "inward-to-outward", "density": "open"}},
+    {"sequence": 14, "id": "hybrid_amethyst_sun_radiant", "zh_name": "紫晶日轮球放射烟花", "en_name": "Amethyst Sun Sphere-Radiant Firework", "colors": ["#8B3FD1", "#FFB703", "#FFF1B8"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "amethyst_orb_shell", "core": "solar_core", "trail": "tapered_ray_tail", "layering": "purple orb surrounded by gold rays", "cadence": "late radiant extension", "density": "dense"}},
+    {"sequence": 15, "id": "hybrid_rose_silver_radiant", "zh_name": "玫瑰银辉球放射烟花", "en_name": "Rose Silver Sphere-Radiant Firework", "colors": ["#E76F8A", "#E8DED4", "#FFF4F1"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "rose_silver_shell", "core": "ivory_core", "trail": "fine_silver_tail", "layering": "rose shell around warm ivory", "cadence": "soft overlap", "density": "airy"}},
+    {"sequence": 16, "id": "hybrid_cherry_gold_radiant", "zh_name": "樱绯鎏金球放射烟花", "en_name": "Cherry Gold Sphere-Radiant Firework", "colors": ["#D81B60", "#F4B400", "#FFF1C2"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "cherry_cascade_shell", "core": "gold_bead_core", "trail": "split_tail", "layering": "cherry petals breaking into gold branches", "cadence": "quick split", "density": "dense"}},
+    {"sequence": 17, "id": "hybrid_cinnabar_ivory_radiant", "zh_name": "朱砂象牙球放射烟花", "en_name": "Cinnabar Ivory Sphere-Radiant Firework", "colors": ["#C1121F", "#EAD7B7", "#FFF8E8"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "cinnabar_lantern_shell", "core": "ivory_lamp_core", "trail": "diverging_ray_tail", "layering": "cinnabar envelope with an ivory lamp center", "cadence": "center hold then radial release", "density": "compact"}},
+    {"sequence": 18, "id": "hybrid_honey_orange_radiant", "zh_name": "蜂蜜橙辉球放射烟花", "en_name": "Honey Orange Sphere-Radiant Firework", "colors": ["#F59E0B", "#F97316", "#FFF5CF"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "honey_orange_shell", "core": "amber_core", "trail": "comet_ray_tail", "layering": "honey core inside an orange outer wave", "cadence": "rising sweep", "density": "medium"}},
+    {"sequence": 19, "id": "hybrid_peach_copper_radiant", "zh_name": "桃霞铜辉球放射烟花", "en_name": "Peach Copper Sphere-Radiant Firework", "colors": ["#FF8C78", "#C65D27", "#FFE3C2"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "peach_copper_shell", "core": "peach_pearl_core", "trail": "ribbon_tail", "layering": "peach outer bloom with copper edge", "cadence": "two-step bloom", "density": "open"}},
+    {"sequence": 20, "id": "hybrid_flame_opal_radiant", "zh_name": "焰彩欧泊球放射烟花", "en_name": "Flame Opal Sphere-Radiant Firework", "colors": ["#EF476F", "#E9C46A", "#FFF4D8"], "visualDifference": {"axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"], "form": "opal_bloom_shell", "core": "cream_fire_core", "trail": "sparkling_tail", "layering": "pink opal disc with a gold rim", "cadence": "final burst release", "density": "dense"}}
+  ]
+}

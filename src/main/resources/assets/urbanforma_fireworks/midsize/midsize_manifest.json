@@ -1,0 +1,251 @@
+{
+  "batchId": "midsize",
+  "catalogClass": "com.urbanforma.fireworks.content.midsize.MidsizeFireworkCatalog",
+  "integrationStatus": "unregistered",
+  "requiredEntryCount": 2,
+  "sharedContracts": {
+    "itemModel": "minecraft:item/firework_rocket",
+    "particleType": "minecraft:firework",
+    "sharedMaxParticlesPerTick": 720,
+    "safeFixedOwnedParticleSet": 15000,
+    "newParticleTypes": false,
+    "newGlobalScheduler": false,
+    "newGlobalNumericIds": false,
+    "newServerParticleLoop": false,
+    "newNetworkPayload": false,
+    "recipeFilesCreated": false,
+    "modelFilesCreated": false,
+    "textureFilesCreated": false
+  },
+  "referenceEffects": {
+    "denseSphere": {
+      "id": "grand_golden_sphere_firework",
+      "styleFields": {
+        "flightTicks": 86,
+        "fullEnvelopeBlocks": 105.0,
+        "totalParticles": 2160,
+        "peakParticlesPerTick": 180
+      },
+      "actualLaunchContract": {
+        "launchSpeed": 1.45,
+        "detonationHeight": 124.7
+      }
+    },
+    "denseRadial": {
+      "id": "giant_amber_radiant_firework",
+      "trajectoryFields": {
+        "ascentTicks": 138,
+        "maxRadius": 130.0,
+        "fullEnvelopeBlocks": 260.0,
+        "branches": 256,
+        "segmentsPerBranch": 48,
+        "totalParticles": 12288,
+        "peakParticlesPerTick": 256
+      },
+      "actualLaunchContract": {
+        "launchSpeed": 1.45,
+        "detonationHeight": 200.1
+      }
+    }
+  },
+  "visualRules": {
+    "paletteOnlyEntriesForbidden": true,
+    "requiredStructuralAxes": [
+      "SHAPE",
+      "CORE",
+      "TRAIL",
+      "LAYERING",
+      "CADENCE",
+      "DENSITY"
+    ],
+    "signatureSource": "com.urbanforma.fireworks.content.midsize.MidsizeVisualSignatures"
+  },
+  "entries": [
+    {
+      "id": "midsize_dense_sphere_firework",
+      "zhName": "中型密集球形烟花",
+      "enName": "Medium Dense Sphere Firework",
+      "effectType": "DENSE_SPHERE",
+      "colors": [
+        "#FFB31A",
+        "#FF7D17",
+        "#FFF0B7"
+      ],
+      "creativeTarget": {
+        "section": "sphere",
+        "orderGroup": "midsize_trial"
+      },
+      "recipeContract": {
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "resultId": "urbanforma_fireworks:midsize_dense_sphere_firework",
+        "count": 1,
+        "generateDataRecipe": false,
+        "coordinatorDataPath": "data/urbanforma_fireworks/recipes/midsize_dense_sphere_firework.json"
+      },
+      "modelContract": {
+        "itemModelParent": "minecraft:item/firework_rocket",
+        "createsModelJson": false,
+        "createsTexture": false,
+        "customLoader": false
+      },
+      "effectPath": {
+        "serverTrigger": "GrandFireworkRocketEntity one-shot detonation payload",
+        "payloadContract": "coordinator maps the stable id to one compact burst payload",
+        "trajectoryClass": "com.urbanforma.fireworks.content.midsize.MidsizeDenseSphereTrajectory",
+        "clientProgramClass": "com.urbanforma.fireworks.client.midsize.MidsizeDenseSphereClientProgram",
+        "clientEntryPoint": "tick(Minecraft)",
+        "requestShape": "Request(double x, double y, double z, long seed)",
+        "coordinatorOwnsSharedWiring": true
+      },
+      "particlePlan": {
+        "particleType": "minecraft:firework",
+        "totalParticles": 1728,
+        "particlesPerTick": 96,
+        "emissionTicks": 18,
+        "minLifetimeTicks": 34,
+        "maxLifetimeTicks": 72,
+        "sharedMaxParticlesPerTick": 720,
+        "maxOwnedParticles": 1728,
+        "velocityContract": "fixed_zero_velocity",
+        "createsParticleType": false,
+        "createsServerParticleLoop": false,
+        "createsGlobalLimiter": false
+      },
+      "expectedBoundary": {
+        "referenceEffectId": "grand_golden_sphere_firework",
+        "referenceTotalParticles": 2160,
+        "particleRatio": 0.8,
+        "referenceFullEnvelopeBlocks": 105.0,
+        "fullEnvelopeBlocks": 52.5,
+        "envelopeRatio": 0.5,
+        "maxRadius": 26.25,
+        "referenceAscentTicks": 86,
+        "ascentTicks": 73,
+        "referenceDetonationHeight": 124.7,
+        "detonationHeight": 105.85,
+        "heightRatio": 0.8488372093023255,
+        "proofContract": "MidsizeDenseSphereTrajectory.fitsEnvelope()"
+      },
+      "visualSignature": {
+        "shape": "compact dahlia sphere",
+        "core": "four short amber bead rings keep the center hollow",
+        "trail": "short pearl tips end alternating petals",
+        "layering": "bead core, braided middle shell, clipped outer crown",
+        "cadence": "four compact core beats followed by fourteen complete shell rings",
+        "density": "1,728 nodes in a 52.5-block envelope at 96 nodes per tick",
+        "paletteToken": "amber pearl",
+        "visualDifference": "Petal-modulated bead layers and a clipped crown make this a compact dahlia, not a uniformly scaled sphere.",
+        "structuralAxes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ]
+      }
+    },
+    {
+      "id": "midsize_dense_radial_firework",
+      "zhName": "中型密集放射烟花",
+      "enName": "Medium Dense Radial Firework",
+      "effectType": "DENSE_RADIAL",
+      "colors": [
+        "#FF4B24",
+        "#FF9A2B",
+        "#FFE3A3"
+      ],
+      "creativeTarget": {
+        "section": "radiant",
+        "orderGroup": "midsize_trial"
+      },
+      "recipeContract": {
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "resultId": "urbanforma_fireworks:midsize_dense_radial_firework",
+        "count": 1,
+        "generateDataRecipe": false,
+        "coordinatorDataPath": "data/urbanforma_fireworks/recipes/midsize_dense_radial_firework.json"
+      },
+      "modelContract": {
+        "itemModelParent": "minecraft:item/firework_rocket",
+        "createsModelJson": false,
+        "createsTexture": false,
+        "customLoader": false
+      },
+      "effectPath": {
+        "serverTrigger": "GrandFireworkRocketEntity one-shot detonation payload",
+        "payloadContract": "coordinator maps the stable id to one compact burst payload",
+        "trajectoryClass": "com.urbanforma.fireworks.content.midsize.MidsizeDenseRadialTrajectory",
+        "clientProgramClass": "com.urbanforma.fireworks.client.midsize.MidsizeDenseRadialClientProgram",
+        "clientEntryPoint": "tick(Minecraft)",
+        "requestShape": "Request(double x, double y, double z, long seed)",
+        "coordinatorOwnsSharedWiring": true
+      },
+      "particlePlan": {
+        "particleType": "minecraft:firework",
+        "totalParticles": 9984,
+        "particlesPerTick": 192,
+        "emissionTicks": 52,
+        "minLifetimeTicks": 42,
+        "maxLifetimeTicks": 86,
+        "sharedMaxParticlesPerTick": 720,
+        "maxOwnedParticles": 9984,
+        "velocityContract": "fixed_zero_velocity",
+        "createsParticleType": false,
+        "createsServerParticleLoop": false,
+        "createsGlobalLimiter": false
+      },
+      "expectedBoundary": {
+        "referenceEffectId": "giant_amber_radiant_firework",
+        "referenceTotalParticles": 12288,
+        "particleRatio": 0.8125,
+        "referenceFullEnvelopeBlocks": 260.0,
+        "fullEnvelopeBlocks": 130.0,
+        "envelopeRatio": 0.5,
+        "maxRadius": 65.0,
+        "referenceAscentTicks": 138,
+        "ascentTicks": 117,
+        "referenceDetonationHeight": 200.1,
+        "detonationHeight": 169.65,
+        "heightRatio": 0.8478260869565217,
+        "proofContract": "MidsizeDenseRadialTrajectory.fitsEnvelope()"
+      },
+      "visualSignature": {
+        "shape": "braided radial chrysanthemum",
+        "core": "eight ember rings form a tight hollow pin core",
+        "trail": "late pearl terminals split from the warm radial body",
+        "layering": "dense core, helical middle lattice, delayed terminal corona",
+        "cadence": "eight core rings, thirty-two braid rings, then twelve terminal rings",
+        "density": "9,984 nodes in a 130-block envelope at 192 nodes per tick",
+        "paletteToken": "ember gold pearl",
+        "visualDifference": "Seeded helical spokes and a delayed terminal corona change the radial silhouette beyond a simple half-scale giant.",
+        "structuralAxes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ]
+      }
+    }
+  ]
+}

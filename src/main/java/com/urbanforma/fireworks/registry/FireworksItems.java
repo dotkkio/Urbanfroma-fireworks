@@ -2,8 +2,13 @@ package com.urbanforma.fireworks.registry;
 
 import com.urbanforma.fireworks.UrbanformaFireworks;
 import com.urbanforma.fireworks.content.FireworkStyle;
+import com.urbanforma.fireworks.content.NormalFireworkCatalog;
+import com.urbanforma.fireworks.content.OtherFireworkCatalog;
+import com.urbanforma.fireworks.content.OtherExtraFireworkCatalog;
+import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
 import com.urbanforma.fireworks.world.item.FireworkRocketItem;
 import com.urbanforma.fireworks.world.item.GrandGoldenSphereFireworkItem;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
@@ -66,8 +71,60 @@ public final class FireworksItems {
             register(FireworkStyle.AMBER_RADIANT_FIREWORK);
     public static final DeferredItem<FireworkRocketItem> AMBER_RADIANT_WILLOW_FIREWORK =
             register(FireworkStyle.AMBER_RADIANT_WILLOW_FIREWORK);
+    public static final DeferredItem<FireworkRocketItem> GIANT_AMBER_RADIANT_FIREWORK =
+            register(FireworkStyle.GIANT_AMBER_RADIANT_FIREWORK);
+    public static final DeferredItem<FireworkRocketItem> HYBRID_AMBER_SPHERE_RADIANT =
+            register(FireworkStyle.HYBRID_AMBER_SPHERE_RADIANT);
+    public static final DeferredItem<FireworkRocketItem> SATURN_AMBER_DOUBLE_SPHERE =
+            register(FireworkStyle.SATURN_AMBER_DOUBLE_SPHERE);
+    public static final DeferredItem<FireworkRocketItem> GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK =
+            register(FireworkStyle.GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK);
 
-    private static final List<DeferredItem<? extends FireworkRocketItem>> ALL_FIREWORKS = List.of(
+    /** Shared registration surface for the 98 typed ordinary batch definitions; each retains its style index. */
+    private static final List<DeferredItem<FireworkRocketItem>> NORMAL_100_FIREWORKS =
+            FireworkStyle.values().subList(
+                            NormalFireworkCatalog.FIRST_STYLE_INDEX,
+                            NormalFireworkCatalog.FIRST_STYLE_INDEX
+                                    + NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> INTEGRATED_GIANT_FIREWORKS =
+            FireworkStyle.values().subList(
+                            com.urbanforma.fireworks.content.GiantFireworkCatalog.FIRST_STYLE_INDEX,
+                            com.urbanforma.fireworks.content.GiantFireworkCatalog.FIRST_STYLE_INDEX
+                                    + com.urbanforma.fireworks.content.GiantFireworkCatalog.INTEGRATED_GIANT_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> OTHER_ORDINARY_FIREWORKS =
+            FireworkStyle.values().subList(
+                            OtherFireworkCatalog.FIRST_STYLE_INDEX,
+                            OtherFireworkCatalog.FIRST_STYLE_INDEX
+                    + OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> OTHER_EXTRA_FIREWORKS =
+            FireworkStyle.values().subList(
+                            OtherExtraFireworkCatalog.FIRST_STYLE_INDEX,
+                            OtherExtraFireworkCatalog.FIRST_STYLE_INDEX
+                                    + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> MIDSIZE_FIREWORKS =
+            FireworkStyle.values().subList(
+                            MidsizeFireworkCatalog.FIRST_STYLE_INDEX,
+                            MidsizeFireworkCatalog.FIRST_STYLE_INDEX + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+
+    private static final List<DeferredItem<? extends FireworkRocketItem>> ALL_FIREWORKS = allFireworks();
+
+    private static List<DeferredItem<? extends FireworkRocketItem>> allFireworks() {
+        List<DeferredItem<? extends FireworkRocketItem>> registered = new ArrayList<>(List.of(
             GRAND_GOLDEN_SPHERE_FIREWORK,
             CINNABAR_AMBER_SPHERE,
             SAFFRON_CORAL_SPHERE,
@@ -109,7 +166,18 @@ public final class FireworksItems {
             LED_MAGENTA_SPHERE,
             LED_ROSE_SPHERE,
             AMBER_RADIANT_FIREWORK,
-            AMBER_RADIANT_WILLOW_FIREWORK);
+            AMBER_RADIANT_WILLOW_FIREWORK,
+            GIANT_AMBER_RADIANT_FIREWORK,
+            HYBRID_AMBER_SPHERE_RADIANT,
+            SATURN_AMBER_DOUBLE_SPHERE,
+            GIANT_GOLDEN_WHITE_RADIAL_WILLOW_FIREWORK));
+        registered.addAll(NORMAL_100_FIREWORKS);
+        registered.addAll(INTEGRATED_GIANT_FIREWORKS);
+        registered.addAll(OTHER_ORDINARY_FIREWORKS);
+        registered.addAll(OTHER_EXTRA_FIREWORKS);
+        registered.addAll(MIDSIZE_FIREWORKS);
+        return List.copyOf(registered);
+    }
 
     private FireworksItems() {
     }

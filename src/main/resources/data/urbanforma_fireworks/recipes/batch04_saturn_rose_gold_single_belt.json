@@ -1,0 +1,29 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "pattern":  [
+                    "PDP",
+                    "FSF",
+                    " G "
+                ],
+    "key":  {
+                "P":  {
+                          "item":  "minecraft:paper"
+                      },
+                "D":  {
+                          "item":  "minecraft:pink_dye"
+                      },
+                "F":  {
+                          "item":  "minecraft:firework_star"
+                      },
+                "S":  {
+                          "item":  "minecraft:gunpowder"
+                      },
+                "G":  {
+                          "item":  "minecraft:glowstone_dust"
+                      }
+            },
+    "result":  {
+                   "id":  "urbanforma_fireworks:batch04_saturn_rose_gold_single_belt",
+                   "count":  1
+               }
+}

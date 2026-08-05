@@ -1,0 +1,23 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "pattern":  [
+                    " P ",
+                    "FGF",
+                    " P "
+                ],
+    "key":  {
+                "P":  {
+                          "item":  "minecraft:paper"
+                      },
+                "F":  {
+                          "item":  "minecraft:firework_star"
+                      },
+                "G":  {
+                          "item":  "minecraft:gunpowder"
+                      }
+            },
+    "result":  {
+                   "id":  "urbanforma_fireworks:hybrid_persimmon_spark_radiant",
+                   "count":  1
+               }
+}

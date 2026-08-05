@@ -1,0 +1,1519 @@
+{
+  "batchId": "batch_other",
+  "seriesId": "other",
+  "integrationStatus": "PENDING_PUBLIC_INTEGRATION",
+  "stableIdPolicy": "preserve_existing_15_ids",
+  "actualShapePolicy": "clientProgram_and_effectPath_are_authoritative; legacyEffectType_is_only_a_frozen_adapter_hint",
+  "trajectoryImplementation": {
+    "owner": "com.urbanforma.fireworks.client.batch_other.BatchOtherClientPrograms",
+    "strategy": "one_explicit_deterministic_geometry_per_route",
+    "sampling": "fixed_mix64_seed_branch_segment",
+    "schedule": "each_branch_segment_emitted_once_on_a_finite_timeline",
+    "maximumPerTick": 216,
+    "maximumOwnedParticles": 2300,
+    "maximumLifetimeTicks": 720
+  },
+  "routeCount": 15,
+  "minimumDistinctRoutes": 8,
+  "coolColorBudget": {
+    "existing": 5,
+    "batchDelta": 0,
+    "afterBatch": 5,
+    "limit": 20
+  },
+  "particleEnvelope": {
+    "type": "urbanforma_fireworks:hd_firework_spark",
+    "dispatchEngine": "GrandFireworkClientEffects.ActiveBurst",
+    "clientProgramOwner": "batch_other.BatchOtherClientPrograms",
+    "ordinaryMaximumEnvelope": 120
+  },
+  "contracts": {
+    "recipeTemplate": "normal_firework_rocket_3x3",
+    "recipePattern": [
+      " P ",
+      "FGF",
+      " P "
+    ],
+    "recipeKey": {
+      "P": "minecraft:paper",
+      "F": "minecraft:firework_star",
+      "G": "minecraft:gunpowder"
+    },
+    "modelParent": "minecraft:item/firework_rocket",
+    "modelPathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+    "modelReuse": "vanilla_firework_rocket",
+    "creativeOrderGroup": "other"
+  },
+  "entries": [
+    {
+      "stableId": "other_ember_chrysanthemum",
+      "sequence": 1,
+      "zhName": "赤焰直束烟花",
+      "enName": "Ember Straight-Ray Firework",
+      "effectType": "RADIAL_STRAIGHT",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:radial_straight",
+      "family": "WARM",
+      "colors": {
+        "primary": "#D73524",
+        "secondary": "#FF8B30",
+        "accent": "#FFE0A1",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_direct_axis_beams",
+        "core": "other_pinpoint_origin",
+        "trail": "other_short_linear_tips",
+        "layering": "other_single_axis_layer",
+        "cadence": "other_same_tick_release",
+        "density": "other_dense_spokes",
+        "structureSignature": "other_direct_axis_beams|other_pinpoint_origin|other_short_linear_tips|other_single_axis_layer|other_same_tick_release|other_dense_spokes",
+        "description": "Pure radial lines leave the center on straight bounded paths with no spherical shell."
+      },
+      "style": {
+        "flightTicks": 54,
+        "diameterBlocks": 72,
+        "fullEnvelopeBlocks": 86,
+        "phaseDelayTicks": 0,
+        "totalStarCount": 1400,
+        "layerSharesPermille": {
+          "main": 160,
+          "secondary": 640,
+          "accent": 200
+        },
+        "starsPerTick": 126,
+        "trail": {
+          "tier": "COMPACT",
+          "starsPerTick": 10,
+          "lifetime": 22
+        },
+        "lifetimes": {
+          "outer": 72,
+          "inner": 60,
+          "accent": 54
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.55
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_ember_chrysanthemum",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 1
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1400
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 72,
+        "fullEnvelopeBlocks": 86,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.radial_straight.fitsWithin(86)"
+      }
+    },
+    {
+      "stableId": "other_saffron_crossfire",
+      "sequence": 2,
+      "zhName": "金线长射烟花",
+      "enName": "Saffron Sparse Long-Ray Firework",
+      "effectType": "SPARSE_LONG_RAYS",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:sparse_long_rays",
+      "family": "JEWEL",
+      "colors": {
+        "primary": "#F18F01",
+        "secondary": "#FFD23F",
+        "accent": "#FFF2B8",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_sparse_meridian_lances",
+        "core": "other_empty_center_seed",
+        "trail": "other_long_isolated_lances",
+        "layering": "other_open_meridian_field",
+        "cadence": "other_three_step_stagger",
+        "density": "other_low_negative_space",
+        "structureSignature": "other_sparse_meridian_lances|other_empty_center_seed|other_long_isolated_lances|other_open_meridian_field|other_three_step_stagger|other_low_negative_space",
+        "description": "A small number of long rays travel farther than the dense entry while leaving broad empty gaps."
+      },
+      "style": {
+        "flightTicks": 58,
+        "diameterBlocks": 68,
+        "fullEnvelopeBlocks": 98,
+        "phaseDelayTicks": 1,
+        "totalStarCount": 1500,
+        "layerSharesPermille": {
+          "main": 100,
+          "secondary": 700,
+          "accent": 200
+        },
+        "starsPerTick": 108,
+        "trail": {
+          "tier": "COMPACT",
+          "starsPerTick": 10,
+          "lifetime": 22
+        },
+        "lifetimes": {
+          "outer": 86,
+          "inner": 64,
+          "accent": 56
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.58
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_saffron_crossfire",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 2
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1500
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 68,
+        "fullEnvelopeBlocks": 98,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.sparse_long_rays.fitsWithin(98)"
+      }
+    },
+    {
+      "stableId": "other_coral_pearl_split",
+      "sequence": 3,
+      "zhName": "珊瑚错相双环烟花",
+      "enName": "Coral Offset Double-Ring Firework",
+      "effectType": "OFFSET_DOUBLE_RING",
+      "effectPath": "SATURN",
+      "clientProgram": "batch_other:offset_double_ring",
+      "family": "METALLIC",
+      "colors": {
+        "primary": "#E85D75",
+        "secondary": "#F4A261",
+        "accent": "#FFF1DD",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_offset_dual_belts",
+        "core": "other_delayed_pearl",
+        "trail": "other_belt_edge_sparks",
+        "layering": "other_two_plane_belts",
+        "cadence": "other_phase_offset_pair",
+        "density": "other_open_belt_spacing",
+        "structureSignature": "other_offset_dual_belts|other_delayed_pearl|other_belt_edge_sparks|other_two_plane_belts|other_phase_offset_pair|other_open_belt_spacing",
+        "description": "Two annuli appear at different phases and stay visibly separate through the burst."
+      },
+      "style": {
+        "flightTicks": 56,
+        "diameterBlocks": 82,
+        "fullEnvelopeBlocks": 96,
+        "phaseDelayTicks": 5,
+        "totalStarCount": 1700,
+        "layerSharesPermille": {
+          "main": 350,
+          "secondary": 500,
+          "accent": 150
+        },
+        "starsPerTick": 144,
+        "trail": {
+          "tier": "STANDARD",
+          "starsPerTick": 12,
+          "lifetime": 24
+        },
+        "lifetimes": {
+          "outer": 78,
+          "inner": 66,
+          "accent": 58
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_coral_pearl_split",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 3
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1700
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 82,
+        "fullEnvelopeBlocks": 96,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.offset_double_ring.fitsWithin(96)"
+      }
+    },
+    {
+      "stableId": "other_copper_comet_crown",
+      "sequence": 4,
+      "zhName": "琥珀三重同心环烟花",
+      "enName": "Amber Three-Concentric-Ring Firework",
+      "effectType": "THREE_CONCENTRIC_RINGS",
+      "effectPath": "SATURN",
+      "clientProgram": "batch_other:three_concentric_rings",
+      "family": "WARM",
+      "colors": {
+        "primary": "#B94E2D",
+        "secondary": "#F08A45",
+        "accent": "#FFE2B8",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_triple_radial_belts",
+        "core": "other_axial_dot",
+        "trail": "other_thin_circular_traces",
+        "layering": "other_inner_mid_outer_belts",
+        "cadence": "other_three_beat_release",
+        "density": "other_even_belt_density",
+        "structureSignature": "other_triple_radial_belts|other_axial_dot|other_thin_circular_traces|other_inner_mid_outer_belts|other_three_beat_release|other_even_belt_density",
+        "description": "Three radii are emitted as discrete concentric rings instead of a filled volume."
+      },
+      "style": {
+        "flightTicks": 60,
+        "diameterBlocks": 88,
+        "fullEnvelopeBlocks": 108,
+        "phaseDelayTicks": 3,
+        "totalStarCount": 2100,
+        "layerSharesPermille": {
+          "main": 260,
+          "secondary": 540,
+          "accent": 200
+        },
+        "starsPerTick": 162,
+        "trail": {
+          "tier": "STANDARD",
+          "starsPerTick": 12,
+          "lifetime": 24
+        },
+        "lifetimes": {
+          "outer": 84,
+          "inner": 70,
+          "accent": 62
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_copper_comet_crown",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 4
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2100
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 88,
+        "fullEnvelopeBlocks": 108,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.three_concentric_rings.fitsWithin(108)"
+      }
+    },
+    {
+      "stableId": "other_ruby_ember_lattice",
+      "sequence": 5,
+      "zhName": "玫红环核混合烟花",
+      "enName": "Ruby Ring-Core Hybrid Firework",
+      "effectType": "RING_CORE_HYBRID",
+      "effectPath": "HYBRID_SPHERE_RADIANT",
+      "clientProgram": "batch_other:ring_core_hybrid",
+      "family": "JEWEL",
+      "colors": {
+        "primary": "#B5162C",
+        "secondary": "#EF6C35",
+        "accent": "#FFD08A",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_annular_needle_core",
+        "core": "other_radial_needle_origin",
+        "trail": "other_ring_terminal_sparks",
+        "layering": "other_core_to_annulus_layers",
+        "cadence": "other_core_first_cadence",
+        "density": "other_mixed_mid_density",
+        "structureSignature": "other_annular_needle_core|other_radial_needle_origin|other_ring_terminal_sparks|other_core_to_annulus_layers|other_core_first_cadence|other_mixed_mid_density",
+        "description": "A compact radial core is enclosed by a later annulus, giving the burst a ring-core profile."
+      },
+      "style": {
+        "flightTicks": 57,
+        "diameterBlocks": 86,
+        "fullEnvelopeBlocks": 102,
+        "phaseDelayTicks": 4,
+        "totalStarCount": 1900,
+        "layerSharesPermille": {
+          "main": 420,
+          "secondary": 440,
+          "accent": 140
+        },
+        "starsPerTick": 144,
+        "trail": {
+          "tier": "STANDARD",
+          "starsPerTick": 12,
+          "lifetime": 24
+        },
+        "lifetimes": {
+          "outer": 82,
+          "inner": 68,
+          "accent": 60
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_ruby_ember_lattice",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 5
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1900
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 86,
+        "fullEnvelopeBlocks": 102,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.ring_core_hybrid.fitsWithin(102)"
+      }
+    },
+    {
+      "stableId": "other_rose_champagne_petal",
+      "sequence": 6,
+      "zhName": "铜红下垂长尾烟花",
+      "enName": "Copper Rose Drooping-Tail Firework",
+      "effectType": "DROOPING_TAILS",
+      "effectPath": "RADIANT_WILLOW",
+      "clientProgram": "batch_other:drooping_tails",
+      "family": "METALLIC",
+      "colors": {
+        "primary": "#D7657B",
+        "secondary": "#F2C078",
+        "accent": "#FFF4D6",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_hooked_downfall_paths",
+        "core": "other_low_held_origin",
+        "trail": "other_long_downward_tails",
+        "layering": "other_upper_to_lower_curtain",
+        "cadence": "other_slow_tail_reveal",
+        "density": "other_open_hanging_density",
+        "structureSignature": "other_hooked_downfall_paths|other_low_held_origin|other_long_downward_tails|other_upper_to_lower_curtain|other_slow_tail_reveal|other_open_hanging_density",
+        "description": "The outer rays bend downward after their reach and finish as a visibly hanging curtain."
+      },
+      "style": {
+        "flightTicks": 62,
+        "diameterBlocks": 90,
+        "fullEnvelopeBlocks": 112,
+        "phaseDelayTicks": 2,
+        "totalStarCount": 2200,
+        "layerSharesPermille": {
+          "main": 180,
+          "secondary": 600,
+          "accent": 220
+        },
+        "starsPerTick": 180,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 92,
+          "inner": 76,
+          "accent": 68
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.58
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_rose_champagne_petal",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.crown_sphere",
+        "orderGroup": "other",
+        "stableOrder": 6
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2200
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 90,
+        "fullEnvelopeBlocks": 112,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.drooping_tails.fitsWithin(112)"
+      }
+    },
+    {
+      "stableId": "other_plum_garnet_crown",
+      "sequence": 7,
+      "zhName": "紫金分层柳条烟花",
+      "enName": "Plum Garnet Layered-Willow Firework",
+      "effectType": "LAYERED_WILLOW",
+      "effectPath": "RADIANT_WILLOW",
+      "clientProgram": "batch_other:layered_willow",
+      "family": "WARM",
+      "colors": {
+        "primary": "#7C2D68",
+        "secondary": "#C84D6B",
+        "accent": "#FFE1C5",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_tiered_willow_steps",
+        "core": "other_three_tiered_beads",
+        "trail": "other_stacked_hanging_threads",
+        "layering": "other_upper_mid_lower_tiers",
+        "cadence": "other_tier_gap_cadence",
+        "density": "other_tiered_negative_space",
+        "structureSignature": "other_tiered_willow_steps|other_three_tiered_beads|other_stacked_hanging_threads|other_upper_mid_lower_tiers|other_tier_gap_cadence|other_tiered_negative_space",
+        "description": "Separate willow tiers open at different heights, retaining clear gaps between the hanging layers."
+      },
+      "style": {
+        "flightTicks": 66,
+        "diameterBlocks": 84,
+        "fullEnvelopeBlocks": 116,
+        "phaseDelayTicks": 7,
+        "totalStarCount": 2100,
+        "layerSharesPermille": {
+          "main": 240,
+          "secondary": 500,
+          "accent": 260
+        },
+        "starsPerTick": 162,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 96,
+          "inner": 78,
+          "accent": 70
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_plum_garnet_crown",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.crown_sphere",
+        "orderGroup": "other",
+        "stableOrder": 7
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2100
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 84,
+        "fullEnvelopeBlocks": 116,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.layered_willow.fitsWithin(116)"
+      }
+    },
+    {
+      "stableId": "other_amethyst_sunwheel",
+      "sequence": 8,
+      "zhName": "靛紫螺旋放射烟花",
+      "enName": "Amethyst Helical-Radiation Firework",
+      "effectType": "HELICAL_RADIATION",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:helical_radiation",
+      "family": "JEWEL",
+      "colors": {
+        "primary": "#7E43BF",
+        "secondary": "#F2B84B",
+        "accent": "#FFF0BF",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_helical_spoke_corkscrew",
+        "core": "other_offset_axis_seed",
+        "trail": "other_twisting_spoke_traces",
+        "layering": "other_continuous_angular_drift",
+        "cadence": "other_continuous_turn_cadence",
+        "density": "other_mid_spiral_spacing",
+        "structureSignature": "other_helical_spoke_corkscrew|other_offset_axis_seed|other_twisting_spoke_traces|other_continuous_angular_drift|other_continuous_turn_cadence|other_mid_spiral_spacing",
+        "description": "Each ray advances outward while its angle turns deterministically around the launch axis."
+      },
+      "style": {
+        "flightTicks": 59,
+        "diameterBlocks": 80,
+        "fullEnvelopeBlocks": 96,
+        "phaseDelayTicks": 3,
+        "totalStarCount": 1800,
+        "layerSharesPermille": {
+          "main": 220,
+          "secondary": 580,
+          "accent": 200
+        },
+        "starsPerTick": 144,
+        "trail": {
+          "tier": "STANDARD",
+          "starsPerTick": 12,
+          "lifetime": 24
+        },
+        "lifetimes": {
+          "outer": 80,
+          "inner": 68,
+          "accent": 60
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_amethyst_sunwheel",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 8
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1800
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 80,
+        "fullEnvelopeBlocks": 96,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.helical_radiation.fitsWithin(96)"
+      }
+    },
+    {
+      "stableId": "other_teal_ice_lantern",
+      "sequence": 9,
+      "zhName": "朱砂交替脉冲烟花",
+      "enName": "Vermilion Alternating-Pulse Firework",
+      "effectType": "ALTERNATING_PULSES",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:alternating_pulses",
+      "family": "METALLIC",
+      "colors": {
+        "primary": "#C44B35",
+        "secondary": "#E9A23B",
+        "accent": "#FFF0B0",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_odd_even_pulses",
+        "core": "other_two_beat_origin",
+        "trail": "other_short_pulse_traces",
+        "layering": "other_alternating_reach_layers",
+        "cadence": "other_odd_even_timing",
+        "density": "other_flashing_gap_density",
+        "structureSignature": "other_odd_even_pulses|other_two_beat_origin|other_short_pulse_traces|other_alternating_reach_layers|other_odd_even_timing|other_flashing_gap_density",
+        "description": "Odd and even branch groups alternate, producing two visible radial pulses rather than one bloom."
+      },
+      "style": {
+        "flightTicks": 56,
+        "diameterBlocks": 78,
+        "fullEnvelopeBlocks": 90,
+        "phaseDelayTicks": 6,
+        "totalStarCount": 1600,
+        "layerSharesPermille": {
+          "main": 380,
+          "secondary": 420,
+          "accent": 200
+        },
+        "starsPerTick": 126,
+        "trail": {
+          "tier": "COMPACT",
+          "starsPerTick": 10,
+          "lifetime": 22
+        },
+        "lifetimes": {
+          "outer": 76,
+          "inner": 62,
+          "accent": 56
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.55
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_teal_ice_lantern",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 9
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1600
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 78,
+        "fullEnvelopeBlocks": 90,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.alternating_pulses.fitsWithin(90)"
+      }
+    },
+    {
+      "stableId": "other_cobalt_silver_cross",
+      "sequence": 10,
+      "zhName": "银金短厚多层射线烟花",
+      "enName": "Silver Gold Thick-Multilayer-Ray Firework",
+      "effectType": "THICK_MULTILAYER_RAYS",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:thick_multilayer_rays",
+      "family": "WARM",
+      "colors": {
+        "primary": "#A9792C",
+        "secondary": "#E7C15B",
+        "accent": "#FFF4C2",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_compact_thick_layers",
+        "core": "other_wide_luminous_origin",
+        "trail": "other_dense_short_lances",
+        "layering": "other_three_thick_ray_layers",
+        "cadence": "other_near_sync_stack",
+        "density": "other_high_thickness_density",
+        "structureSignature": "other_compact_thick_layers|other_wide_luminous_origin|other_dense_short_lances|other_three_thick_ray_layers|other_near_sync_stack|other_high_thickness_density",
+        "description": "Several short radial layers are emitted close together so the result is broad and dense, not round."
+      },
+      "style": {
+        "flightTicks": 52,
+        "diameterBlocks": 92,
+        "fullEnvelopeBlocks": 104,
+        "phaseDelayTicks": 1,
+        "totalStarCount": 2200,
+        "layerSharesPermille": {
+          "main": 600,
+          "secondary": 300,
+          "accent": 100
+        },
+        "starsPerTick": 216,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 84,
+          "inner": 70,
+          "accent": 60
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_cobalt_silver_cross",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 10
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2200
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 92,
+        "fullEnvelopeBlocks": 104,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.thick_multilayer_rays.fitsWithin(104)"
+      }
+    },
+    {
+      "stableId": "other_gold_leaf_mosaic",
+      "sequence": 11,
+      "zhName": "红玉延迟内核烟花",
+      "enName": "Ruby Delayed-Core Shell Firework",
+      "effectType": "DELAYED_CORE_SHELL",
+      "effectPath": "HYBRID_SPHERE_RADIANT",
+      "clientProgram": "batch_other:delayed_core_shell",
+      "family": "JEWEL",
+      "colors": {
+        "primary": "#A8324B",
+        "secondary": "#D97A72",
+        "accent": "#FFF0D0",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_hold_then_shell",
+        "core": "other_late_inner_kernel",
+        "trail": "other_shell_after_hold_traces",
+        "layering": "other_core_hold_outer_release",
+        "cadence": "other_delayed_shell_cadence",
+        "density": "other_split_density",
+        "structureSignature": "other_hold_then_shell|other_late_inner_kernel|other_shell_after_hold_traces|other_core_hold_outer_release|other_delayed_shell_cadence|other_split_density",
+        "description": "The inner kernel is held before the outer shell starts, leaving a deliberate empty interval."
+      },
+      "style": {
+        "flightTicks": 64,
+        "diameterBlocks": 94,
+        "fullEnvelopeBlocks": 118,
+        "phaseDelayTicks": 12,
+        "totalStarCount": 2300,
+        "layerSharesPermille": {
+          "main": 350,
+          "secondary": 500,
+          "accent": 150
+        },
+        "starsPerTick": 180,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 90,
+          "inner": 74,
+          "accent": 64
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_gold_leaf_mosaic",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 11
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2300
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 94,
+        "fullEnvelopeBlocks": 118,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.delayed_core_shell.fitsWithin(118)"
+      }
+    },
+    {
+      "stableId": "other_vermilion_pearl_blossom",
+      "sequence": 12,
+      "zhName": "铂金轨道环烟花",
+      "enName": "Platinum Orbital-Ring Firework",
+      "effectType": "ORBITAL_SATURN",
+      "effectPath": "SATURN",
+      "clientProgram": "batch_other:orbital_saturn",
+      "family": "METALLIC",
+      "colors": {
+        "primary": "#B9C7D6",
+        "secondary": "#F2D18A",
+        "accent": "#FFFFFF",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_tilted_orbit_belt",
+        "core": "other_axial_micro_core",
+        "trail": "other_inclined_belt_traces",
+        "layering": "other_core_inside_orbit",
+        "cadence": "other_orbit_after_core",
+        "density": "other_medium_belt_spacing",
+        "structureSignature": "other_tilted_orbit_belt|other_axial_micro_core|other_inclined_belt_traces|other_core_inside_orbit|other_orbit_after_core|other_medium_belt_spacing",
+        "description": "A tilted orbital belt surrounds a small axial core and reads as a ringed object in motion."
+      },
+      "style": {
+        "flightTicks": 55,
+        "diameterBlocks": 86,
+        "fullEnvelopeBlocks": 100,
+        "phaseDelayTicks": 4,
+        "totalStarCount": 1900,
+        "layerSharesPermille": {
+          "main": 300,
+          "secondary": 550,
+          "accent": 150
+        },
+        "starsPerTick": 162,
+        "trail": {
+          "tier": "STANDARD",
+          "starsPerTick": 12,
+          "lifetime": 24
+        },
+        "lifetimes": {
+          "outer": 82,
+          "inner": 68,
+          "accent": 60
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_vermilion_pearl_blossom",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.crown_sphere",
+        "orderGroup": "other",
+        "stableOrder": 12
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1900
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 86,
+        "fullEnvelopeBlocks": 100,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.orbital_saturn.fitsWithin(100)"
+      }
+    },
+    {
+      "stableId": "other_marigold_strobe_crown",
+      "sequence": 13,
+      "zhName": "绯红双轨交织烟花",
+      "enName": "Crimson Twin-Cross-Orbit Firework",
+      "effectType": "TWIN_CROSS_ORBITS",
+      "effectPath": "SATURN",
+      "clientProgram": "batch_other:twin_cross_orbits",
+      "family": "WARM",
+      "colors": {
+        "primary": "#C73545",
+        "secondary": "#E06D92",
+        "accent": "#FFE0EA",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_cross_track_orbits",
+        "core": "other_paired_axis_origins",
+        "trail": "other_perpendicular_orbit_traces",
+        "layering": "other_twin_track_interleave",
+        "cadence": "other_track_alternating_cadence",
+        "density": "other_open_cross_density",
+        "structureSignature": "other_cross_track_orbits|other_paired_axis_origins|other_perpendicular_orbit_traces|other_twin_track_interleave|other_track_alternating_cadence|other_open_cross_density",
+        "description": "Two tilted orbital paths run at distinct phases and form a sparse three-dimensional pair of rings."
+      },
+      "style": {
+        "flightTicks": 61,
+        "diameterBlocks": 90,
+        "fullEnvelopeBlocks": 110,
+        "phaseDelayTicks": 8,
+        "totalStarCount": 2100,
+        "layerSharesPermille": {
+          "main": 250,
+          "secondary": 540,
+          "accent": 210
+        },
+        "starsPerTick": 180,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 88,
+          "inner": 72,
+          "accent": 64
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_marigold_strobe_crown",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.double_sphere",
+        "orderGroup": "other",
+        "stableOrder": 13
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2100
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 90,
+        "fullEnvelopeBlocks": 110,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.twin_cross_orbits.fitsWithin(110)"
+      }
+    },
+    {
+      "stableId": "other_cerise_lattice_double",
+      "sequence": 14,
+      "zhName": "金橙分段长射烟花",
+      "enName": "Golden Segmented-Ray Firework",
+      "effectType": "SEGMENTED_RAYS",
+      "effectPath": "RADIANT",
+      "clientProgram": "batch_other:segmented_rays",
+      "family": "JEWEL",
+      "colors": {
+        "primary": "#D58B18",
+        "secondary": "#F3C14B",
+        "accent": "#FFF3BC",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_gapped_long_lances",
+        "core": "other_broken_origin_bead",
+        "trail": "other_fixed_segment_lances",
+        "layering": "other_spatial_segment_gaps",
+        "cadence": "other_segment_tick_cadence",
+        "density": "other_low_fill_spacing",
+        "structureSignature": "other_gapped_long_lances|other_broken_origin_bead|other_fixed_segment_lances|other_spatial_segment_gaps|other_segment_tick_cadence|other_low_fill_spacing",
+        "description": "Long rays are broken into fixed visible segments so gaps remain readable along every direction."
+      },
+      "style": {
+        "flightTicks": 58,
+        "diameterBlocks": 74,
+        "fullEnvelopeBlocks": 88,
+        "phaseDelayTicks": 2,
+        "totalStarCount": 1500,
+        "layerSharesPermille": {
+          "main": 180,
+          "secondary": 600,
+          "accent": 220
+        },
+        "starsPerTick": 126,
+        "trail": {
+          "tier": "COMPACT",
+          "starsPerTick": 10,
+          "lifetime": 22
+        },
+        "lifetimes": {
+          "outer": 78,
+          "inner": 64,
+          "accent": 56
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.55
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_cerise_lattice_double",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 14
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 1500
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 74,
+        "fullEnvelopeBlocks": 88,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.segmented_rays.fitsWithin(88)"
+      }
+    },
+    {
+      "stableId": "other_bronze_sunburst_sphere",
+      "sequence": 15,
+      "zhName": "青铜变色珠链烟花",
+      "enName": "Bronze Color-Shift Bead-Chain Firework",
+      "effectType": "COLOR_SHIFT_BEADS",
+      "effectPath": "COLOR_CHANGE",
+      "clientProgram": "batch_other:color_shift_beads",
+      "family": "METALLIC",
+      "colors": {
+        "primary": "#A95A24",
+        "secondary": "#E9A23B",
+        "accent": "#FFF0B0",
+        "consumesCoolColorQuota": false
+      },
+      "visualDifference": {
+        "axes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ],
+        "shape": "other_chroma_bead_chain",
+        "core": "other_three_bead_origin",
+        "trail": "other_beaded_radial_traces",
+        "layering": "other_successive_bead_radii",
+        "cadence": "other_per_bead_color_phase",
+        "density": "other_dotted_chain_density",
+        "structureSignature": "other_chroma_bead_chain|other_three_bead_origin|other_beaded_radial_traces|other_successive_bead_radii|other_per_bead_color_phase|other_dotted_chain_density",
+        "description": "Successive beads move along each ray and change palette stage by segment, creating a dotted chain."
+      },
+      "style": {
+        "flightTicks": 63,
+        "diameterBlocks": 88,
+        "fullEnvelopeBlocks": 114,
+        "phaseDelayTicks": 10,
+        "totalStarCount": 2200,
+        "layerSharesPermille": {
+          "main": 300,
+          "secondary": 520,
+          "accent": 180
+        },
+        "starsPerTick": 180,
+        "trail": {
+          "tier": "GRAND",
+          "starsPerTick": 14,
+          "lifetime": 26
+        },
+        "lifetimes": {
+          "outer": 90,
+          "inner": 74,
+          "accent": 64
+        },
+        "twinkleChance": {
+          "min": 0.35,
+          "max": 0.6
+        }
+      },
+      "recipe": {
+        "template": "normal_firework_rocket_3x3",
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "result": "urbanforma_fireworks:other_bronze_sunburst_sphere",
+        "count": 1
+      },
+      "creative": {
+        "target": "gui.urbanforma_fireworks.section.fireworks.sphere",
+        "orderGroup": "other",
+        "stableOrder": 15
+      },
+      "model": {
+        "parent": "minecraft:item/firework_rocket",
+        "pathTemplate": "assets/urbanforma_fireworks/models/item/{id}.json",
+        "reuseContract": "vanilla_firework_rocket"
+      },
+      "particle": {
+        "type": "urbanforma_fireworks:hd_firework_spark",
+        "engine": "GrandFireworkClientEffects.ActiveBurst",
+        "category": "STANDARD",
+        "peakPerBurst": 2200
+      },
+      "expectedBoundary": {
+        "nominalDiameterBlocks": 88,
+        "fullEnvelopeBlocks": 114,
+        "ordinaryMaximumBlocks": 120,
+        "proofContract": "BatchOtherClientPrograms.color_shift_beads.fitsWithin(114)"
+      }
+    }
+  ]
+}

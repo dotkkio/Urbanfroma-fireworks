@@ -5,13 +5,13 @@ import com.urbanforma.fireworks.network.payload.GrandFireworkBurstPayload;
 import com.urbanforma.fireworks.registry.FireworksEntities;
 import com.urbanforma.fireworks.registry.FireworksItems;
 import java.util.Objects;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ItemSupplier;
@@ -43,6 +43,8 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
     private int life;
     private long explosionSeed;
     private boolean launchSoundPlayed;
+    private boolean explosionDispatched;
+    private int burstDispatchCount;
 
     public GrandFireworkRocketEntity(EntityType<GrandFireworkRocketEntity> entityType, Level level) {
         super(entityType, level);
@@ -88,6 +90,15 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
 
     public void setStyle(FireworkStyle style) {
         this.entityData.set(DATA_STYLE_INDEX, Objects.requireNonNull(style, "style").index());
+    }
+
+    public boolean explosionDispatched() {
+        return this.explosionDispatched;
+    }
+
+    /** A detonation has exactly one compact client payload; no server particle state is retained. */
+    public int burstDispatchCount() {
+        return this.burstDispatchCount;
     }
 
     @Override
@@ -181,6 +192,10 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
     }
 
     private void explode() {
+        if (this.explosionDispatched) {
+            return;
+        }
+        this.explosionDispatched = true;
         if (this.level() instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayersNear(
                     serverLevel,
@@ -191,6 +206,7 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
                     EFFECT_RADIUS,
                     new GrandFireworkBurstPayload(
                             this.getX(), this.getY(), this.getZ(), this.explosionSeed, this.style().index()));
+            this.burstDispatchCount++;
         }
         this.discard();
     }
