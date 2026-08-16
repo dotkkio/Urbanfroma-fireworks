@@ -1,0 +1,48 @@
+{
+  "schema": "urbanforma_fireworks.release_next.giant_cascade.v1",
+  "replacement": {
+    "replacesId": "giant_cascade_firework",
+    "programId": "giant_cascade_radiant_children_v2",
+    "detonation": "one seed and position request; client-only deterministic visual"
+  },
+  "newIds": [
+    "giant_jade_gold_palm_firework",
+    "giant_aurora_spiral_firework",
+    "giant_chrysanthemum_multishell_firework",
+    "giant_interlaced_cometfield_firework"
+  ],
+  "deliveryCount": 5,
+  "cascadeContract": {
+    "parent": {"branches": 144, "segments": 24, "particles": 3456},
+    "children": {"bursts": 48, "radialBranchesPerBurst": 32, "simultaneousDepthsPerBranch": 4, "particles": 6144},
+    "nearSimultaneousWave": {
+      "oldPeakParticlesPerTick": 768,
+      "replacementPeakParticlesPerTick": 640,
+      "sharedBudgetParticlesPerTick": 720,
+      "ticks": 10,
+      "perTickPlan": [
+        {"relativeTick": 0, "bursts": 5, "particles": 640},
+        {"relativeTick": 1, "bursts": 5, "particles": 640},
+        {"relativeTick": 2, "bursts": 5, "particles": 640},
+        {"relativeTick": 3, "bursts": 5, "particles": 640},
+        {"relativeTick": 4, "bursts": 5, "particles": 640},
+        {"relativeTick": 5, "bursts": 5, "particles": 640},
+        {"relativeTick": 6, "bursts": 5, "particles": 640},
+        {"relativeTick": 7, "bursts": 5, "particles": 640},
+        {"relativeTick": 8, "bursts": 4, "particles": 512},
+        {"relativeTick": 9, "bursts": 4, "particles": 512}
+      ],
+      "childShellEmission": "each child retains all 32 radial directions and 4 depth samples on one trigger tick"
+    },
+    "totalParticles": 9600,
+    "maxRadius": 130,
+    "lifetimeTicks": {"minimum": 44, "maximum": 96, "lastEmissionTick": 91, "totalVisualTicks": 188},
+    "clientQueue": {"active": 1, "pending": 1},
+    "serverParticleSimulation": false
+  },
+  "integrationRequired": [
+    "register the four new IDs in the shared catalog and route their existing client kernels",
+    "route giant_cascade_firework to GiantCascadeReplacementClientQueue",
+    "add language, creative section, network, and GameTest coverage in their shared owner paths"
+  ]
+}

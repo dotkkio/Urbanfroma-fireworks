@@ -54,7 +54,7 @@
     }
   },
   "art_direction": {
-    "reference_image": "external-reference-not-shipped",
+    "reference_image": null,
     "require_non_color_visual_difference": true,
     "required_structural_axes": ["SHAPE", "CORE", "TRAIL", "LAYERING", "CADENCE", "DENSITY"],
     "adjacent_duplicate_policy": "same structural signature and same palette signature are forbidden",

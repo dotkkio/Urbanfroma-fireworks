@@ -1,1 +1,3 @@
-{"parent":"minecraft:item/firework_rocket","textures":{"layer0":"urbanforma_fireworks:item/giant_golden_white_radial_willow_firework"}}
+{
+    "parent":  "minecraft:item/firework_rocket"
+}

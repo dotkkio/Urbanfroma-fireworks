@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "scope": "release-next isolated giant/super willow prototypes; not registered until shared integration approval",
+  "integration_status": "ISOLATED_NOT_REGISTERED",
+  "catalog_class": "com.urbanforma.fireworks.content.release_next.giant_willow.GiantWillowReleaseNextCatalog",
+  "client_program_class": "com.urbanforma.fireworks.client.release_next.giant_willow.GiantWillowReleaseNextClientProgram",
+  "typed_route_enum": "com.urbanforma.fireworks.content.release_next.giant_willow.GiantWillowReleaseNextCatalog$ClientRoute",
+  "required_entry_count": 5,
+  "creative_section": "giant",
+  "item_model_descriptor_root": "release_next/giant_willow/models/item",
+  "integration_target_model_root": "models/item",
+  "recipe_descriptor_root": "release_next/giant_willow/recipes",
+  "execution": {
+    "deterministic_client_seeded": true,
+    "server_particles": false,
+    "server_tick_trajectory": false,
+    "client_particle_velocity": [0.0, 0.0, 0.0],
+    "max_horizontal_radius": 126.0,
+    "max_envelope_distance": 182.0,
+    "max_particles_per_tick": 160,
+    "particle_lifetime_ticks": [72, 128]
+  },
+  "effects": [
+    {
+      "stable_id": "giant_imperial_canopy_willow",
+      "display_name": { "zh_cn": "\u5de8\u578b\u5e1d\u738b\u91d1\u51a0\u5782\u67f3\u70df\u82b1", "en_us": "Giant Imperial Canopy Willow Firework" },
+      "item": { "id": "urbanforma_fireworks:giant_imperial_canopy_willow", "translation_key": "item.urbanforma_fireworks.giant_imperial_canopy_willow", "model_descriptor": "release_next/giant_willow/models/item/giant_imperial_canopy_willow.json", "integration_target_model": "models/item/giant_imperial_canopy_willow.json", "texture": "urbanforma_fireworks:item/giant_superwillow_firework" },
+      "suggested_shared_route": { "giant_tier": "SUPER_WILLOW", "effect_category": "GIANT_SUPER_WILLOW", "creative_section": "giant" },
+      "typed_client_route": { "route": "GIANT_WILLOW_RELEASE_NEXT", "profile": "IMPERIAL_CANOPY", "factory": "GiantWillowReleaseNextClientProgram.forEntry(entry, x, y, z, seed)" },
+      "palette": { "primary": "#FFA829", "secondary": "#FFD36A", "accent": "#FFF0C2" },
+      "recipe_descriptor": "release_next/giant_willow/recipes/giant_imperial_canopy_willow.json",
+      "visual_contract": "144 full-3D gold branches form a broad umbrella canopy, then bend into a deep symmetric curtain.",
+      "branches": 144, "segments_per_branch": 26, "emission_ticks": [0, 25], "particles": 3744, "peak_particles_per_tick": 144,
+      "envelope": { "radius": 114.0, "drop": 88.0, "initial_lift": 0.0, "maximum_distance": 182.0 }, "lifetime_ticks": [72, 128], "total_visual_ticks": 154
+    },
+    {
+      "stable_id": "giant_silver_waterfall_willow",
+      "display_name": { "zh_cn": "\u5de8\u578b\u94f6\u7011\u5782\u67f3\u70df\u82b1", "en_us": "Giant Silver Waterfall Willow Firework" },
+      "item": { "id": "urbanforma_fireworks:giant_silver_waterfall_willow", "translation_key": "item.urbanforma_fireworks.giant_silver_waterfall_willow", "model_descriptor": "release_next/giant_willow/models/item/giant_silver_waterfall_willow.json", "integration_target_model": "models/item/giant_silver_waterfall_willow.json", "texture": "urbanforma_fireworks:item/polar_silver_willow" },
+      "suggested_shared_route": { "giant_tier": "EXTRA_LARGE", "effect_category": "GIANT_EXTRA_LARGE", "creative_section": "giant" },
+      "typed_client_route": { "route": "GIANT_WILLOW_RELEASE_NEXT", "profile": "SILVER_WATERFALL", "factory": "GiantWillowReleaseNextClientProgram.forEntry(entry, x, y, z, seed)" },
+      "palette": { "primary": "#96B9D0", "secondary": "#D1EFFF", "accent": "#FFFFFF" },
+      "recipe_descriptor": "release_next/giant_willow/recipes/giant_silver_waterfall_willow.json",
+      "visual_contract": "120 sparse silver branches begin after a six-tick pause and descend farther than any other profile as a cool waterfall.",
+      "branches": 120, "segments_per_branch": 30, "emission_ticks": [6, 35], "particles": 3600, "peak_particles_per_tick": 120,
+      "envelope": { "radius": 102.0, "drop": 108.0, "initial_lift": -8.0, "maximum_distance": 182.0 }, "lifetime_ticks": [72, 128], "total_visual_ticks": 164
+    },
+    {
+      "stable_id": "giant_emerald_braided_willow",
+      "display_name": { "zh_cn": "\u5de8\u578b\u7fe1\u7fe0\u7f16\u8faf\u5782\u67f3\u70df\u82b1", "en_us": "Giant Emerald Braided Willow Firework" },
+      "item": { "id": "urbanforma_fireworks:giant_emerald_braided_willow", "translation_key": "item.urbanforma_fireworks.giant_emerald_braided_willow", "model_descriptor": "release_next/giant_willow/models/item/giant_emerald_braided_willow.json", "integration_target_model": "models/item/giant_emerald_braided_willow.json", "texture": "urbanforma_fireworks:item/jade_pearl_willow" },
+      "suggested_shared_route": { "giant_tier": "SUPER_WILLOW", "effect_category": "GIANT_SUPER_WILLOW", "creative_section": "giant" },
+      "typed_client_route": { "route": "GIANT_WILLOW_RELEASE_NEXT", "profile": "EMERALD_BRAID", "factory": "GiantWillowReleaseNextClientProgram.forEntry(entry, x, y, z, seed)" },
+      "palette": { "primary": "#0BCF6E", "secondary": "#33FF94", "accent": "#DFFFF0" },
+      "recipe_descriptor": "release_next/giant_willow/recipes/giant_emerald_braided_willow.json",
+      "visual_contract": "96 emerald branches twist 2.75 turns through the volume before falling, producing readable braided spirals instead of a radial curtain.",
+      "branches": 96, "segments_per_branch": 34, "emission_ticks": [12, 45], "particles": 3264, "peak_particles_per_tick": 96,
+      "envelope": { "radius": 112.0, "drop": 92.0, "initial_lift": 4.0, "maximum_distance": 182.0 }, "lifetime_ticks": [72, 128], "total_visual_ticks": 174
+    },
+    {
+      "stable_id": "giant_amber_fountain_willow",
+      "display_name": { "zh_cn": "\u5de8\u578b\u7425\u73c0\u55b7\u6cc9\u5782\u67f3\u70df\u82b1", "en_us": "Giant Amber Fountain Willow Firework" },
+      "item": { "id": "urbanforma_fireworks:giant_amber_fountain_willow", "translation_key": "item.urbanforma_fireworks.giant_amber_fountain_willow", "model_descriptor": "release_next/giant_willow/models/item/giant_amber_fountain_willow.json", "integration_target_model": "models/item/giant_amber_fountain_willow.json", "texture": "urbanforma_fireworks:item/giant_amber_radiant_firework" },
+      "suggested_shared_route": { "giant_tier": "EXTRA_LARGE", "effect_category": "GIANT_EXTRA_LARGE", "creative_section": "giant" },
+      "typed_client_route": { "route": "GIANT_WILLOW_RELEASE_NEXT", "profile": "AMBER_FOUNTAIN", "factory": "GiantWillowReleaseNextClientProgram.forEntry(entry, x, y, z, seed)" },
+      "palette": { "primary": "#FF6B14", "secondary": "#FFB12A", "accent": "#FFF0B2" },
+      "recipe_descriptor": "release_next/giant_willow/recipes/giant_amber_fountain_willow.json",
+      "visual_contract": "128 amber branches first rise in a fountain arc, then roll into a compact hanging willow; its lift phase is unique in the set.",
+      "branches": 128, "segments_per_branch": 24, "emission_ticks": [3, 26], "particles": 3072, "peak_particles_per_tick": 128,
+      "envelope": { "radius": 98.0, "drop": 70.0, "initial_lift": 26.0, "maximum_distance": 182.0 }, "lifetime_ticks": [72, 128], "total_visual_ticks": 155
+    },
+    {
+      "stable_id": "giant_violet_rain_curtain_willow",
+      "display_name": { "zh_cn": "\u5de8\u578b\u7d2b\u7f57\u5170\u96e8\u5e55\u5782\u67f3\u70df\u82b1", "en_us": "Giant Violet Rain Curtain Willow Firework" },
+      "item": { "id": "urbanforma_fireworks:giant_violet_rain_curtain_willow", "translation_key": "item.urbanforma_fireworks.giant_violet_rain_curtain_willow", "model_descriptor": "release_next/giant_willow/models/item/giant_violet_rain_curtain_willow.json", "integration_target_model": "models/item/giant_violet_rain_curtain_willow.json", "texture": "urbanforma_fireworks:item/violet_champagne_radiant" },
+      "suggested_shared_route": { "giant_tier": "SUPER_WILLOW", "effect_category": "GIANT_SUPER_WILLOW", "creative_section": "giant" },
+      "typed_client_route": { "route": "GIANT_WILLOW_RELEASE_NEXT", "profile": "VIOLET_RAIN_CURTAIN", "factory": "GiantWillowReleaseNextClientProgram.forEntry(entry, x, y, z, seed)" },
+      "palette": { "primary": "#6D34D4", "secondary": "#B057FF", "accent": "#F3DDFF" },
+      "recipe_descriptor": "release_next/giant_willow/recipes/giant_violet_rain_curtain_willow.json",
+      "visual_contract": "160 dense violet branches begin at tick 18 and create the widest, deepest rain curtain with a low suspended crown.",
+      "branches": 160, "segments_per_branch": 24, "emission_ticks": [18, 41], "particles": 3840, "peak_particles_per_tick": 160,
+      "envelope": { "radius": 120.0, "drop": 116.0, "initial_lift": -14.0, "maximum_distance": 182.0 }, "lifetime_ticks": [72, 128], "total_visual_ticks": 170
+    }
+  ]
+}

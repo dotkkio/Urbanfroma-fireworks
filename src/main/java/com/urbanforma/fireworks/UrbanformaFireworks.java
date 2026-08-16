@@ -2,6 +2,7 @@ package com.urbanforma.fireworks;
 
 import com.urbanforma.fireworks.client.FireworksClient;
 import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
+import com.urbanforma.fireworks.content.IntegratedFireworkCatalog;
 import com.urbanforma.fireworks.gametest.FireworksGameTests;
 import com.urbanforma.fireworks.registry.FireworkCreativeSections;
 import com.urbanforma.fireworks.registry.FireworksEntities;
@@ -38,12 +39,23 @@ public final class UrbanformaFireworks {
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "fireworks");
     public static final ResourceLocation MIDSIZE_FUNCTIONAL_CATEGORY_ID =
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "midsize_fireworks");
+    public static final ResourceLocation SMALL_FUNCTIONAL_CATEGORY_ID =
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "small_fireworks");
+    public static final ResourceLocation GIANT_FUNCTIONAL_CATEGORY_ID =
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "giant_fireworks");
 
     public UrbanformaFireworks(IEventBus modBus) {
         FireworksItems.register(modBus);
         FireworksEntities.register(modBus);
         FireworksParticles.register(modBus);
         FireworksNetworking.register(modBus);
+        FunctionalCreativeCategoryRegistry.registerSectioned(
+                SMALL_FUNCTIONAL_CATEGORY_ID,
+                "gui.urbanforma_fireworks.category.small",
+                () -> FireworksItems.itemFor(IntegratedFireworkCatalog.entries().stream()
+                        .filter(entry -> entry.kind() == IntegratedFireworkCatalog.Kind.SMALL)
+                        .findFirst().orElseThrow().style()).getDefaultInstance(),
+                FireworkCreativeSections::smallSections);
         FunctionalCreativeCategoryRegistry.registerSectioned(
                 MIDSIZE_FUNCTIONAL_CATEGORY_ID,
                 "gui.urbanforma_fireworks.category.midsize",
@@ -54,6 +66,12 @@ public final class UrbanformaFireworks {
                 "gui.urbanforma_fireworks.category.fireworks",
                 () -> FireworksItems.GRAND_GOLDEN_SPHERE_FIREWORK.get().getDefaultInstance(),
                 FireworkCreativeSections::sections);
+        FunctionalCreativeCategoryRegistry.registerSectioned(
+                GIANT_FUNCTIONAL_CATEGORY_ID,
+                "gui.urbanforma_fireworks.category.giant",
+                () -> FireworksItems.itemFor(IntegratedFireworkCatalog.require(
+                        "giant_jade_gold_palm_firework").style()).getDefaultInstance(),
+                FireworkCreativeSections::giantSections);
 
         modBus.addListener(UrbanformaFireworks::addFunctionalTabItem);
         modBus.addListener(UrbanformaFireworks::registerDispenserBehavior);

@@ -1,0 +1,225 @@
+{
+  "schema": "urbanforma_fireworks.small.prototype.v1",
+  "catalogClass": "com.urbanforma.fireworks.content.small.SmallFireworkCatalog",
+  "integrationStatus": "unregistered",
+  "requiredEntryCount": 2,
+  "category": {
+    "id": "small",
+    "orderGroup": "small_trial",
+    "mustNotMixWith": [
+      "midsize",
+      "giant"
+    ]
+  },
+  "sharedContracts": {
+    "preferredExistingHdParticle": "urbanforma_fireworks:hd_firework_spark",
+    "hdParticleDefinition": "assets/urbanforma_fireworks/particles/hd_firework_spark.json",
+    "vanillaFallbackParticle": "minecraft:firework",
+    "vanillaRocketItemModel": "minecraft:item/firework_rocket",
+    "usesExistingOneShotBurstPayload": "GrandFireworkBurstPayload",
+    "newParticleTypes": false,
+    "newParticleProviders": false,
+    "newClientListeners": false,
+    "newSharedSchedulers": false,
+    "newNetworkPayloads": false,
+    "newServerParticleLoops": false,
+    "newServerTerrainCalculation": false,
+    "newServerTrajectoryCalculation": false,
+    "recipeFilesCreated": false,
+    "modelFilesCreated": false,
+    "textureFilesCreated": false
+  },
+  "launchTarget": {
+    "sharedLaunchSpeed": 1.45,
+    "flightTicks": 30,
+    "detonationHeight": 43.5,
+    "minimumNonGroundHeight": 32.0,
+    "referenceMidsizeId": "midsize_dense_sphere_firework",
+    "referenceMidsizeDetonationHeight": 105.85,
+    "requiresAdditionalServerTrajectoryCalculation": false
+  },
+  "visualRules": {
+    "paletteOnlyEntriesForbidden": true,
+    "requiredStructuralAxes": [
+      "SHAPE",
+      "CORE",
+      "TRAIL",
+      "LAYERING",
+      "CADENCE",
+      "DENSITY"
+    ],
+    "signatureSource": "com.urbanforma.fireworks.content.small.SmallVisualSignatures"
+  },
+  "entries": [
+    {
+      "id": "small_layered_sphere_firework",
+      "zhName": "小型层叠球形烟花",
+      "enName": "Small Layered Sphere Firework",
+      "effectForm": "layered_sphere",
+      "colors": [
+        "#2EA9FF",
+        "#7FE8FF",
+        "#F0FCFF"
+      ],
+      "creativeTarget": {
+        "category": "small",
+        "section": "small",
+        "orderGroup": "small_trial",
+        "mustNotMixWith": [
+          "midsize",
+          "giant"
+        ]
+      },
+      "recipeTarget": {
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "resultId": "urbanforma_fireworks:small_layered_sphere_firework",
+        "count": 1,
+        "generateDataRecipe": false,
+        "coordinatorDataPath": "data/urbanforma_fireworks/recipes/small_layered_sphere_firework.json"
+      },
+      "modelTarget": {
+        "itemModelParent": "minecraft:item/firework_rocket",
+        "createsModelJson": false,
+        "createsTexture": false,
+        "customLoader": false
+      },
+      "clientEffectPath": {
+        "clientOnly": true,
+        "clientProgramClass": "com.urbanforma.fireworks.client.small.SmallLayeredSphereClientProgram",
+        "clientEntryPoint": "tick(Minecraft)",
+        "requestShape": "Request(double x, double y, double z, long seed)",
+        "usesExistingOneShotBurstPayload": "GrandFireworkBurstPayload",
+        "createsNewNetworkPayload": false,
+        "createsServerParticleLoop": false,
+        "createsServerTerrainCalculation": false,
+        "createsServerTrajectoryCalculation": false
+      },
+      "particlePlan": {
+        "preferredParticle": "urbanforma_fireworks:hd_firework_spark",
+        "fallbackParticle": "minecraft:firework",
+        "totalParticles": 616,
+        "peakParticlesPerTick": 56,
+        "emissionTicks": 11,
+        "minLifetimeTicks": 18,
+        "maxLifetimeTicks": 42,
+        "localTickBudget": 64,
+        "localOwnedParticleBudget": 640,
+        "maxRadius": 8.0,
+        "fullEnvelopeBlocks": 16.0,
+        "budgetScope": "one client program instance; no shared global limiter"
+      },
+      "visualSignature": {
+        "shape": "layered peony sphere",
+        "core": "three cool-white bead rings form a bright inner kernel",
+        "trail": "short ice-blue tips finish the outer petals",
+        "layering": "pearl kernel, cyan petal shell, pale outer edge",
+        "cadence": "three inner beats followed by eight complete shell rings",
+        "density": "616 nodes in a 16-block envelope at 56 nodes per tick",
+        "paletteToken": "azure ice pearl",
+        "visualDifference": "A visible inner kernel, deliberate gap, and petal-modulated shell make this a compact sphere instead of a uniformly scaled burst.",
+        "structuralAxes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ]
+      }
+    },
+    {
+      "id": "small_compact_radial_firework",
+      "zhName": "小型饱满放射烟花",
+      "enName": "Small Compact Radial Firework",
+      "effectForm": "compact_radial",
+      "colors": [
+        "#FF582E",
+        "#FFB135",
+        "#FFF1B0"
+      ],
+      "creativeTarget": {
+        "category": "small",
+        "section": "small",
+        "orderGroup": "small_trial",
+        "mustNotMixWith": [
+          "midsize",
+          "giant"
+        ]
+      },
+      "recipeTarget": {
+        "pattern": [
+          " P ",
+          "FGF",
+          " P "
+        ],
+        "key": {
+          "P": "minecraft:paper",
+          "F": "minecraft:firework_star",
+          "G": "minecraft:gunpowder"
+        },
+        "resultId": "urbanforma_fireworks:small_compact_radial_firework",
+        "count": 1,
+        "generateDataRecipe": false,
+        "coordinatorDataPath": "data/urbanforma_fireworks/recipes/small_compact_radial_firework.json"
+      },
+      "modelTarget": {
+        "itemModelParent": "minecraft:item/firework_rocket",
+        "createsModelJson": false,
+        "createsTexture": false,
+        "customLoader": false
+      },
+      "clientEffectPath": {
+        "clientOnly": true,
+        "clientProgramClass": "com.urbanforma.fireworks.client.small.SmallCompactRadialClientProgram",
+        "clientEntryPoint": "tick(Minecraft)",
+        "requestShape": "Request(double x, double y, double z, long seed)",
+        "usesExistingOneShotBurstPayload": "GrandFireworkBurstPayload",
+        "createsNewNetworkPayload": false,
+        "createsServerParticleLoop": false,
+        "createsServerTerrainCalculation": false,
+        "createsServerTrajectoryCalculation": false
+      },
+      "particlePlan": {
+        "preferredParticle": "urbanforma_fireworks:hd_firework_spark",
+        "fallbackParticle": "minecraft:firework",
+        "totalParticles": 640,
+        "peakParticlesPerTick": 80,
+        "emissionTicks": 8,
+        "minLifetimeTicks": 16,
+        "maxLifetimeTicks": 38,
+        "localTickBudget": 96,
+        "localOwnedParticleBudget": 672,
+        "maxRadius": 9.6,
+        "fullEnvelopeBlocks": 19.2,
+        "budgetScope": "one client program instance; no shared global limiter"
+      },
+      "visualSignature": {
+        "shape": "short full three-dimensional radial bloom",
+        "core": "two ember ignition rings establish a warm pin core",
+        "trail": "two pearl-gold terminal flares cap every short spoke",
+        "layering": "ember core, gold spoke body, pearl terminal flare",
+        "cadence": "two ignition rings, four full spoke rings, then two terminal rings",
+        "density": "640 nodes in a 19.2-block envelope at 80 nodes per tick",
+        "paletteToken": "ember gold pearl",
+        "visualDifference": "Eighty seeded directions span every axis with curled short spokes and terminal flares, so this is a full radial bloom rather than a single straight line.",
+        "structuralAxes": [
+          "SHAPE",
+          "CORE",
+          "TRAIL",
+          "LAYERING",
+          "CADENCE",
+          "DENSITY"
+        ]
+      }
+    }
+  ]
+}

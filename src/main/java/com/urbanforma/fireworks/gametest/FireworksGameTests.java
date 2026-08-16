@@ -7,17 +7,25 @@ import com.urbanforma.fireworks.content.FireworkStyle;
 import com.urbanforma.fireworks.content.EffectCategory;
 import com.urbanforma.fireworks.content.GiantFireworkCatalog;
 import com.urbanforma.fireworks.content.GiantTier;
+import com.urbanforma.fireworks.content.IntegratedFireworkCatalog;
+import com.urbanforma.fireworks.content.large_extra.LargeExtraFireworkCatalog;
 import com.urbanforma.fireworks.content.NormalFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherExtraFireworkCatalog;
 import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
-import com.urbanforma.fireworks.content.midsize.MidsizeFireworkDefinition;
-import com.urbanforma.fireworks.client.batch_other.BatchOtherClientPrograms;
-import com.urbanforma.fireworks.client.batch_other_extra.BatchOtherExtraClientPrograms;
+import com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialFireworkCatalog;
+import com.urbanforma.fireworks.content.midsize.sphere.MediumSphereCatalog;
+import com.urbanforma.fireworks.content.small.SmallFireworkCatalog;
 import com.urbanforma.fireworks.content.RadiantTrajectory;
 import com.urbanforma.fireworks.content.RadiantWillowTrajectory;
 import com.urbanforma.fireworks.content.WillowTrajectory;
 import com.urbanforma.fireworks.content.colorchange.ColorChangeBallProgram;
+import com.urbanforma.fireworks.content.crown.CrownDescentTrajectory;
+import com.urbanforma.fireworks.content.giant.chrysanthemum.GiantChrysanthemumTrajectory;
+import com.urbanforma.fireworks.content.giant.cometfield.GiantCometfieldTrajectory;
+import com.urbanforma.fireworks.content.giant.cascade.GiantCascadeTrajectory;
+import com.urbanforma.fireworks.content.giant.palm.GiantPalmTrajectory;
+import com.urbanforma.fireworks.content.giant.spiral.GiantSpiralTrajectory;
 import com.urbanforma.fireworks.content.giant.GiantRadiantTrajectory;
 import com.urbanforma.fireworks.content.giant.willow.GiantWillowTrajectory;
 import com.urbanforma.fireworks.content.hybrid.HybridSphereRadiantTrajectory;
@@ -136,12 +144,8 @@ public final class FireworksGameTests {
             FireworkStyle.Shape.WILLOW_SPHERE,
             FireworkStyle.Shape.RADIANT,
             FireworkStyle.Shape.RADIANT_WILLOW,
-            FireworkStyle.Shape.GIANT_RADIANT,
             FireworkStyle.Shape.HYBRID_SPHERE_RADIANT,
             FireworkStyle.Shape.SATURN);
-    private static final List<Integer> EXPECTED_SECTION_ITEM_COUNTS = List.of(23, 6, 5, 6, 1, 1, 2, 1, 1);
-    private static final int SECTIONED_DISPLAY_SLOT_COUNT = 180;
-    private static final int EXPECTED_LANGUAGE_KEY_COUNT = 58;
     private static final List<LedColorExpectation> EXPECTED_LED_PALETTE = List.of(
             new LedColorExpectation("led_scarlet_sphere", "#BC4040", "#E01B1B", "#FF3415", "#FFD1D1"),
             new LedColorExpectation("led_coral_sphere", "#DA8971", "#FE5D2E", "#FF7324", "#FFDCD1"),
@@ -164,9 +168,9 @@ public final class FireworksGameTests {
             "gui.urbanforma_fireworks.section.fireworks.willow",
             "gui.urbanforma_fireworks.section.fireworks.radiant",
             "gui.urbanforma_fireworks.section.fireworks.radiant_willow",
-            "gui.urbanforma_fireworks.section.fireworks.giant_radiant",
             "gui.urbanforma_fireworks.section.fireworks.hybrid",
             "gui.urbanforma_fireworks.section.fireworks.saturn",
+            "gui.urbanforma_fireworks.section.fireworks.large",
             "gui.urbanforma_fireworks.section.fireworks.other");
     private static final List<String> EXPECTED_MIDSIZE_SECTION_KEYS = List.of(
             "gui.urbanforma_fireworks.section.fireworks.sphere",
@@ -220,14 +224,15 @@ public final class FireworksGameTests {
     @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
     public static void registrationsCategoriesAndCreativeOrder(GameTestHelper helper) {
         List<FireworkStyle> styles = FireworkStyle.values();
-        int expectedStyleCount = EXPECTED_IDS.length
+        int stableStyleCount = EXPECTED_IDS.length
                 + NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT
                 + GiantFireworkCatalog.INTEGRATED_GIANT_COUNT
                 + OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
                 + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
                 + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT;
+        int expectedStyleCount = stableStyleCount + IntegratedFireworkCatalog.TOTAL_STYLE_COUNT;
         helper.assertTrue(FireworkStyle.count() == expectedStyleCount && styles.size() == expectedStyleCount,
-                "The stable catalog, normal 100, integrated giants, Other30, and midsize trials must all be registered");
+                "The stable catalog and append-only integrated styles must all be registered");
         helper.assertTrue(NormalFireworkCatalog.entries().size() == NormalFireworkCatalog.NEW_ORDINARY_STYLE_COUNT
                         && NormalFireworkCatalog.NORMAL_100_STYLE_COUNT == 100
                         && OtherFireworkCatalog.entries().size() == OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
@@ -238,8 +243,18 @@ public final class FireworksGameTests {
                         && OtherExtraFireworkCatalog.TOTAL_OTHER_STYLE_COUNT == 30
                         && OtherExtraFireworkCatalog.COOL_COLOR_STYLE_COUNT == 6
                         && OtherExtraFireworkCatalog.COOL_COLOR_STYLE_COUNT <= OtherExtraFireworkCatalog.COOL_COLOR_STYLE_CAP
-                        && MidsizeFireworkCatalog.entries().size() == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT,
-                "Normal100, Other30, midsize trials, and the controlled six cool-color entries must remain stable");
+                        && MidsizeFireworkCatalog.entries().size() == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT
+                        && IntegratedFireworkCatalog.entries().size() == IntegratedFireworkCatalog.TOTAL_STYLE_COUNT
+                        && integratedKindCount(IntegratedFireworkCatalog.Kind.SMALL) == IntegratedFireworkCatalog.SMALL_STYLE_COUNT
+                        && integratedKindCount(IntegratedFireworkCatalog.Kind.MEDIUM_SPHERE)
+                                == IntegratedFireworkCatalog.MEDIUM_SPHERE_STYLE_COUNT
+                        && integratedKindCount(IntegratedFireworkCatalog.Kind.MEDIUM_RADIAL)
+                                == IntegratedFireworkCatalog.MEDIUM_RADIAL_STYLE_COUNT
+                        && integratedKindCount(IntegratedFireworkCatalog.Kind.LARGE_EXTRA)
+                                == IntegratedFireworkCatalog.LARGE_EXTRA_STYLE_COUNT
+                        && integratedKindCount(IntegratedFireworkCatalog.Kind.ADDITIONAL_GIANT)
+                                == IntegratedFireworkCatalog.ADDITIONAL_GIANT_STYLE_COUNT,
+                "Normal100, Other30, midsize trials, and every typed integrated batch must remain stable");
         helper.assertTrue(styles.get(43).id().equals("hybrid_amber_sphere_radiant")
                         && styles.get(44).id().equals("saturn_amber_double_sphere")
                         && styles.subList(GiantFireworkCatalog.FIRST_STYLE_INDEX,
@@ -253,9 +268,17 @@ public final class FireworksGameTests {
                                 == OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
                         && styles.subList(OtherExtraFireworkCatalog.FIRST_STYLE_INDEX, MidsizeFireworkCatalog.FIRST_STYLE_INDEX).size()
                                 == OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
-                        && styles.subList(MidsizeFireworkCatalog.FIRST_STYLE_INDEX, FireworkStyle.count()).size()
-                                == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT,
-                "The ordinary prototypes, giant queue entries, Other30, and midsize index ranges must remain stable");
+                        && styles.subList(MidsizeFireworkCatalog.FIRST_STYLE_INDEX,
+                                IntegratedFireworkCatalog.FIRST_STYLE_INDEX).size()
+                                == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT
+                        && styles.subList(IntegratedFireworkCatalog.FIRST_STYLE_INDEX, FireworkStyle.count()).size()
+                                == IntegratedFireworkCatalog.TOTAL_STYLE_COUNT
+                        && styles.subList(IntegratedFireworkCatalog.FIRST_STYLE_INDEX, FireworkStyle.count()).stream()
+                                .map(FireworkStyle::id)
+                                .toList()
+                                .equals(IntegratedFireworkCatalog.entries().stream()
+                                        .map(entry -> entry.style().id()).toList()),
+                "The ordinary prototypes and every append-only style range must remain ordered");
         helper.assertTrue(FireworksNetworking.NETWORK_VERSION.equals("8"),
                 "v0.3.0 must reject older peers through network protocol 8");
         helper.assertTrue(styles.stream().noneMatch(style -> LEGACY_IDS.contains(style.id())),
@@ -304,6 +327,10 @@ public final class FireworksGameTests {
                 "Shared rocket entity must retain the required launch and tracking settings");
 
         List<FunctionalCreativeCategory> registeredCategories = FunctionalCreativeCategoryRegistry.categories();
+        FunctionalCreativeCategory smallCategory = registeredCategories.stream()
+                .filter(category -> category.id().equals(UrbanformaFireworks.SMALL_FUNCTIONAL_CATEGORY_ID))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Small functional category was not registered"));
         FunctionalCreativeCategory midsizeCategory = registeredCategories.stream()
                 .filter(category -> category.id().equals(UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID))
                 .findFirst()
@@ -312,12 +339,26 @@ public final class FireworksGameTests {
                 .filter(category -> category.id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Large-firework functional category was not registered"));
+        FunctionalCreativeCategory giantCategory = registeredCategories.stream()
+                .filter(category -> category.id().equals(UrbanformaFireworks.GIANT_FUNCTIONAL_CATEGORY_ID))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Giant functional category was not registered"));
         helper.assertTrue(registeredCategories.stream()
-                        .filter(category -> category.id().equals(UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID)
-                                || category.id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID))
-                        .count() == 2
-                        && registeredCategories.indexOf(midsizeCategory) < registeredCategories.indexOf(largeCategory),
-                "Midsize Fireworks must be a separate top-level category before Large Fireworks");
+                        .filter(category -> category.id().equals(UrbanformaFireworks.SMALL_FUNCTIONAL_CATEGORY_ID)
+                                || category.id().equals(UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID)
+                                || category.id().equals(UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID)
+                                || category.id().equals(UrbanformaFireworks.GIANT_FUNCTIONAL_CATEGORY_ID))
+                        .count() == 4
+                        && registeredCategories.indexOf(smallCategory) < registeredCategories.indexOf(midsizeCategory)
+                        && registeredCategories.indexOf(midsizeCategory) < registeredCategories.indexOf(largeCategory)
+                        && registeredCategories.indexOf(largeCategory) < registeredCategories.indexOf(giantCategory),
+                "Small, midsize, large, and giant fireworks must be independent ordered top-level categories");
+        helper.assertTrue(smallCategory.translationKey().equals("gui.urbanforma_fireworks.category.small")
+                        && smallCategory.icon().is(FireworksItems.itemFor(
+                                IntegratedFireworkCatalog.entries().stream()
+                                        .filter(entry -> entry.kind() == IntegratedFireworkCatalog.Kind.SMALL)
+                                        .findFirst().orElseThrow().style())),
+                "Small Fireworks must retain its typed first-entry icon and category key");
         helper.assertTrue(midsizeCategory.translationKey().equals("gui.urbanforma_fireworks.category.midsize")
                         && midsizeCategory.icon().is(FireworksItems.itemFor(
                                 MidsizeFireworkCatalog.entries().getFirst().style())),
@@ -325,8 +366,14 @@ public final class FireworksGameTests {
         helper.assertTrue(largeCategory.translationKey().equals("gui.urbanforma_fireworks.category.fireworks")
                         && largeCategory.icon().is(FireworksItems.GRAND_GOLDEN_SPHERE_FIREWORK.get()),
                 "Large Fireworks must retain its original golden icon and translation key");
+        helper.assertTrue(giantCategory.translationKey().equals("gui.urbanforma_fireworks.category.giant")
+                        && giantCategory.icon().is(FireworksItems.itemFor(
+                                IntegratedFireworkCatalog.require("giant_jade_gold_palm_firework").style())),
+                "Giant Fireworks must retain its typed palm icon and category key");
+        assertSmallCreativeSections(helper, smallCategory);
         assertMidsizeCreativeSections(helper, midsizeCategory);
         assertLargeCreativeSections(helper, largeCategory, styles);
+        assertGiantCreativeSections(helper, giantCategory, styles);
 
         UrbanformaCreativeCategory[] builtInCategories =
                 UrbanformaCreativeCategory.categoriesFor(UrbanformaCreativeTabs.FUNCTIONAL_TAB.get());
@@ -335,11 +382,13 @@ public final class FireworksGameTests {
         helper.assertTrue(builtInCategories.length == 2
                         && builtInCategories[0] == UrbanformaCreativeCategory.FUNCTIONAL_PLATFORMS
                         && builtInCategories[1] == UrbanformaCreativeCategory.PHYSICS
-                        && addOnCategories.size() == 2
+                        && addOnCategories.size() == 4
                         && addOnCategories.stream().map(FunctionalCreativeCategory::id).toList().equals(List.of(
+                                UrbanformaFireworks.SMALL_FUNCTIONAL_CATEGORY_ID,
                                 UrbanformaFireworks.MIDSIZE_FUNCTIONAL_CATEGORY_ID,
-                                UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID)),
-                "Functional category order must remain platforms, physics, midsize fireworks, then large fireworks");
+                                UrbanformaFireworks.FUNCTIONAL_CATEGORY_ID,
+                                UrbanformaFireworks.GIANT_FUNCTIONAL_CATEGORY_ID)),
+                "Functional category order must remain platforms, physics, small, midsize, large, then giant fireworks");
         List<ItemStack> functionalTabItems = new ArrayList<>();
         List<ItemStack> nonFunctionalTabItems = new ArrayList<>();
         UrbanformaFireworks.appendFunctionalTabItem(UrbanformaCreativeTabs.FUNCTIONAL_TAB_KEY, functionalTabItems::add);
@@ -353,12 +402,19 @@ public final class FireworksGameTests {
 
     @GameTest(templateNamespace = UrbanformaFireworks.MOD_ID, template = EMPTY_TEMPLATE_PATH)
     public static void prototypeContractsAndCategoryBudgets(GameTestHelper helper) {
-        BatchOtherClientPrograms.validateAll();
-        BatchOtherExtraClientPrograms.validateAll();
         helper.assertTrue(MidsizeFireworkCatalog.entries().stream()
                         .allMatch(entry -> entry.style().shape() == FireworkStyle.Shape.OTHER
                                 && entry.style().giantTier() == GiantTier.NONE),
                 "Midsize styles must retain their explicit client-program adapter route");
+        helper.assertTrue(IntegratedFireworkCatalog.entries().stream()
+                        .filter(entry -> entry.kind() != IntegratedFireworkCatalog.Kind.ADDITIONAL_GIANT)
+                        .allMatch(entry -> entry.style().shape() == FireworkStyle.Shape.OTHER
+                                && entry.style().giantTier() == GiantTier.NONE)
+                        && IntegratedFireworkCatalog.entries().stream()
+                                .filter(entry -> entry.kind() == IntegratedFireworkCatalog.Kind.ADDITIONAL_GIANT)
+                                .allMatch(entry -> entry.style().shape() == FireworkStyle.Shape.GIANT_RADIANT
+                                        && entry.style().giantTier() != GiantTier.NONE),
+                "Integrated entries must retain their typed common-side kind and giant tier boundaries");
         FireworkStyle giant = FireworkStyle.GIANT_AMBER_RADIANT_FIREWORK;
         helper.assertTrue(giant.giantTier() == GiantTier.LARGE
                         && giant.effectCategory() == EffectCategory.GIANT_LARGE
@@ -427,6 +483,28 @@ public final class FireworksGameTests {
                         && ColorChangeBallProgram.switchDelayTicksFromSeconds(0.3D) == 6
                         && ColorChangeBallProgram.switchDelayTicksFromSeconds(0.7D) == 14,
                 "The existing sphere color-change capability must use stable 6-to-14 tick timing");
+        List<String> expectedColorChangeIds = List.of(
+                ColorChangeBallProgram.CINNABAR_AMBER_SPHERE_ID,
+                ColorChangeBallProgram.EMBER_TWILIGHT_RADIANT_ID,
+                ColorChangeBallProgram.SUNSET_ORCHID_WILLOW_ID,
+                ColorChangeBallProgram.AURORA_PEARL_HYBRID_ID);
+        helper.assertTrue(ColorChangeBallProgram.supportedStyleIds().equals(expectedColorChangeIds)
+                        && expectedColorChangeIds.stream().allMatch(id ->
+                                ColorChangeBallProgram.contractFor(FireworkStyle.fromId(id)).isPresent()),
+                "Every reviewed color-change path must resolve an explicit existing-particle contract");
+
+        helper.assertTrue(GiantPalmTrajectory.staticContractHolds(0x145A9D3BC76E2F01L)
+                        && GiantSpiralTrajectory.staticContractHolds(0x2F6D9A81C4E73B05L)
+                        && GiantChrysanthemumTrajectory.staticContractHolds(0x123456789ABCDEFL)
+                        && GiantCometfieldTrajectory.staticContractHolds(0x0FEDCBA987654321L)
+                        && GiantCascadeTrajectory.hasSingleDetonationPlan(0x1234ABCD5678EF90L),
+                "New giant trajectory contracts must remain deterministic, one-shot, and bounded");
+        helper.assertTrue(CrownDescentTrajectory.SUPPORTED_STYLE_IDS.size() == 5
+                        && CrownDescentTrajectory.SUPPORTED_STYLE_IDS.stream()
+                                .map(FireworkStyle::fromId)
+                                .allMatch(CrownDescentTrajectory::supports)
+                        && CrownDescentTrajectory.staticContractHolds(0x4D595DF4D0F33173L),
+                "The five established crown styles must use the bounded terrain-clearance descent contract");
         helper.succeed();
     }
 
@@ -436,7 +514,7 @@ public final class FireworksGameTests {
         JsonObject chinese = readJsonObject("assets/urbanforma_fireworks/lang/zh_cn.json");
         List<FireworkStyle> styles = FireworkStyle.values();
 
-        int expectedLanguageKeyCount = styles.size() + 13;
+        int expectedLanguageKeyCount = styles.size() + 27;
         helper.assertTrue(english.size() == expectedLanguageKeyCount
                         && chinese.size() == expectedLanguageKeyCount,
                 "Both language files must contain every item plus the fixed category, section, and pack keys");
@@ -454,10 +532,13 @@ public final class FireworksGameTests {
                             + ": expected=" + style.enName()
                             + ", actual=" + (english.has(translationKey)
                             ? english.get(translationKey).getAsString() : "<missing>"));
-            helper.assertTrue(model.size() == 1
-                            && model.has("parent")
-                            && model.get("parent").getAsString().equals("minecraft:item/firework_rocket"),
-                    "Every stable firework item model must inherit the vanilla rocket model only");
+            helper.assertTrue(model.has("parent")
+                            && model.get("parent").getAsString().equals("minecraft:item/firework_rocket")
+                            && model.has("textures")
+                            && model.getAsJsonObject("textures").has("layer0")
+                            && model.getAsJsonObject("textures").get("layer0").getAsString()
+                                    .equals(UrbanformaFireworks.MOD_ID + ":item/" + style.id()),
+                    "Every firework item model must retain the vanilla parent and its approved item texture");
             helper.assertTrue(recipe.has("type")
                             && recipe.get("type").getAsString().equals("minecraft:crafting_shaped")
                             && recipe.has("result")
@@ -1049,6 +1130,43 @@ public final class FireworksGameTests {
         }
     }
 
+    private static void assertSmallCreativeSections(GameTestHelper helper, FunctionalCreativeCategory category) {
+        List<UrbanformaCreativeCategory.Section> sections = category.sections();
+        List<UrbanformaCreativeCategory.SectionBanner> banners = category.sectionBanners();
+        List<FireworkStyle> smallStyles = integratedStyles(IntegratedFireworkCatalog.Kind.SMALL);
+        List<List<FireworkStyle>> expectedStylesBySection = List.of(
+                smallStyles.stream().filter(style -> style.id().equals("small_layered_sphere_firework")).toList(),
+                smallStyles.stream().filter(style -> style.id().equals("small_compact_radial_firework")).toList());
+        helper.assertTrue(category.hasSections()
+                        && sections.size() == expectedStylesBySection.size()
+                        && banners.size() == expectedStylesBySection.size(),
+                "Small Fireworks must expose independent sphere and radiant sections");
+        Set<String> sectionPaths = new HashSet<>();
+        int expectedBannerRow = 0;
+        for (int sectionIndex = 0; sectionIndex < expectedStylesBySection.size(); sectionIndex++) {
+            List<FireworkStyle> expectedStyles = expectedStylesBySection.get(sectionIndex);
+            UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
+            UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
+            helper.assertTrue(expectedStyles.size() == 1
+                            && section.paths().equals(expectedStyles.stream().map(FireworkStyle::id).toList())
+                            && section.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
+                            && section.theme().pattern() == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS,
+                    "Small sections must retain their typed shape routes");
+            assertStacksMatchStyles(helper, section.stacks(), expectedStyles,
+                    "Small sections must expose only their matching item");
+            helper.assertTrue(sectionPaths.add(expectedStyles.getFirst().id())
+                            && banner.row() == expectedBannerRow
+                            && banner.translationKey().equals(section.translationKey())
+                            && banner.theme().equals(section.theme()),
+                    "Small sections must be unique and ordered");
+            expectedBannerRow += 1 + rowsFor(section.stacks().size());
+        }
+        helper.assertTrue(sectionPaths.equals(smallStyles.stream().map(FireworkStyle::id).collect(java.util.stream.Collectors.toSet())),
+                "Small Fireworks must not leak into medium or large sections");
+        assertSectionedDisplayStacks(helper, category.stacks(), sections,
+                "Small Fireworks must reserve one complete banner row before each section");
+    }
+
     private static void assertLargeCreativeSections(
             GameTestHelper helper, FunctionalCreativeCategory category, List<FireworkStyle> styles) {
         List<UrbanformaCreativeCategory.Section> sections = category.sections();
@@ -1063,7 +1181,7 @@ public final class FireworksGameTests {
         for (int sectionIndex = 0; sectionIndex < EXPECTED_SECTION_SHAPES.size(); sectionIndex++) {
             FireworkStyle.Shape shape = EXPECTED_SECTION_SHAPES.get(sectionIndex);
             List<FireworkStyle> expectedStyles = stylesForShape(styles, shape).stream()
-                    .filter(style -> !isOtherStyle(style) && !isMidsizeStyle(style))
+                    .filter(FireworksGameTests::isLargeCategoryStyle)
                     .toList();
             UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
             UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
@@ -1088,7 +1206,29 @@ public final class FireworksGameTests {
             expectedBannerRow += 1 + rowsFor(section.stacks().size());
         }
 
-        int otherSectionIndex = EXPECTED_SECTION_SHAPES.size();
+        int largeSectionIndex = EXPECTED_SECTION_SHAPES.size();
+        UrbanformaCreativeCategory.Section largeSection = sections.get(largeSectionIndex);
+        UrbanformaCreativeCategory.SectionBanner largeBanner = banners.get(largeSectionIndex);
+        List<FireworkStyle> expectedLargeExtraStyles = integratedStyles(IntegratedFireworkCatalog.Kind.LARGE_EXTRA);
+        helper.assertTrue(largeSection.translationKey().equals(EXPECTED_LARGE_SECTION_KEYS.get(largeSectionIndex))
+                        && largeSection.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
+                        && largeSection.theme().pattern() == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS
+                        && largeSection.paths().equals(expectedLargeExtraStyles.stream().map(FireworkStyle::id).toList())
+                        && expectedLargeExtraStyles.size() == LargeExtraFireworkCatalog.REQUIRED_ENTRY_COUNT,
+                "The Large subsection must contain exactly the ten typed large-extra styles");
+        assertStacksMatchStyles(helper, largeSection.stacks(), expectedLargeExtraStyles,
+                "The Large subsection must expose only typed large-extra items");
+        for (FireworkStyle style : expectedLargeExtraStyles) {
+            helper.assertTrue(sectionPaths.add(style.id()),
+                    "A large-extra item must not be duplicated in another large section");
+        }
+        helper.assertTrue(largeBanner.row() == expectedBannerRow
+                        && largeBanner.translationKey().equals(largeSection.translationKey())
+                        && largeBanner.theme().equals(largeSection.theme()),
+                "The Large subsection banner must follow the legacy shape sections");
+        expectedBannerRow += 1 + rowsFor(largeSection.stacks().size());
+
+        int otherSectionIndex = largeSectionIndex + 1;
         UrbanformaCreativeCategory.Section otherSection = sections.get(otherSectionIndex);
         UrbanformaCreativeCategory.SectionBanner otherBanner = banners.get(otherSectionIndex);
         List<FireworkStyle> expectedOtherStyles = java.util.stream.Stream.concat(
@@ -1113,13 +1253,14 @@ public final class FireworksGameTests {
                         && otherBanner.theme().equals(otherSection.theme()),
                 "The Other section banner must follow the shape sections");
 
-        List<FireworkStyle> expectedLargeStyles = styles.stream().filter(style -> !isMidsizeStyle(style)).toList();
+        List<FireworkStyle> expectedLargeStyles = styles.stream()
+                .filter(FireworksGameTests::isLargeCategoryStyle)
+                .toList();
         helper.assertTrue(sectionPaths.size() == expectedLargeStyles.size()
                         && expectedLargeStyles.stream().allMatch(style -> sectionPaths.contains(style.id()))
-                        && MidsizeFireworkCatalog.entries().stream()
-                                .map(entry -> entry.style().id())
-                                .noneMatch(sectionPaths::contains),
-                "Large Fireworks must partition every non-midsize style and contain zero midsize items");
+                        && styles.stream().filter(style -> !isLargeCategoryStyle(style))
+                                .noneMatch(style -> sectionPaths.contains(style.id())),
+                "Large Fireworks must contain only large items and zero small, medium, or giant items");
         assertSectionedDisplayStacks(helper, category.stacks(), sections,
                 "Large Fireworks must reserve one complete banner row before each section");
 
@@ -1130,28 +1271,73 @@ public final class FireworksGameTests {
                 "Large-firework helper must expose the registered shape order plus Other");
     }
 
+    private static void assertGiantCreativeSections(
+            GameTestHelper helper, FunctionalCreativeCategory category, List<FireworkStyle> styles) {
+        List<UrbanformaCreativeCategory.Section> sections = category.sections();
+        List<UrbanformaCreativeCategory.SectionBanner> banners = category.sectionBanners();
+        List<FireworkStyle> giantStyles = styles.stream()
+                .filter(style -> style.giantTier() != GiantTier.NONE)
+                .toList();
+        helper.assertTrue(category.hasSections()
+                        && sections.size() == FireworkCreativeSections.giantSections().size()
+                        && banners.size() == sections.size(),
+                "Giant Fireworks must expose one explicit section for every giant tier family");
+        Set<String> sectionPaths = new HashSet<>();
+        int expectedBannerRow = 0;
+        for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
+            UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
+            UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
+            List<FireworkStyle> expectedStyles = giantStyles.stream()
+                    .filter(style -> section.paths().contains(style.id()))
+                    .toList();
+            helper.assertTrue(!expectedStyles.isEmpty()
+                            && section.paths().equals(expectedStyles.stream().map(FireworkStyle::id).toList())
+                            && section.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
+                            && section.theme().pattern() == UrbanformaCreativeCategory.SectionPattern.HORIZONTAL_BARS,
+                    "Giant sections must contain only their explicit giant-tier styles");
+            assertStacksMatchStyles(helper, section.stacks(), expectedStyles,
+                    "Giant sections must expose only their matching items");
+            for (FireworkStyle style : expectedStyles) {
+                helper.assertTrue(sectionPaths.add(style.id()),
+                        "A giant item must belong to one giant section only");
+            }
+            helper.assertTrue(banner.row() == expectedBannerRow
+                            && banner.translationKey().equals(section.translationKey())
+                            && banner.theme().equals(section.theme()),
+                    "Giant section banners must follow the explicit tier order");
+            expectedBannerRow += 1 + rowsFor(section.stacks().size());
+        }
+        helper.assertTrue(sectionPaths.equals(giantStyles.stream().map(FireworkStyle::id)
+                        .collect(java.util.stream.Collectors.toSet())),
+                "Every giant style must appear exactly once in the giant category");
+        assertSectionedDisplayStacks(helper, category.stacks(), sections,
+                "Giant Fireworks must reserve one complete banner row before each section");
+    }
+
     private static void assertMidsizeCreativeSections(GameTestHelper helper, FunctionalCreativeCategory category) {
         List<UrbanformaCreativeCategory.Section> sections = category.sections();
         List<UrbanformaCreativeCategory.SectionBanner> banners = category.sectionBanners();
-        List<MidsizeFireworkDefinition.EffectType> expectedEffects = List.of(
-                MidsizeFireworkDefinition.EffectType.DENSE_SPHERE,
-                MidsizeFireworkDefinition.EffectType.DENSE_RADIAL);
+        List<List<FireworkStyle>> expectedStylesBySection = List.of(
+                java.util.stream.Stream.concat(
+                                List.of(MidsizeFireworkCatalog.require("midsize_dense_sphere_firework").style()).stream(),
+                                integratedStyles(IntegratedFireworkCatalog.Kind.MEDIUM_SPHERE).stream())
+                        .toList(),
+                java.util.stream.Stream.concat(
+                                List.of(MidsizeFireworkCatalog.require("midsize_dense_radial_firework").style()).stream(),
+                                integratedStyles(IntegratedFireworkCatalog.Kind.MEDIUM_RADIAL).stream())
+                        .toList());
         Set<String> sectionPaths = new HashSet<>();
         int expectedBannerRow = 0;
 
         helper.assertTrue(category.hasSections()
-                        && sections.size() == expectedEffects.size()
-                        && banners.size() == expectedEffects.size(),
+                        && sections.size() == expectedStylesBySection.size()
+                        && banners.size() == expectedStylesBySection.size(),
                 "Midsize Fireworks must provide exactly the sphere and radiant sections");
-        for (int sectionIndex = 0; sectionIndex < expectedEffects.size(); sectionIndex++) {
-            MidsizeFireworkDefinition.EffectType effectType = expectedEffects.get(sectionIndex);
-            List<FireworkStyle> expectedStyles = MidsizeFireworkCatalog.entries().stream()
-                    .filter(entry -> entry.source().effectType() == effectType)
-                    .map(MidsizeFireworkCatalog.Entry::style)
-                    .toList();
+        for (int sectionIndex = 0; sectionIndex < expectedStylesBySection.size(); sectionIndex++) {
+            List<FireworkStyle> expectedStyles = expectedStylesBySection.get(sectionIndex);
             UrbanformaCreativeCategory.Section section = sections.get(sectionIndex);
             UrbanformaCreativeCategory.SectionBanner banner = banners.get(sectionIndex);
-            helper.assertTrue(expectedStyles.size() == 1
+            helper.assertTrue(expectedStyles.size() == 26
                             && section.translationKey().equals(EXPECTED_MIDSIZE_SECTION_KEYS.get(sectionIndex))
                             && section.paths().equals(expectedStyles.stream().map(FireworkStyle::id).toList())
                             && section.theme().tone() == UrbanformaCreativeCategory.SectionTone.DARK_PANEL
@@ -1168,10 +1354,12 @@ public final class FireworksGameTests {
                     "Midsize banners must follow their section order and row layout");
             expectedBannerRow += 1 + rowsFor(section.stacks().size());
         }
-        List<FireworkStyle> midsizeStyles = MidsizeFireworkCatalog.entries().stream()
-                .map(MidsizeFireworkCatalog.Entry::style)
+        List<FireworkStyle> midsizeStyles = expectedStylesBySection.stream()
+                .flatMap(List::stream)
                 .toList();
         helper.assertTrue(sectionPaths.size() == MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT
+                        + IntegratedFireworkCatalog.MEDIUM_SPHERE_STYLE_COUNT
+                        + IntegratedFireworkCatalog.MEDIUM_RADIAL_STYLE_COUNT
                         && midsizeStyles.stream().allMatch(style -> sectionPaths.contains(style.id()))
                         && MidsizeFireworkCatalog.require("midsize_dense_sphere_firework").style().zhName()
                                 .equals("中型密集球形烟花")
@@ -1181,6 +1369,8 @@ public final class FireworksGameTests {
                                 .equals("中型密集放射烟花")
                         && MidsizeFireworkCatalog.require("midsize_dense_radial_firework").style().enName()
                                 .equals("Medium Dense Radial Firework")
+                        && midsizeStyles.stream().allMatch(style -> style.zhName().startsWith("\u4e2d\u578b")
+                                && style.enName().startsWith("Medium "))
                         && midsizeStyles.stream().noneMatch(style -> style.zhName().contains("中小型")
                                 || style.enName().contains("Midsize")),
                 "Midsize display names must use Medium, never the category label");
@@ -1199,6 +1389,17 @@ public final class FireworksGameTests {
                 .toList();
     }
 
+    private static List<FireworkStyle> integratedStyles(IntegratedFireworkCatalog.Kind kind) {
+        return IntegratedFireworkCatalog.entries().stream()
+                .filter(entry -> entry.kind() == kind)
+                .map(IntegratedFireworkCatalog.Entry::style)
+                .toList();
+    }
+
+    private static int integratedKindCount(IntegratedFireworkCatalog.Kind kind) {
+        return integratedStyles(kind).size();
+    }
+
     private static boolean isOtherStyle(FireworkStyle style) {
         return style.index() >= OtherFireworkCatalog.FIRST_STYLE_INDEX
                 && style.index() < OtherExtraFireworkCatalog.FIRST_STYLE_INDEX
@@ -1206,9 +1407,25 @@ public final class FireworksGameTests {
     }
 
     private static boolean isMidsizeStyle(FireworkStyle style) {
-        return style.index() >= MidsizeFireworkCatalog.FIRST_STYLE_INDEX
+        return (style.index() >= MidsizeFireworkCatalog.FIRST_STYLE_INDEX
                 && style.index() < MidsizeFireworkCatalog.FIRST_STYLE_INDEX
-                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT;
+                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT)
+                || (IntegratedFireworkCatalog.contains(style.id())
+                        && (IntegratedFireworkCatalog.require(style.id()).kind()
+                                == IntegratedFireworkCatalog.Kind.MEDIUM_SPHERE
+                                || IntegratedFireworkCatalog.require(style.id()).kind()
+                                == IntegratedFireworkCatalog.Kind.MEDIUM_RADIAL));
+    }
+
+    private static boolean isSmallStyle(FireworkStyle style) {
+        return IntegratedFireworkCatalog.contains(style.id())
+                && IntegratedFireworkCatalog.require(style.id()).kind() == IntegratedFireworkCatalog.Kind.SMALL;
+    }
+
+    private static boolean isLargeCategoryStyle(FireworkStyle style) {
+        return style.giantTier() == GiantTier.NONE
+                && !isSmallStyle(style)
+                && !isMidsizeStyle(style);
     }
 
     private static void assertSectionedDisplayStacks(

@@ -6,6 +6,8 @@ import com.urbanforma.fireworks.content.NormalFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherExtraFireworkCatalog;
 import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
+import com.urbanforma.fireworks.content.IntegratedFireworkCatalog;
+import com.urbanforma.fireworks.content.ReleaseNextFireworkCatalog;
 import com.urbanforma.fireworks.world.item.FireworkRocketItem;
 import com.urbanforma.fireworks.world.item.GrandGoldenSphereFireworkItem;
 import java.util.ArrayList;
@@ -120,6 +122,22 @@ public final class FireworksItems {
                     .stream()
                     .map(FireworksItems::register)
                     .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> INTEGRATED_EXPANSION_FIREWORKS =
+            FireworkStyle.values().subList(
+                            IntegratedFireworkCatalog.FIRST_STYLE_INDEX,
+                            IntegratedFireworkCatalog.FIRST_STYLE_INDEX
+                                    + IntegratedFireworkCatalog.TOTAL_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
+    private static final List<DeferredItem<FireworkRocketItem>> RELEASE_NEXT_FIREWORKS =
+            FireworkStyle.values().subList(
+                            ReleaseNextFireworkCatalog.FIRST_STYLE_INDEX,
+                            ReleaseNextFireworkCatalog.FIRST_STYLE_INDEX
+                                    + ReleaseNextFireworkCatalog.TOTAL_STYLE_COUNT)
+                    .stream()
+                    .map(FireworksItems::register)
+                    .toList();
 
     private static final List<DeferredItem<? extends FireworkRocketItem>> ALL_FIREWORKS = allFireworks();
 
@@ -176,6 +194,8 @@ public final class FireworksItems {
         registered.addAll(OTHER_ORDINARY_FIREWORKS);
         registered.addAll(OTHER_EXTRA_FIREWORKS);
         registered.addAll(MIDSIZE_FIREWORKS);
+        registered.addAll(INTEGRATED_EXPANSION_FIREWORKS);
+        registered.addAll(RELEASE_NEXT_FIREWORKS);
         return List.copyOf(registered);
     }
 

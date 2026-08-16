@@ -1,0 +1,24 @@
+{
+  "schema": "urbanforma_fireworks.release_next.small_sphere.v1",
+  "integrationStatus": "unregistered",
+  "catalogClass": "com.urbanforma.fireworks.content.release_next.small_sphere.SmallSphereCatalog",
+  "clientProgramClass": "com.urbanforma.fireworks.client.release_next.small_sphere.SmallSphereClientProgram",
+  "requiredEntryCount": 15,
+  "launch": { "speed": 1.3, "flightTicks": 24, "detonationHeight": 31.2, "lowAltitude": true },
+  "clientOnly": {
+    "usesExistingBurstPayload": true,
+    "createsClientListener": false,
+    "createsSharedScheduler": false,
+    "createsNetworkPayload": false,
+    "createsServerParticles": false,
+    "createsServerTickSimulation": false,
+    "particlesPerEntry": 384,
+    "peakParticlesPerTick": 48,
+    "maxRadius": 6.4
+  },
+  "entries": [
+    "azure_pearl", "cinnabar_lantern", "emerald_twin", "violet_petal", "golden_orbit",
+    "teal_spiral", "scarlet_star", "amethyst_crown", "coral_delayed", "silver_lace",
+    "amber_comet", "sapphire_crystal", "rose_ripple", "jade_offset", "aurora_veil"
+  ]
+}

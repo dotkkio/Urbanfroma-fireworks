@@ -1,0 +1,345 @@
+{
+  "batchId": "midsize_radial_second_batch",
+  "catalogClass": "com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialFireworkCatalog",
+  "definitionClass": "com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialFireworkDefinition",
+  "trajectoryClass": "com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialTrajectory",
+  "clientProgramClass": "com.urbanforma.fireworks.client.midsize.radial.MidsizeRadialClientProgram",
+  "integrationStatus": "unregistered",
+  "requiredEntryCount": 25,
+  "displayNamePrefix": {
+    "zh": "中型",
+    "en": "Medium"
+  },
+  "futureCreativeTarget": {
+    "category": "medium_small_fireworks",
+    "subsection": "radial",
+    "orderGroup": "midsize_radial_second_batch",
+    "coordinatorOwnsSharedClassification": true
+  },
+  "sharedContracts": {
+    "itemModel": "minecraft:item/firework_rocket",
+    "particleType": "urbanforma_fireworks:hd_firework_spark",
+    "recipeTemplate": {
+      "pattern": [" P ", "FGF", " P "],
+      "key": {
+        "P": "minecraft:paper",
+        "F": "minecraft:firework_star",
+        "G": "minecraft:gunpowder"
+      }
+    },
+    "newParticleTypes": false,
+    "newGlobalScheduler": false,
+    "newGlobalNumericIds": false,
+    "newNetworkPayload": false,
+    "newServerParticleLoop": false,
+    "newServerTrajectoryCalculation": false,
+    "newRecipeFiles": false,
+    "newModelFiles": false,
+    "newTextureFiles": false,
+    "sharedParticleLimitDependency": false
+  },
+  "referenceLargeRadial": {
+    "id": "giant_amber_radiant_firework",
+    "totalParticles": 12288,
+    "fullEnvelopeBlocks": 260.0,
+    "ascentTicks": 138,
+    "launchSpeed": 1.45,
+    "detonationHeight": 200.1
+  },
+  "mediumContract": {
+    "fullEnvelopeBlocks": 130.0,
+    "maximumRadiusCap": 65.0,
+    "ascentTicks": 118,
+    "detonationHeight": 171.1,
+    "heightRatio": 0.855072463768116,
+    "particleRatioRange": [0.79, 0.85],
+    "localPeakParticlesPerTickCap": 480,
+    "coolColorEntryCount": 7,
+    "coolColorEntryCap": 10,
+    "determinism": "seeded mix64 path, layer, branch, and segment sampling",
+    "finiteLifetime": "per-path local totalVisualTicks and bounded sample lifetime"
+  },
+  "visualRules": {
+    "paletteOnlyEntriesForbidden": true,
+    "uniqueSixAxisStructuralSignatureRequired": true,
+    "adjacentCombinedStructureAndPaletteSignatureForbidden": true,
+    "signatureSource": "com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialVisualSignatures"
+  },
+  "entries": [
+    {
+      "id": "midsize_radial_sun_lance_firework",
+      "zhName": "中型日芒放射烟花",
+      "enName": "Medium Sun Lance Radial Firework",
+      "path": "SUN_LANCE",
+      "colors": ["#FFB21A", "#FF6C14", "#FFF2B8"],
+      "coolColor": false,
+      "particlePlan": {"total": 10176, "ratio": 0.828125, "localPeak": 352, "minLifetime": 44, "maxLifetime": 74, "totalVisualTicks": 114, "maxOwned": 10176},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(SUN_LANCE, seed)"},
+      "visualSignature": {"shape": "straight_lance_star", "core": "tight_pin", "trail": "clean_lances", "layering": "pin_spoke_crown", "cadence": "early_then_late", "density": "10176_352", "palette": "sun_amber"}
+    },
+    {
+      "id": "midsize_radial_ember_broadbeam_firework",
+      "zhName": "中型余烬粗束放射烟花",
+      "enName": "Medium Ember Broad Beam Radial Firework",
+      "path": "BROAD_BEAM",
+      "colors": ["#E94A24", "#FF942B", "#FFE0A3"],
+      "coolColor": false,
+      "particlePlan": {"total": 10112, "ratio": 0.8229166666666666, "localPeak": 352, "minLifetime": 46, "maxLifetime": 78, "totalVisualTicks": 116, "maxOwned": 10112},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(BROAD_BEAM, seed)"},
+      "visualSignature": {"shape": "thick_radiant_bloom", "core": "ember_bead", "trail": "broad_terminals", "layering": "wide_body_edge", "cadence": "long_body", "density": "10112_352", "palette": "ember_copper"}
+    },
+    {
+      "id": "midsize_radial_golden_segment_beam_firework",
+      "zhName": "中型镀金分节光束放射烟花",
+      "enName": "Medium Golden Segment Beam Radial Firework",
+      "path": "SEGMENT_BEAM",
+      "colors": ["#F4B41C", "#D97710", "#FFF5C5"],
+      "coolColor": false,
+      "particlePlan": {"total": 10176, "ratio": 0.828125, "localPeak": 336, "minLifetime": 45, "maxLifetime": 76, "totalVisualTicks": 120, "maxOwned": 10176},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(SEGMENT_BEAM, seed)"},
+      "visualSignature": {"shape": "segmented_beam_shell", "core": "gold_bead", "trail": "gapped_tips", "layering": "seven_step_body", "cadence": "late_terminal", "density": "10176_336", "palette": "gold_amber"}
+    },
+    {
+      "id": "midsize_radial_cinnabar_staggered_ring_firework",
+      "zhName": "中型朱砂交错环放射烟花",
+      "enName": "Medium Cinnabar Staggered Ring Radial Firework",
+      "path": "STAGGERED_RING",
+      "colors": ["#D83B29", "#FF7250", "#FFD6B2"],
+      "coolColor": false,
+      "particlePlan": {"total": 9968, "ratio": 0.8111979166666666, "localPeak": 424, "minLifetime": 47, "maxLifetime": 81, "totalVisualTicks": 113, "maxOwned": 9968},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(STAGGERED_RING, seed)"},
+      "visualSignature": {"shape": "staggered_ring_radial", "core": "offset_ring", "trail": "round_edge", "layering": "three_ring_elevations", "cadence": "body_then_overlap", "density": "9968_424", "palette": "cinnabar_coral"}
+    },
+    {
+      "id": "midsize_radial_orchid_phase_shell_firework",
+      "zhName": "中型兰紫相位壳放射烟花",
+      "enName": "Medium Orchid Phase Shell Radial Firework",
+      "path": "PHASE_SHELL",
+      "colors": ["#8D49D8", "#D28BFF", "#FFE5FF"],
+      "coolColor": true,
+      "particlePlan": {"total": 10032, "ratio": 0.81640625, "localPeak": 344, "minLifetime": 46, "maxLifetime": 80, "totalVisualTicks": 119, "maxOwned": 10032},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(PHASE_SHELL, seed)"},
+      "visualSignature": {"shape": "phase_shell", "core": "inner_phase", "trail": "orchid_edge", "layering": "three_azimuth_phases", "cadence": "inside_out", "density": "10032_344", "palette": "orchid_pearl"}
+    },
+    {
+      "id": "midsize_radial_saffron_short_ray_firework",
+      "zhName": "中型藏红短射线放射烟花",
+      "enName": "Medium Saffron Short Ray Radial Firework",
+      "path": "SHORT_RAY",
+      "colors": ["#FF9205", "#FFCA35", "#FFF0B5"],
+      "coolColor": false,
+      "particlePlan": {"total": 9968, "ratio": 0.8111979166666666, "localPeak": 344, "minLifetime": 43, "maxLifetime": 72, "totalVisualTicks": 108, "maxOwned": 9968},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 61.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(SHORT_RAY, seed)"},
+      "visualSignature": {"shape": "short_ray_shell", "core": "compact_saffron", "trail": "clipped_tips", "layering": "dense_close_shell", "cadence": "fast_compact", "density": "9968_344", "palette": "saffron_gold"}
+    },
+    {
+      "id": "midsize_radial_ruby_delayed_core_firework",
+      "zhName": "中型红宝延迟内核放射烟花",
+      "enName": "Medium Ruby Delayed Core Radial Firework",
+      "path": "DELAYED_CORE",
+      "colors": ["#B71936", "#F05248", "#FFD6C8"],
+      "coolColor": false,
+      "particlePlan": {"total": 10048, "ratio": 0.8177083333333334, "localPeak": 416, "minLifetime": 48, "maxLifetime": 86, "totalVisualTicks": 126, "maxOwned": 10048},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(DELAYED_CORE, seed)"},
+      "visualSignature": {"shape": "opening_radial", "core": "late_ruby_nucleus", "trail": "open_pearl", "layering": "outer_before_core", "cadence": "reversed_center", "density": "10048_416", "palette": "ruby_ember"}
+    },
+    {
+      "id": "midsize_radial_coral_pulse_firework",
+      "zhName": "中型珊瑚脉冲放射烟花",
+      "enName": "Medium Coral Pulse Radial Firework",
+      "path": "PULSE_RADIAL",
+      "colors": ["#FF684F", "#FF9F69", "#FFE1C6"],
+      "coolColor": false,
+      "particlePlan": {"total": 9920, "ratio": 0.8072916666666666, "localPeak": 328, "minLifetime": 45, "maxLifetime": 77, "totalVisualTicks": 117, "maxOwned": 9920},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(PULSE_RADIAL, seed)"},
+      "visualSignature": {"shape": "pulsed_bloom", "core": "coral_pulse", "trail": "breathing_ivory", "layering": "concentric_pulses", "cadence": "three_expansions", "density": "9920_328", "palette": "coral_peach"}
+    },
+    {
+      "id": "midsize_radial_amethyst_rotary_wheel_firework",
+      "zhName": "中型紫晶旋转光轮放射烟花",
+      "enName": "Medium Amethyst Rotary Wheel Radial Firework",
+      "path": "ROTARY_WHEEL",
+      "colors": ["#6E43C5", "#AD76EF", "#F2DEFF"],
+      "coolColor": true,
+      "particlePlan": {"total": 9952, "ratio": 0.8098958333333334, "localPeak": 344, "minLifetime": 46, "maxLifetime": 82, "totalVisualTicks": 117, "maxOwned": 9952},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(ROTARY_WHEEL, seed)"},
+      "visualSignature": {"shape": "rotary_wheel", "core": "amethyst_hub", "trail": "curved_spokes", "layering": "rotating_rim", "cadence": "accelerated_turn", "density": "9952_344", "palette": "amethyst_lilac"}
+    },
+    {
+      "id": "midsize_radial_copper_crown_lance_firework",
+      "zhName": "中型赤铜冠枪放射烟花",
+      "enName": "Medium Copper Crown Lance Radial Firework",
+      "path": "CROWN_LANCE",
+      "colors": ["#BA5A30", "#E99B45", "#FFE0AE"],
+      "coolColor": false,
+      "particlePlan": {"total": 9904, "ratio": 0.8059895833333334, "localPeak": 344, "minLifetime": 48, "maxLifetime": 84, "totalVisualTicks": 124, "maxOwned": 9904},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(CROWN_LANCE, seed)"},
+      "visualSignature": {"shape": "crowned_lance", "core": "copper_seed", "trail": "upward_lances", "layering": "high_crown", "cadence": "raised_outer_last", "density": "9904_344", "palette": "copper_champagne"}
+    },
+    {
+      "id": "midsize_radial_amber_split_fan_firework",
+      "zhName": "中型琥珀裂扇放射烟花",
+      "enName": "Medium Amber Split Fan Radial Firework",
+      "path": "SPLIT_FAN",
+      "colors": ["#F28B16", "#FFC14E", "#FFF0B4"],
+      "coolColor": false,
+      "particlePlan": {"total": 10000, "ratio": 0.8138020833333334, "localPeak": 344, "minLifetime": 44, "maxLifetime": 75, "totalVisualTicks": 109, "maxOwned": 10000},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(SPLIT_FAN, seed)"},
+      "visualSignature": {"shape": "split_fan", "core": "amber_fan", "trail": "flattened_tips", "layering": "two_fan_planes", "cadence": "near_simultaneous", "density": "10000_344", "palette": "amber_honey"}
+    },
+    {
+      "id": "midsize_radial_garnet_lattice_firework",
+      "zhName": "中型石榴格网放射烟花",
+      "enName": "Medium Garnet Lattice Radial Firework",
+      "path": "LATTICE_WEAVE",
+      "colors": ["#8D253B", "#CC4951", "#FFD4BB"],
+      "coolColor": false,
+      "particlePlan": {"total": 10080, "ratio": 0.8203125, "localPeak": 352, "minLifetime": 46, "maxLifetime": 79, "totalVisualTicks": 114, "maxOwned": 10080},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(LATTICE_WEAVE, seed)"},
+      "visualSignature": {"shape": "lattice_shell", "core": "garnet_lattice", "trail": "cross_filaments", "layering": "woven_body_crown", "cadence": "interleaved_weave", "density": "10080_352", "palette": "garnet_rose"}
+    },
+    {
+      "id": "midsize_radial_plum_helix_firework",
+      "zhName": "中型梅紫螺旋放射烟花",
+      "enName": "Medium Plum Helix Radial Firework",
+      "path": "SPIRAL_HELIX",
+      "colors": ["#6C326F", "#B266BA", "#F1D4F7"],
+      "coolColor": true,
+      "particlePlan": {"total": 9856, "ratio": 0.8020833333333334, "localPeak": 336, "minLifetime": 47, "maxLifetime": 83, "totalVisualTicks": 119, "maxOwned": 9856},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(SPIRAL_HELIX, seed)"},
+      "visualSignature": {"shape": "spiral_helix", "core": "plum_spiral", "trail": "wound_tips", "layering": "helix_body_rim", "cadence": "continuous_twist", "density": "9856_336", "palette": "plum_orchid"}
+    },
+    {
+      "id": "midsize_radial_mandarin_comet_firework",
+      "zhName": "中型柑橘彗尾放射烟花",
+      "enName": "Medium Mandarin Comet Radial Firework",
+      "path": "COMET_SWEEP",
+      "colors": ["#EA601E", "#FFA23A", "#FFE0AE"],
+      "coolColor": false,
+      "particlePlan": {"total": 9984, "ratio": 0.8125, "localPeak": 352, "minLifetime": 45, "maxLifetime": 80, "totalVisualTicks": 116, "maxOwned": 9984},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(COMET_SWEEP, seed)"},
+      "visualSignature": {"shape": "comet_sweep", "core": "mandarin_head", "trail": "drawn_back_tail", "layering": "lifted_body_tail", "cadence": "swept_follow", "density": "9984_352", "palette": "mandarin_pearl"}
+    },
+    {
+      "id": "midsize_radial_rose_twin_helix_firework",
+      "zhName": "中型玫瑰双螺旋放射烟花",
+      "enName": "Medium Rose Twin Helix Radial Firework",
+      "path": "TWIN_HELIX",
+      "colors": ["#D95573", "#F39AA9", "#FFE5CE"],
+      "coolColor": false,
+      "particlePlan": {"total": 9856, "ratio": 0.8020833333333334, "localPeak": 320, "minLifetime": 47, "maxLifetime": 85, "totalVisualTicks": 125, "maxOwned": 9856},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(TWIN_HELIX, seed)"},
+      "visualSignature": {"shape": "twin_helix", "core": "rose_double_seed", "trail": "paired_strands", "layering": "alternating_helices", "cadence": "meet_at_rim", "density": "9856_320", "palette": "rose_champagne"}
+    },
+    {
+      "id": "midsize_radial_vermilion_ring_bloom_firework",
+      "zhName": "中型朱红环绽放射烟花",
+      "enName": "Medium Vermilion Ring Bloom Radial Firework",
+      "path": "RING_BLOOM",
+      "colors": ["#D83622", "#FF7E35", "#FFE1A3"],
+      "coolColor": false,
+      "particlePlan": {"total": 9856, "ratio": 0.8020833333333334, "localPeak": 336, "minLifetime": 46, "maxLifetime": 81, "totalVisualTicks": 118, "maxOwned": 9856},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(RING_BLOOM, seed)"},
+      "visualSignature": {"shape": "ring_bloom", "core": "vermilion_flower", "trail": "rounded_petals", "layering": "pulsed_rings", "cadence": "ring_then_bloom", "density": "9856_336", "palette": "vermilion_gold"}
+    },
+    {
+      "id": "midsize_radial_violet_pinwheel_firework",
+      "zhName": "中型紫罗风车放射烟花",
+      "enName": "Medium Violet Pinwheel Radial Firework",
+      "path": "PHASED_PINWHEEL",
+      "colors": ["#6B44B8", "#AB7BE5", "#F0E0FF"],
+      "coolColor": true,
+      "particlePlan": {"total": 10032, "ratio": 0.81640625, "localPeak": 360, "minLifetime": 48, "maxLifetime": 87, "totalVisualTicks": 121, "maxOwned": 10032},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(PHASED_PINWHEEL, seed)"},
+      "visualSignature": {"shape": "phased_pinwheel", "core": "violet_hub", "trail": "five_curved_blades", "layering": "five_offsets", "cadence": "blade_turn", "density": "10032_360", "palette": "violet_pearl"}
+    },
+    {
+      "id": "midsize_radial_champagne_hollow_firework",
+      "zhName": "中型香槟空心放射烟花",
+      "enName": "Medium Champagne Hollow Core Radial Firework",
+      "path": "HOLLOW_CORE",
+      "colors": ["#D7B66B", "#F4DFA5", "#FFF8DD"],
+      "coolColor": false,
+      "particlePlan": {"total": 9936, "ratio": 0.80859375, "localPeak": 328, "minLifetime": 44, "maxLifetime": 76, "totalVisualTicks": 114, "maxOwned": 9936},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(HOLLOW_CORE, seed)"},
+      "visualSignature": {"shape": "hollow_core", "core": "negative_center", "trail": "cream_perimeter", "layering": "open_dense_wide", "cadence": "body_before_inner", "density": "9936_328", "palette": "champagne_ivory"}
+    },
+    {
+      "id": "midsize_radial_crimson_fracture_firework",
+      "zhName": "中型绯红裂射放射烟花",
+      "enName": "Medium Crimson Fracture Ray Radial Firework",
+      "path": "FRACTURE_RAY",
+      "colors": ["#B51F34", "#ED4D3F", "#FFD3BD"],
+      "coolColor": false,
+      "particlePlan": {"total": 9856, "ratio": 0.8020833333333334, "localPeak": 384, "minLifetime": 49, "maxLifetime": 88, "totalVisualTicks": 122, "maxOwned": 9856},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(FRACTURE_RAY, seed)"},
+      "visualSignature": {"shape": "fractured_ray", "core": "crimson_shard", "trail": "split_fragments", "layering": "alternating_lengths", "cadence": "late_fracture", "density": "9856_384", "palette": "crimson_coral"}
+    },
+    {
+      "id": "midsize_radial_topaz_diamond_firework",
+      "zhName": "中型黄玉菱星放射烟花",
+      "enName": "Medium Topaz Diamond Star Radial Firework",
+      "path": "DIAMOND_STAR",
+      "colors": ["#D98A12", "#F6C63E", "#FFF0B1"],
+      "coolColor": false,
+      "particlePlan": {"total": 9952, "ratio": 0.8098958333333334, "localPeak": 336, "minLifetime": 46, "maxLifetime": 79, "totalVisualTicks": 115, "maxOwned": 9952},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(DIAMOND_STAR, seed)"},
+      "visualSignature": {"shape": "diamond_star", "core": "topaz_diamond", "trail": "faceted_points", "layering": "four_facets", "cadence": "sharp_rim", "density": "9952_336", "palette": "topaz_gold"}
+    },
+    {
+      "id": "midsize_radial_solar_crossweave_firework",
+      "zhName": "中型日曜交织放射烟花",
+      "enName": "Medium Solar Crossweave Radial Firework",
+      "path": "CROSSWEAVE",
+      "colors": ["#F27A12", "#FFBF31", "#FFF2AC"],
+      "coolColor": false,
+      "particlePlan": {"total": 10080, "ratio": 0.8203125, "localPeak": 352, "minLifetime": 47, "maxLifetime": 83, "totalVisualTicks": 119, "maxOwned": 10080},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(CROSSWEAVE, seed)"},
+      "visualSignature": {"shape": "crossweave", "core": "solar_knot", "trail": "crossed_filaments", "layering": "two_weave_axes", "cadence": "rapid_cross", "density": "10080_352", "palette": "solar_white"}
+    },
+    {
+      "id": "midsize_radial_persimmon_wave_firework",
+      "zhName": "中型柿色波澜放射烟花",
+      "enName": "Medium Persimmon Wave Radial Firework",
+      "path": "WAVE_RADIANT",
+      "colors": ["#E55222", "#FF9A45", "#FFE1B9"],
+      "coolColor": false,
+      "particlePlan": {"total": 10016, "ratio": 0.8151041666666666, "localPeak": 344, "minLifetime": 48, "maxLifetime": 86, "totalVisualTicks": 124, "maxOwned": 10016},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(WAVE_RADIANT, seed)"},
+      "visualSignature": {"shape": "wave_radial", "core": "persimmon_wave", "trail": "rolling_tips", "layering": "vertical_wave", "cadence": "two_crests", "density": "10016_344", "palette": "persimmon_cream"}
+    },
+    {
+      "id": "midsize_radial_aurora_triple_pulse_firework",
+      "zhName": "中型极光三脉冲放射烟花",
+      "enName": "Medium Aurora Triple Pulse Radial Firework",
+      "path": "TRIPLE_PULSE",
+      "colors": ["#2B92AA", "#65CBD4", "#E5FFFF"],
+      "coolColor": true,
+      "particlePlan": {"total": 9968, "ratio": 0.8111979166666666, "localPeak": 360, "minLifetime": 45, "maxLifetime": 78, "totalVisualTicks": 114, "maxOwned": 9968},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 64.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(TRIPLE_PULSE, seed)"},
+      "visualSignature": {"shape": "triple_pulse", "core": "aqua_pulse", "trail": "cyan_flashes", "layering": "three_breathing_shells", "cadence": "three_peaks", "density": "9968_360", "palette": "aurora_cyan"}
+    },
+    {
+      "id": "midsize_radial_teal_aurora_firework",
+      "zhName": "中型青翠极光弧放射烟花",
+      "enName": "Medium Teal Aurora Arc Radial Firework",
+      "path": "AURORA_ARC",
+      "colors": ["#0B9E9C", "#4ED0C4", "#E6FFFF"],
+      "coolColor": true,
+      "particlePlan": {"total": 9920, "ratio": 0.8072916666666666, "localPeak": 344, "minLifetime": 50, "maxLifetime": 92, "totalVisualTicks": 129, "maxOwned": 9920},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(AURORA_ARC, seed)"},
+      "visualSignature": {"shape": "aurora_arc", "core": "teal_seed", "trail": "mint_arcs", "layering": "curtain_arcs", "cadence": "long_arc", "density": "9920_344", "palette": "teal_ice"}
+    },
+    {
+      "id": "midsize_radial_cobalt_icewheel_firework",
+      "zhName": "中型钴蓝冰轮放射烟花",
+      "enName": "Medium Cobalt Ice Wheel Radial Firework",
+      "path": "ICE_WHEEL",
+      "colors": ["#285EB6", "#64A7E7", "#E8F6FF"],
+      "coolColor": true,
+      "particlePlan": {"total": 9984, "ratio": 0.8125, "localPeak": 336, "minLifetime": 49, "maxLifetime": 90, "totalVisualTicks": 129, "maxOwned": 9984},
+      "boundary": {"fullEnvelopeBlocks": 130.0, "maxRadius": 65.0, "proof": "MidsizeRadialTrajectory.staticContractHolds(ICE_WHEEL, seed)"},
+      "visualSignature": {"shape": "ice_wheel", "core": "cobalt_hub", "trail": "blue_white_teeth", "layering": "wheel_frozen_rim", "cadence": "turn_then_rim", "density": "9984_336", "palette": "cobalt_frost"}
+    }
+  ]
+}

@@ -12,41 +12,42 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FireworkParticles;
 import net.minecraft.client.particle.Particle;
 
-/** Client-only renderer for one seventh giant request: one shell followed by seeded medium radial blooms. */
+/**
+ * Client-only visual program for one seventh-giant request.
+ *
+ * <p>The only allocation path is {@link #emit}. Each child is emitted as its complete 32-direction,
+ * four-depth shell on one trigger tick. No child creates an entity, a payload, or a follow-up program.</p>
+ */
 public final class GiantCascadeClientProgram {
     private final Request request;
-    private final List<ChildBurst> childBursts = new ArrayList<>(GiantCascadeTrajectory.CHILD_BURST_COUNT);
+    private final ChildBurst[] childBursts = new ChildBurst[GiantCascadeTrajectory.CHILD_BURST_COUNT];
     private final List<TrackedSpark> trackedSparks = new ArrayList<>(GiantCascadeTrajectory.TOTAL_PARTICLES);
     private int age;
     private int createdParticles;
 
     public GiantCascadeClientProgram(Request request) {
         this.request = request;
-        for (int index = 0; index < GiantCascadeTrajectory.CHILD_BURST_COUNT; index++) {
-            this.childBursts.add(GiantCascadeTrajectory.childBurst(request.seed(), index));
+        for (int index = 0; index < this.childBursts.length; index++) {
+            this.childBursts[index] = GiantCascadeTrajectory.childBurst(request.seed(), index);
         }
     }
 
-    /** Returns true only when both bounded stages and all retirement windows have elapsed. */
+    /** Returns true only after the one bounded visual population and every retirement window have elapsed. */
     public boolean tick(Minecraft minecraft) {
         ClientLevel level = minecraft.level;
         if (level == null) {
             return false;
         }
-        updateRetirementFlicker();
+
+        this.updateRetirementFlicker();
         if (GiantCascadeTrajectory.isMainEmitting(this.age)) {
             for (int branch = 0; branch < GiantCascadeTrajectory.MAIN_BRANCH_COUNT; branch++) {
-                emit(minecraft, GiantCascadeTrajectory.mainSample(this.request.seed(), branch, this.age));
+                this.emit(minecraft, GiantCascadeTrajectory.mainSample(this.request.seed(), branch, this.age));
             }
         }
-        for (int burstIndex = 0; burstIndex < this.childBursts.size(); burstIndex++) {
-            ChildBurst burst = this.childBursts.get(burstIndex);
-            if (this.age >= burst.startTick() && this.age <= burst.finalEmissionTick()) {
-                int segment = this.age - burst.startTick();
-                for (int branch = 0; branch < GiantCascadeTrajectory.CHILD_BRANCH_COUNT; branch++) {
-                    emit(minecraft, GiantCascadeTrajectory.childSample(
-                            this.request.seed(), burstIndex, branch, segment));
-                }
+        for (ChildBurst burst : this.childBursts) {
+            if (this.age == burst.startTick()) {
+                this.emitCompleteChildShell(minecraft, burst);
             }
         }
         this.age++;
@@ -74,7 +75,7 @@ public final class GiantCascadeClientProgram {
             return true;
         }
         for (ChildBurst burst : this.childBursts) {
-            if (this.age >= burst.startTick() && this.age <= burst.finalEmissionTick()) {
+            if (this.age == burst.startTick()) {
                 return true;
             }
         }
@@ -83,6 +84,16 @@ public final class GiantCascadeClientProgram {
 
     public int expectedCreatedParticleCountAtAge() {
         return GiantCascadeTrajectory.particlesCreatedThroughTick(this.age - 1);
+    }
+
+    /** Allocates all 128 shell nodes of one child before the next client tick. */
+    private void emitCompleteChildShell(Minecraft minecraft, ChildBurst burst) {
+        for (int branch = 0; branch < GiantCascadeTrajectory.CHILD_BRANCH_COUNT; branch++) {
+            for (int shellDepth = 0; shellDepth < GiantCascadeTrajectory.CHILD_SEGMENTS_PER_BRANCH; shellDepth++) {
+                this.emit(minecraft, GiantCascadeTrajectory.childSample(
+                        this.request.seed(), burst.index(), branch, shellDepth));
+            }
+        }
     }
 
     private void emit(Minecraft minecraft, BranchSample sample) {
@@ -104,7 +115,11 @@ public final class GiantCascadeClientProgram {
                     spark, FireworkParticleAppearance.CORE_BASE_SCALE, true);
         } else {
             FireworkParticleAppearance.applyVividColor(
-                    spark, rgb.red(), rgb.green(), rgb.blue(), sample.brightness(),
+                    spark,
+                    rgb.red(),
+                    rgb.green(),
+                    rgb.blue(),
+                    sample.brightness(),
                     FireworkParticleAppearance.OUTER_COLOR_WHITE_LIFT);
             FireworkParticleAppearance.applyVisibilityScale(spark, sample.colorBand().scale());
         }

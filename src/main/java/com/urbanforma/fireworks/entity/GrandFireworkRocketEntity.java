@@ -1,6 +1,7 @@
 package com.urbanforma.fireworks.entity;
 
 import com.urbanforma.fireworks.content.FireworkStyle;
+import com.urbanforma.fireworks.content.FireworkAscentTrajectory;
 import com.urbanforma.fireworks.network.payload.GrandFireworkBurstPayload;
 import com.urbanforma.fireworks.registry.FireworksEntities;
 import com.urbanforma.fireworks.registry.FireworksItems;
@@ -39,12 +40,27 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
     private static final String STYLE_INDEX_TAG = "StyleIndex";
     private static final EntityDataAccessor<Integer> DATA_STYLE_INDEX =
             SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_LAUNCH_AGE =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> DATA_LAUNCH_SEED =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Float> DATA_TARGET_HEIGHT =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_LANDING_OFFSET_X =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_LANDING_OFFSET_Z =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_SWAY_PHASE =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_SWAY_FREQUENCY =
+            SynchedEntityData.defineId(GrandFireworkRocketEntity.class, EntityDataSerializers.FLOAT);
 
     private int life;
     private long explosionSeed;
     private boolean launchSoundPlayed;
     private boolean explosionDispatched;
     private int burstDispatchCount;
+    private Vec3 launchOrigin;
 
     public GrandFireworkRocketEntity(EntityType<GrandFireworkRocketEntity> entityType, Level level) {
         super(entityType, level);
@@ -61,15 +77,27 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
         this.setPos(x, y, z);
         this.setOwner(owner);
         this.setStyle(style);
+        // Dispensers construct the projectile directly, so initialize before their configured velocity is applied.
+        this.launchOrigin = this.position();
+        this.configureAscentProfile();
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(DATA_STYLE_INDEX, FireworkStyle.GRAND_GOLDEN_SPHERE.index());
+        builder.define(DATA_LAUNCH_AGE, 0);
+        builder.define(DATA_LAUNCH_SEED, 0L);
+        builder.define(DATA_TARGET_HEIGHT, 40.0F);
+        builder.define(DATA_LANDING_OFFSET_X, 0.0F);
+        builder.define(DATA_LANDING_OFFSET_Z, 0.0F);
+        builder.define(DATA_SWAY_PHASE, 0.0F);
+        builder.define(DATA_SWAY_FREQUENCY, 1.0F);
     }
 
     public void launchVertically() {
-        this.shoot(0.0D, 1.0D, 0.0D, LAUNCH_SPEED, 0.0F);
+        this.launchOrigin = this.position();
+        this.configureAscentProfile();
+        this.setDeltaMovement(this.initialServerVelocity());
     }
 
     public int life() {
@@ -78,6 +106,11 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
 
     public long explosionSeed() {
         return this.explosionSeed;
+    }
+
+    /** Immutable launch seed synchronized once with entity tracking data. */
+    public long launchSeed() {
+        return this.entityData.get(DATA_LAUNCH_SEED);
     }
 
     public int styleIndex() {
@@ -110,8 +143,7 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
     public void tick() {
         super.tick();
         if (this.level().isClientSide) {
-            // The server sends a correction every tick; this fills the interval between them.
-            this.setPos(this.position().add(this.getDeltaMovement()));
+            this.advanceClientVisualPath();
             this.updateRotation();
             return;
         }
@@ -129,23 +161,41 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
             this.launchSoundPlayed = true;
         }
 
-        Vec3 currentPosition = this.position();
-        Vec3 velocity = this.getDeltaMovement();
-        HitResult collision = this.level().clip(new ClipContext(
-                currentPosition,
-                currentPosition.add(velocity),
-                ClipContext.Block.COLLIDER,
-                ClipContext.Fluid.NONE,
-                this));
-        if (collision.getType() == HitResult.Type.BLOCK) {
-            this.setPos(collision.getLocation());
-            this.explode();
-            return;
+        if (this.life == 0) {
+            // ProjectileItem may apply its dispenser velocity after construction; normalize all launch paths once.
+            this.setDeltaMovement(this.initialServerVelocity());
+        }
+        int flightTicks = Math.max(1, this.style().flightTicks());
+        int currentAge = Math.min(flightTicks, Math.max(0, this.life));
+        int nextAge = Math.min(flightTicks, currentAge + 1);
+        Vec3 currentPosition = this.arcPointForAge(currentAge, flightTicks);
+        Vec3 nextPosition = this.arcPointForAge(nextAge, flightTicks);
+        // Sweep consecutive pieces of the same seed-derived curve the client reconstructs. A straight chord from
+        // tick endpoints cuts below a curved large/giant ascent and can incorrectly detonate near the ground.
+        int collisionSegments = FireworkAscentTrajectory.collisionSegments(this.launchProfile());
+        Vec3 segmentStart = currentPosition;
+        for (int segment = 1; segment <= collisionSegments; segment++) {
+            double age = currentAge + (nextAge - currentAge) * (segment / (double) collisionSegments);
+            Vec3 segmentEnd = this.arcPointForProgress(age / flightTicks);
+            HitResult collision = this.level().clip(new ClipContext(
+                    segmentStart,
+                    segmentEnd,
+                    ClipContext.Block.COLLIDER,
+                    ClipContext.Fluid.NONE,
+                    this));
+            if (collision.getType() == HitResult.Type.BLOCK) {
+                this.setPos(collision.getLocation());
+                this.explode();
+                return;
+            }
+            segmentStart = segmentEnd;
         }
 
-        this.setPos(currentPosition.add(velocity));
+        this.setPos(nextPosition);
+        this.setDeltaMovement(nextPosition.subtract(currentPosition));
         this.updateRotation();
         this.life++;
+        this.entityData.set(DATA_LAUNCH_AGE, this.life);
         if (this.life >= this.style().flightTicks()) {
             this.explode();
         }
@@ -173,6 +223,10 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
         tag.putLong("Seed", this.explosionSeed);
         tag.putBoolean("LaunchSoundPlayed", this.launchSoundPlayed);
         tag.putInt(STYLE_INDEX_TAG, this.style().index());
+        Vec3 origin = this.launchOrigin == null ? this.position() : this.launchOrigin;
+        tag.putDouble("LaunchOriginX", origin.x);
+        tag.putDouble("LaunchOriginY", origin.y);
+        tag.putDouble("LaunchOriginZ", origin.z);
         Vec3 velocity = this.getDeltaMovement();
         tag.putDouble("VelocityX", velocity.x);
         tag.putDouble("VelocityY", velocity.y);
@@ -186,6 +240,11 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
         this.explosionSeed = tag.getLong("Seed");
         this.launchSoundPlayed = tag.getBoolean("LaunchSoundPlayed");
         this.setStyle(FireworkStyle.fromIndex(tag.getInt(STYLE_INDEX_TAG)));
+        this.launchOrigin = tag.contains("LaunchOriginX")
+                ? new Vec3(tag.getDouble("LaunchOriginX"), tag.getDouble("LaunchOriginY"), tag.getDouble("LaunchOriginZ"))
+                : this.position();
+        this.configureAscentProfile();
+        this.entityData.set(DATA_LAUNCH_AGE, this.life);
         if (tag.contains("VelocityX") && tag.contains("VelocityY") && tag.contains("VelocityZ")) {
             this.setDeltaMovement(tag.getDouble("VelocityX"), tag.getDouble("VelocityY"), tag.getDouble("VelocityZ"));
         }
@@ -197,6 +256,17 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
         }
         this.explosionDispatched = true;
         if (this.level() instanceof ServerLevel serverLevel) {
+            // This is the single authoritative detonation sound for every registered style. The client only
+            // reconstructs its visual payload, so receivers do not play a second local blast.
+            serverLevel.playSound(
+                    null,
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    SoundEvents.FIREWORK_ROCKET_LARGE_BLAST,
+                    SoundSource.AMBIENT,
+                    16.0F,
+                    0.35F);
             PacketDistributor.sendToPlayersNear(
                     serverLevel,
                     null,
@@ -209,5 +279,60 @@ public final class GrandFireworkRocketEntity extends Projectile implements ItemS
             this.burstDispatchCount++;
         }
         this.discard();
+    }
+
+    private void configureAscentProfile() {
+        FireworkAscentTrajectory.Profile profile = FireworkAscentTrajectory.profile(this.style(), this.explosionSeed);
+        this.entityData.set(DATA_LAUNCH_SEED, this.explosionSeed);
+        this.entityData.set(DATA_TARGET_HEIGHT, profile.targetHeight());
+        this.entityData.set(DATA_LANDING_OFFSET_X, profile.landingOffsetX());
+        this.entityData.set(DATA_LANDING_OFFSET_Z, profile.landingOffsetZ());
+        this.entityData.set(DATA_SWAY_PHASE, profile.swayPhase());
+        this.entityData.set(DATA_SWAY_FREQUENCY, profile.swayFrequency());
+    }
+
+    /** Returns the synchronized, finite launch profile used by client-side visual reconstruction. */
+    public FireworkAscentTrajectory.Profile launchProfile() {
+        return new FireworkAscentTrajectory.Profile(
+                this.entityData.get(DATA_TARGET_HEIGHT),
+                this.entityData.get(DATA_LANDING_OFFSET_X),
+                this.entityData.get(DATA_LANDING_OFFSET_Z),
+                this.entityData.get(DATA_SWAY_PHASE),
+                this.entityData.get(DATA_SWAY_FREQUENCY));
+    }
+
+    private Vec3 initialServerVelocity() {
+        int flightTicks = Math.max(1, this.style().flightTicks());
+        return FireworkAscentTrajectory.offset(this.launchProfile(), 1.0D).scale(1.0D / flightTicks);
+    }
+
+    private Vec3 arcPointForAge(int age, int flightTicks) {
+        return this.arcPointForProgress((double) Math.min(flightTicks, Math.max(0, age)) / flightTicks);
+    }
+
+    private Vec3 arcPointForProgress(double progress) {
+        if (this.launchOrigin == null) {
+            this.launchOrigin = this.position();
+        }
+        return this.launchOrigin.add(FireworkAscentTrajectory.offset(this.launchProfile(), progress));
+    }
+
+    /** The physical client alone samples the complete bounded micro-arc between the authoritative endpoints. */
+    private void advanceClientVisualPath() {
+        int flightTicks = Math.max(1, this.style().flightTicks());
+        int age = Math.min(flightTicks, Math.max(0, this.entityData.get(DATA_LAUNCH_AGE)));
+        FireworkAscentTrajectory.Profile profile = this.launchProfile();
+        Vec3 origin = this.launchOrigin;
+        if (origin == null) {
+            Vec3 linearProgress = FireworkAscentTrajectory.offset(profile, 1.0D)
+                    .scale((double) age / flightTicks);
+            origin = this.position().subtract(linearProgress);
+            this.launchOrigin = origin;
+        }
+        int nextAge = Math.min(flightTicks, age + 1);
+        Vec3 current = origin.add(FireworkAscentTrajectory.offset(profile, (double) age / flightTicks));
+        Vec3 next = origin.add(FireworkAscentTrajectory.offset(profile, (double) nextAge / flightTicks));
+        this.setPos(current);
+        this.setDeltaMovement(next.subtract(current));
     }
 }

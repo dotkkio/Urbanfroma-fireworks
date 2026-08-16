@@ -1,0 +1,27 @@
+{
+  "batch": "release_next:large_extension",
+  "status": "ISOLATED_NOT_REGISTERED",
+  "entries": 20,
+  "itemModels": "release_next/large_extension/models/item/<id>.json",
+  "integration": {
+    "commonCatalog": "com.urbanforma.fireworks.content.release_next.large_extension.LargeExtensionCatalog",
+    "clientProgram": "com.urbanforma.fireworks.client.release_next.large_extension.LargeExtensionClientPrograms",
+    "creativeSection": "large",
+    "serverParticleLoop": false,
+    "serverTrajectoryComputation": false,
+    "networkPayload": false,
+    "globalScheduler": false
+  },
+  "ids": [
+    "large_extension_crimson_fan_palm", "large_extension_gold_crown_fountain",
+    "large_extension_amber_scallop_shell", "large_extension_coral_petal_lace",
+    "large_extension_rose_heart_bloom", "large_extension_violet_spiderweb",
+    "large_extension_sapphire_comet_wheel", "large_extension_teal_double_helix",
+    "large_extension_silver_white_snowflake", "large_extension_black_gold_eclipse",
+    "large_extension_ruby_chrysanthemum", "large_extension_champagne_gold_diamond",
+    "large_extension_honey_amber_lantern", "large_extension_coral_reef_branch",
+    "large_extension_rose_garden_maze", "large_extension_amethyst_orbit_lattice",
+    "large_extension_azure_polar_cross", "large_extension_jade_tide_arc",
+    "large_extension_platinum_starburst", "large_extension_onyx_gilded_gate"
+  ]
+}

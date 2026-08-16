@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "lifecycle": "client_existing_particles_only",
+  "transition_ticks": 1,
+  "recipes": [
+    "release_next_cinnabar_azure",
+    "release_next_ember_violet",
+    "release_next_sunset_orchid",
+    "release_next_aurora_cyan",
+    "release_next_amber_ruby",
+    "release_next_ruby_azure",
+    "release_next_giant_amber_aurora",
+    "release_next_golden_violet",
+    "release_next_led_scarlet_mint",
+    "release_next_led_cobalt_rose",
+    "release_next_polar_gold",
+    "release_next_jade_magenta"
+  ],
+  "replacement_map": {
+    "cinnabar_amber_sphere": "release_next_cinnabar_azure",
+    "batch05_ember_twilight_radiant": "release_next_ember_violet",
+    "batch05_sunset_orchid_willow": "release_next_sunset_orchid",
+    "batch05_aurora_pearl_hybrid": "release_next_aurora_cyan",
+    "amber_radiant_firework": "release_next_amber_ruby",
+    "amber_radiant_willow_firework": "release_next_ruby_azure",
+    "giant_amber_radiant_firework": "release_next_giant_amber_aurora",
+    "giant_golden_white_radial_willow_firework": "release_next_golden_violet",
+    "led_scarlet_sphere": "release_next_led_scarlet_mint",
+    "led_cobalt_sphere": "release_next_led_cobalt_rose",
+    "polar_silver_willow": "release_next_polar_gold",
+    "jade_pearl_willow": "release_next_jade_magenta"
+  }
+}

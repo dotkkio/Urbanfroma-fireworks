@@ -1,0 +1,23 @@
+{
+  "batchId": "release_next_medium_extension",
+  "integrationStatus": "unregistered",
+  "requiredEntryCount": 24,
+  "categories": ["sphere", "radial", "ring_core", "short_willow", "pulse", "interleaved_shell"],
+  "sharedBoundary": {
+    "particleType": "minecraft:firework",
+    "maximumLocalParticlesPerTick": 480,
+    "serverParticleLoop": false,
+    "globalScheduler": false,
+    "networkPayload": false,
+    "registryMutation": false,
+    "languageMutation": false
+  },
+  "clientContract": {
+    "trajectory": "com.urbanforma.fireworks.content.release_next.medium_extension.MediumExtensionTrajectory",
+    "programBase": "com.urbanforma.fireworks.client.release_next.medium_extension.MediumExtensionClientProgram",
+    "invocation": "coordinator-owned caller-driven tick(Minecraft, Request, elapsedTicks)",
+    "deterministicSeed": true,
+    "finiteEmission": true,
+    "zeroVelocityParticles": true
+  }
+}

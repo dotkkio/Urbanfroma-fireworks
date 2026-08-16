@@ -713,7 +713,7 @@ public record FireworkStyle(
                         : shape == Shape.GIANT_RADIANT ? fullEnvelope > 260
                         : shape == Shape.SATURN ? fullEnvelope > 160 : fullEnvelope > 130))
                 || diameter > fullEnvelope || phaseDelayTicks < 0 || totalStarCount <= 0
-                || starsPerTick <= 0 || starsPerTick > 340 || outerLifetime <= 0 || innerLifetime <= 0
+                || starsPerTick <= 0 || starsPerTick > 768 || outerLifetime <= 0 || innerLifetime <= 0
                 || accentLifetime <= 0 || twinkleChanceMin < 0.0F || twinkleChanceMax > 1.0F
                 || twinkleChanceMin > twinkleChanceMax) {
             throw new IllegalArgumentException("Invalid firework style " + id);
@@ -753,13 +753,17 @@ public record FireworkStyle(
                         + GiantFireworkCatalog.INTEGRATED_GIANT_COUNT
                         + OtherFireworkCatalog.OTHER_ORDINARY_STYLE_COUNT
                         + OtherExtraFireworkCatalog.OTHER_EXTRA_STYLE_COUNT
-                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT);
+                        + MidsizeFireworkCatalog.MIDSIZE_STYLE_COUNT
+                        + IntegratedFireworkCatalog.TOTAL_STYLE_COUNT
+                        + ReleaseNextFireworkCatalog.TOTAL_STYLE_COUNT);
         styles.addAll(BASE_VALUES);
         styles.addAll(NormalFireworkCatalog.stylesFrom(BASE_VALUES.size()));
         styles.addAll(GiantFireworkCatalog.stylesFrom(styles.size()));
         styles.addAll(OtherFireworkCatalog.stylesFrom(styles.size()));
         styles.addAll(OtherExtraFireworkCatalog.stylesFrom(styles.size()));
         styles.addAll(MidsizeFireworkCatalog.stylesFrom(styles.size()));
+        styles.addAll(IntegratedFireworkCatalog.stylesFrom(styles.size()));
+        styles.addAll(ReleaseNextFireworkCatalog.stylesFrom(styles.size()));
         return List.copyOf(styles);
     }
 

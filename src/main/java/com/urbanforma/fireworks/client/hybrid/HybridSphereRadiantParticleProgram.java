@@ -1,6 +1,8 @@
 package com.urbanforma.fireworks.client.hybrid;
 
 import com.urbanforma.fireworks.client.FireworkParticleAppearance;
+import com.urbanforma.fireworks.client.colorchange.ColorChangeBallParticleAdapter;
+import com.urbanforma.fireworks.content.colorchange.ColorChangeBallProgram;
 import com.urbanforma.fireworks.content.FireworkStyle;
 import com.urbanforma.fireworks.content.RadiantTrajectory;
 import com.urbanforma.fireworks.content.hybrid.HybridSphereRadiantTrajectory;
@@ -28,6 +30,7 @@ public final class HybridSphereRadiantParticleProgram {
     private final FireworkStyle.Rgb primaryColor;
     private final FireworkStyle.Rgb secondaryColor;
     private final FireworkStyle.Rgb accentColor;
+    private final ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession;
     private final RadiantTrajectory.Branch[] radialBranches;
     private int ageTicks;
 
@@ -41,6 +44,21 @@ public final class HybridSphereRadiantParticleProgram {
             FireworkStyle.Rgb primaryColor,
             FireworkStyle.Rgb secondaryColor,
             FireworkStyle.Rgb accentColor) {
+        this(minecraft, x, y, z, payloadSeed, radialProfile,
+                primaryColor, secondaryColor, accentColor, null);
+    }
+
+    public HybridSphereRadiantParticleProgram(
+            Minecraft minecraft,
+            double x,
+            double y,
+            double z,
+            long payloadSeed,
+            FireworkStyle.RadiantProfile radialProfile,
+            FireworkStyle.Rgb primaryColor,
+            FireworkStyle.Rgb secondaryColor,
+            FireworkStyle.Rgb accentColor,
+            ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession) {
         this.minecraft = Objects.requireNonNull(minecraft, "minecraft");
         this.x = x;
         this.y = y;
@@ -50,6 +68,7 @@ public final class HybridSphereRadiantParticleProgram {
         this.primaryColor = Objects.requireNonNull(primaryColor, "primaryColor");
         this.secondaryColor = Objects.requireNonNull(secondaryColor, "secondaryColor");
         this.accentColor = Objects.requireNonNull(accentColor, "accentColor");
+        this.colorChangeSession = colorChangeSession;
         this.radialBranches = new RadiantTrajectory.Branch[HybridSphereRadiantTrajectory.RADIAL_BRANCH_COUNT];
         for (int branchIndex = 0; branchIndex < this.radialBranches.length; branchIndex++) {
             this.radialBranches[branchIndex] = HybridSphereRadiantTrajectory.radialBranch(
@@ -97,6 +116,10 @@ public final class HybridSphereRadiantParticleProgram {
             }
         }
         this.ageTicks++;
+        if (this.ageTicks >= HybridSphereRadiantTrajectory.TOTAL_EMISSION_TICKS
+                && this.colorChangeSession != null) {
+            this.colorChangeSession.seal();
+        }
         return emitted;
     }
 
@@ -134,6 +157,7 @@ public final class HybridSphereRadiantParticleProgram {
         if (!coreHighlight) {
             enableTwinkle(spark);
         }
+        trackExisting(spark, node.colorBand(), node.lifetime(), coreHighlight);
     }
 
     private void emitRadialNode(HybridSphereRadiantTrajectory.RadialNode node) {
@@ -159,6 +183,23 @@ public final class HybridSphereRadiantParticleProgram {
         if (sample.twinkles()) {
             enableTwinkle(spark);
         }
+        trackExisting(spark, sample.colorBand(), sample.lifetime(), false);
+    }
+
+    private void trackExisting(
+            Particle spark,
+            RadiantTrajectory.ColorBand colorBand,
+            int lifetime,
+            boolean coreHighlight) {
+        if (this.colorChangeSession == null) {
+            return;
+        }
+        ColorChangeBallProgram.Layer layer = switch (colorBand) {
+            case PRIMARY -> ColorChangeBallProgram.Layer.PRIMARY;
+            case SECONDARY -> ColorChangeBallProgram.Layer.SECONDARY;
+            case ACCENT -> ColorChangeBallProgram.Layer.ACCENT;
+        };
+        this.colorChangeSession.trackExisting(spark, layer, lifetime, coreHighlight);
     }
 
     private FireworkStyle.Rgb colorFor(RadiantTrajectory.ColorBand band) {

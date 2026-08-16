@@ -1,0 +1,19 @@
+{
+  "schema": "urbanforma_fireworks.release_next.small_shapes.v1",
+  "catalogClass": "com.urbanforma.fireworks.content.release_next.small_shapes.SmallShapeCatalog",
+  "clientProgramClass": "com.urbanforma.fireworks.client.release_next.small_shapes.SmallShapeClientProgram",
+  "integrationStatus": "unregistered",
+  "entryCount": 15,
+  "families": ["short_ray", "ring", "comet", "cross", "short_willow", "mine", "pulse", "split"],
+  "clientOnly": true,
+  "usesExistingBurstPayload": true,
+  "createsClientListener": false,
+  "createsSharedScheduler": false,
+  "createsNewNetworkPayload": false,
+  "createsServerParticleLoop": false,
+  "createsServerTrajectoryCalculation": false,
+  "localBounds": {"maxRadius": 9.0, "maxParticlesPerTick": 64, "maxOwnedParticles": 448},
+  "entries": [
+    "small_shape_amber_short_ray", "small_shape_cinnabar_short_ray", "small_shape_jade_ring", "small_shape_violet_double_ring", "small_shape_gold_comet", "small_shape_azure_comet", "small_shape_coral_cross", "small_shape_silver_cross", "small_shape_willow_ember", "small_shape_willow_moon", "small_shape_copper_mine", "small_shape_emerald_mine", "small_shape_saffron_pulse", "small_shape_lilac_pulse", "small_shape_rose_split"
+  ]
+}

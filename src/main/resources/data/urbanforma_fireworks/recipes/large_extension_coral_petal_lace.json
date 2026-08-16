@@ -1,0 +1,23 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "pattern":  [
+                    " P ",
+                    "FGF",
+                    " P "
+                ],
+    "key":  {
+                "P":  {
+                          "item":  "minecraft:paper"
+                      },
+                "F":  {
+                          "item":  "minecraft:firework_star"
+                      },
+                "G":  {
+                          "item":  "minecraft:gunpowder"
+                      }
+            },
+    "result":  {
+                   "id":  "urbanforma_fireworks:large_extension_coral_petal_lace",
+                   "count":  1
+               }
+}

@@ -1,14 +1,23 @@
 package com.urbanforma.fireworks.client;
 
 import com.urbanforma.fireworks.content.FireworkStyle;
+import com.urbanforma.fireworks.content.IntegratedFireworkCatalog;
+import com.urbanforma.fireworks.content.ReleaseNextFireworkCatalog;
 import com.urbanforma.fireworks.content.MidsizeFireworkCatalog;
 import com.urbanforma.fireworks.content.NormalFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherExtraFireworkCatalog;
 import com.urbanforma.fireworks.content.OtherFireworkCatalog;
+import com.urbanforma.fireworks.content.GiantTier;
 import com.urbanforma.fireworks.content.RadiantTrajectory;
 import com.urbanforma.fireworks.content.RadiantWillowTrajectory;
 import com.urbanforma.fireworks.content.WillowTrajectory;
 import com.urbanforma.fireworks.content.colorchange.ColorChangeBallProgram;
+import com.urbanforma.fireworks.content.crown.CrownDescentTrajectory;
+import com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialFireworkCatalog;
+import com.urbanforma.fireworks.content.midsize.radial.MidsizeRadialFireworkDefinition;
+import com.urbanforma.fireworks.content.midsize.sphere.MediumSphereCatalog;
+import com.urbanforma.fireworks.content.small.SmallFireworkCatalog;
+import com.urbanforma.fireworks.content.small.SmallFireworkDefinition;
 import com.urbanforma.fireworks.content.giant.GiantRadiantTrajectory;
 import com.urbanforma.fireworks.content.hybrid.HybridSphereRadiantTrajectory;
 import com.urbanforma.fireworks.content.saturn.SaturnProgram;
@@ -31,11 +40,27 @@ import com.urbanforma.fireworks.client.giant.thickradial.GiantThickRadialClientP
 import com.urbanforma.fireworks.client.giant.thickradial.GiantThickRadialClientQueue;
 import com.urbanforma.fireworks.client.giant.cascade.GiantCascadeClientProgram;
 import com.urbanforma.fireworks.client.giant.cascade.GiantCascadeClientQueue;
+import com.urbanforma.fireworks.client.giant.palm.GiantPalmClientProgram;
+import com.urbanforma.fireworks.client.giant.palm.GiantPalmClientQueue;
+import com.urbanforma.fireworks.client.giant.spiral.GiantSpiralClientProgram;
+import com.urbanforma.fireworks.client.giant.spiral.GiantSpiralClientQueue;
+import com.urbanforma.fireworks.client.giant.chrysanthemum.GiantChrysanthemumClientProgram;
+import com.urbanforma.fireworks.client.giant.chrysanthemum.GiantChrysanthemumClientQueue;
+import com.urbanforma.fireworks.client.giant.cometfield.GiantCometfieldClientProgram;
+import com.urbanforma.fireworks.client.giant.cometfield.GiantCometfieldClientQueue;
+import com.urbanforma.fireworks.client.crown.CrownDescentClientProgram;
+import com.urbanforma.fireworks.client.crown.CrownDescentClientQueue;
 import com.urbanforma.fireworks.client.hybrid.HybridSphereRadiantParticleProgram;
 import com.urbanforma.fireworks.client.batch_other.BatchOtherClientPrograms;
 import com.urbanforma.fireworks.client.batch_other_extra.BatchOtherExtraClientPrograms;
+import com.urbanforma.fireworks.client.large_extra.LargeExtraClientContracts;
+import com.urbanforma.fireworks.client.large_extra.LargeExtraClientPrograms;
 import com.urbanforma.fireworks.client.midsize.MidsizeDenseRadialClientProgram;
 import com.urbanforma.fireworks.client.midsize.MidsizeDenseSphereClientProgram;
+import com.urbanforma.fireworks.client.midsize.radial.MidsizeRadialClientProgram;
+import com.urbanforma.fireworks.client.midsize.sphere.MediumSphereClientProgram;
+import com.urbanforma.fireworks.client.small.SmallCompactRadialClientProgram;
+import com.urbanforma.fireworks.client.small.SmallLayeredSphereClientProgram;
 import com.urbanforma.fireworks.client.saturn.SaturnClientPlan;
 import com.urbanforma.fireworks.client.saturn.SaturnEmission;
 import com.urbanforma.fireworks.entity.GrandFireworkRocketEntity;
@@ -48,8 +73,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FireworkParticles;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
@@ -94,6 +118,14 @@ public final class GrandFireworkClientEffects {
     private static final GiantMultiRadial2ClientQueue GIANT_MULTI_RADIAL_II_QUEUE = new GiantMultiRadial2ClientQueue();
     private static final GiantThickRadialClientQueue GIANT_THICK_RADIAL_QUEUE = new GiantThickRadialClientQueue();
     private static final GiantCascadeClientQueue GIANT_CASCADE_QUEUE = new GiantCascadeClientQueue();
+    private static final GiantPalmClientQueue GIANT_PALM_QUEUE = new GiantPalmClientQueue();
+    private static final GiantSpiralClientQueue GIANT_SPIRAL_QUEUE = new GiantSpiralClientQueue();
+    private static final GiantChrysanthemumClientQueue GIANT_CHRYSANTHEMUM_QUEUE =
+            new GiantChrysanthemumClientQueue();
+    private static final GiantCometfieldClientQueue GIANT_COMETFIELD_QUEUE = new GiantCometfieldClientQueue();
+    private static final CrownDescentClientQueue CROWN_DESCENT_QUEUE = new CrownDescentClientQueue();
+    private static final com.urbanforma.fireworks.client.release_next.giant_cascade.GiantCascadeReplacementClientQueue
+            RELEASE_NEXT_CASCADE_QUEUE = new com.urbanforma.fireworks.client.release_next.giant_cascade.GiantCascadeReplacementClientQueue();
     private static ClientLevel observedLevel;
 
     private GrandFireworkClientEffects() {
@@ -124,10 +156,18 @@ public final class GrandFireworkClientEffects {
         GIANT_MULTI_RADIAL_II_QUEUE.tick(minecraft);
         GIANT_THICK_RADIAL_QUEUE.tick(minecraft);
         GIANT_CASCADE_QUEUE.tick(minecraft);
+        GIANT_PALM_QUEUE.tick(minecraft);
+        GIANT_SPIRAL_QUEUE.tick(minecraft);
+        GIANT_CHRYSANTHEMUM_QUEUE.tick(minecraft);
+        GIANT_COMETFIELD_QUEUE.tick(minecraft);
+        CROWN_DESCENT_QUEUE.tick(minecraft);
+        RELEASE_NEXT_CASCADE_QUEUE.tick(minecraft);
+        com.urbanforma.fireworks.client.release_next.crown.ReleaseNextCrownClientEffects.tick(minecraft);
         emitSpecialBurstQueue(minecraft);
         emitPrototypeQueue(minecraft);
         emitBurstQueue(minecraft);
         emitRocketTrails(minecraft, level);
+        ColorChangeBallParticleAdapter.tickAllSessions();
     }
 
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
@@ -144,6 +184,14 @@ public final class GrandFireworkClientEffects {
         GIANT_MULTI_RADIAL_II_QUEUE.clear();
         GIANT_THICK_RADIAL_QUEUE.clear();
         GIANT_CASCADE_QUEUE.clear();
+        GIANT_PALM_QUEUE.clear();
+        GIANT_SPIRAL_QUEUE.clear();
+        GIANT_CHRYSANTHEMUM_QUEUE.clear();
+        GIANT_COMETFIELD_QUEUE.clear();
+        CROWN_DESCENT_QUEUE.clear();
+        RELEASE_NEXT_CASCADE_QUEUE.clear();
+        com.urbanforma.fireworks.client.release_next.crown.ReleaseNextCrownClientEffects.clear();
+        ColorChangeBallParticleAdapter.clearSessions();
         observedLevel = null;
     }
 
@@ -156,6 +204,37 @@ public final class GrandFireworkClientEffects {
 
     private static void startBurst(ClientLevel level, GrandFireworkBurstPayload payload) {
         FireworkStyle style = payload.style();
+        // Stable crown IDs are checked before every broad catalog branch so the dedicated 15-second descent cannot
+        // be shadowed by the ordinary crown or release-next dispatchers.
+        if (com.urbanforma.fireworks.client.release_next.crown.ReleaseNextCrownClientEffects.supports(style)) {
+            com.urbanforma.fireworks.client.release_next.crown.ReleaseNextCrownClientEffects.enqueue(
+                    payload.x(), payload.y(), payload.z(), style, payload.seed());
+            return;
+        }
+        String colorChangeId = com.urbanforma.fireworks.content.release_next.colorchange.ReleaseNextColorChangeCatalog
+                .REPLACEMENT_MAP.get(style.id());
+        if (colorChangeId != null) {
+            ACTIVE_SPECIAL_BURSTS.add(new ReleaseNextColorChangeBurst(payload, style.id()));
+            return;
+        }
+        if (ReleaseNextFireworkCatalog.contains(style.id())) {
+            ACTIVE_SPECIAL_BURSTS.add(new ReleaseNextBurst(payload, ReleaseNextFireworkCatalog.require(style.id())));
+            return;
+        }
+        if (IntegratedFireworkCatalog.contains(style.id())) {
+            startIntegratedBurst(level, payload, style);
+            return;
+        }
+        if (CrownDescentTrajectory.supports(style)) {
+            CROWN_DESCENT_QUEUE.enqueue(CrownDescentClientProgram.Request.fromStyle(
+                    payload.x(), payload.y(), payload.z(), style, payload.seed()));
+            return;
+        }
+        if (style.id().equals(com.urbanforma.fireworks.content.release_next.giant_cascade.GiantCascadeReplacementTrajectory.REPLACED_ID)) {
+            RELEASE_NEXT_CASCADE_QUEUE.enqueue(new com.urbanforma.fireworks.client.release_next.giant_cascade.GiantCascadeReplacementClientProgram.Request(
+                    payload.x(), payload.y(), payload.z(), payload.seed()));
+            return;
+        }
         if (style.index() >= MidsizeFireworkCatalog.FIRST_STYLE_INDEX) {
             startMidsizeBurst(level, payload, style);
             return;
@@ -169,35 +248,72 @@ public final class GrandFireworkClientEffects {
             return;
         }
         if (style.giantTier() != com.urbanforma.fireworks.content.GiantTier.NONE) {
-            switch (style.giantTier()) {
-                case LARGE -> GIANT_LARGE_QUEUE.enqueue(
-                        new GiantRadiantClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case EXTRA_LARGE -> GIANT_EXTRA_LARGE_QUEUE.enqueue(
-                        new GiantWillowClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case SUPER_WILLOW -> GIANT_SUPER_WILLOW_QUEUE.enqueue(
-                        new SuperWillowClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case MULTI_RADIAL_II -> GIANT_MULTI_RADIAL_II_QUEUE.enqueue(
-                        new GiantMultiRadial2ClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case THICK_RADIAL -> GIANT_THICK_RADIAL_QUEUE.enqueue(
-                        new GiantThickRadialClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case CASCADE -> GIANT_CASCADE_QUEUE.enqueue(
-                        new GiantCascadeClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
-                case NONE -> throw new IllegalStateException("A giant style requires an independent giant tier");
-            }
+            enqueueGiant(style, payload);
             return;
         }
 
         if (style.shape() == FireworkStyle.Shape.HYBRID_SPHERE_RADIANT) {
-            playBurstSound(level, payload);
             ACTIVE_PROTOTYPES.add(new HybridPrototypeBurst(payload, style));
             return;
         }
         if (style.shape() == FireworkStyle.Shape.SATURN) {
-            playBurstSound(level, payload);
             ACTIVE_PROTOTYPES.add(new SaturnPrototypeBurst(payload, style));
             return;
         }
         startOrdinaryBurst(level, payload, style);
+    }
+
+    private static void startIntegratedBurst(
+            ClientLevel level, GrandFireworkBurstPayload payload, FireworkStyle style) {
+        IntegratedFireworkCatalog.Entry entry = IntegratedFireworkCatalog.require(style.id());
+        if (entry.style().index() != style.index() || entry.style() != style) {
+            throw new IllegalStateException("Integrated style identity drifted for " + style.id());
+        }
+        switch (entry.kind()) {
+            case SMALL -> {
+                SmallFireworkDefinition definition = SmallFireworkCatalog.byId(style.id());
+                if (definition == null) {
+                    throw new IllegalStateException("Missing typed small definition for " + style.id());
+                }
+                if (definition.effectType() == SmallFireworkDefinition.EffectType.LAYERED_SPHERE) {
+                    ACTIVE_SPECIAL_BURSTS.add(new SmallSphereBurst(payload));
+                } else if (definition.effectType() == SmallFireworkDefinition.EffectType.COMPACT_RADIAL) {
+                    ACTIVE_SPECIAL_BURSTS.add(new SmallRadialBurst(payload));
+                } else {
+                    throw new IllegalStateException("Unsupported typed small effect for " + style.id());
+                }
+            }
+            case MEDIUM_SPHERE -> ACTIVE_SPECIAL_BURSTS.add(new MediumSphereTypedBurst(payload));
+            case MEDIUM_RADIAL -> ACTIVE_SPECIAL_BURSTS.add(new MediumRadialTypedBurst(payload));
+            case LARGE_EXTRA -> ACTIVE_SPECIAL_BURSTS.add(new LargeExtraBurst(payload));
+            case ADDITIONAL_GIANT -> enqueueGiant(style, payload);
+        }
+    }
+
+    private static void enqueueGiant(FireworkStyle style, GrandFireworkBurstPayload payload) {
+        switch (style.giantTier()) {
+            case LARGE -> GIANT_LARGE_QUEUE.enqueue(
+                    new GiantRadiantClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case EXTRA_LARGE -> GIANT_EXTRA_LARGE_QUEUE.enqueue(
+                    new GiantWillowClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case SUPER_WILLOW -> GIANT_SUPER_WILLOW_QUEUE.enqueue(
+                    new SuperWillowClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case MULTI_RADIAL_II -> GIANT_MULTI_RADIAL_II_QUEUE.enqueue(
+                    new GiantMultiRadial2ClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case THICK_RADIAL -> GIANT_THICK_RADIAL_QUEUE.enqueue(
+                    new GiantThickRadialClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case CASCADE -> GIANT_CASCADE_QUEUE.enqueue(
+                    new GiantCascadeClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case PALM -> GIANT_PALM_QUEUE.enqueue(
+                    new GiantPalmClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case SPIRAL -> GIANT_SPIRAL_QUEUE.enqueue(
+                    new GiantSpiralClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case CHRYSANTHEMUM_MULTI_SHELL -> GIANT_CHRYSANTHEMUM_QUEUE.enqueue(
+                    new GiantChrysanthemumClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case INTERLACED_COMET_FIELD -> GIANT_COMETFIELD_QUEUE.enqueue(
+                    new GiantCometfieldClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()));
+            case NONE -> throw new IllegalStateException("A giant style requires an independent giant tier");
+        }
     }
 
     private static void startMidsizeBurst(ClientLevel level, GrandFireworkBurstPayload payload, FireworkStyle style) {
@@ -205,7 +321,6 @@ public final class GrandFireworkClientEffects {
         if (!definition.effectPath().clientProgramClass().equals(definition.effectType().clientProgramClass())) {
             throw new IllegalStateException("Midsize typed client mapping drifted for " + style.id());
         }
-        playBurstSound(level, payload);
         if (definition.effectType() == MidsizeFireworkDefinition.EffectType.DENSE_SPHERE) {
             ACTIVE_SPECIAL_BURSTS.add(new MidsizeSphereBurst(payload));
         } else {
@@ -220,7 +335,6 @@ public final class GrandFireworkClientEffects {
                 || !program.route().clientProgramId().equals(definition.clientProgram())) {
             throw new IllegalStateException("batch_other typed client mapping drifted for " + style.id());
         }
-        playBurstSound(level, payload);
         ACTIVE_SPECIAL_BURSTS.add(new OtherBurst(payload, style, program));
     }
 
@@ -229,21 +343,13 @@ public final class GrandFireworkClientEffects {
         if (!definition.clientProgram().equals(definition.effectPath().clientProgramId())) {
             throw new IllegalStateException("batch_other_extra typed client mapping drifted for " + style.id());
         }
-        playBurstSound(level, payload);
         ACTIVE_SPECIAL_BURSTS.add(new OtherExtraBurst(
                 payload, style, BatchOtherExtraClientPrograms.forEntry(definition.id())));
     }
 
     private static void startOrdinaryBurst(
             ClientLevel level, GrandFireworkBurstPayload payload, FireworkStyle style) {
-        playBurstSound(level, payload);
         ACTIVE_BURSTS.add(new ActiveBurst(payload.x(), payload.y(), payload.z(), payload.seed(), style));
-    }
-
-    private static void playBurstSound(ClientLevel level, GrandFireworkBurstPayload payload) {
-        level.playLocalSound(
-                payload.x(), payload.y(), payload.z(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST,
-                SoundSource.AMBIENT, 16.0F, 0.35F, false);
     }
 
     /** Every received compact event advances its own finite, style-defined visual frame without a shared quota. */
@@ -369,6 +475,135 @@ public final class GrandFireworkClientEffects {
         boolean tick(Minecraft minecraft);
     }
 
+    /**
+     * Real client-owned color-change replacement for the twelve reviewed legacy IDs. Each particle is created here,
+     * then admitted to the finite phase tracker so INITIAL -> TRANSITION -> TARGET is observable without server
+     * particle state or a second network payload.
+     */
+    private static final class ReleaseNextColorChangeBurst implements SpecialBurst {
+        private final double originX;
+        private final double originY;
+        private final double originZ;
+        private final long seed;
+        private final com.urbanforma.fireworks.client.release_next.colorchange.ReleaseNextColorChangeClient session;
+        private boolean emitted;
+        private int age;
+
+        private ReleaseNextColorChangeBurst(GrandFireworkBurstPayload payload, String legacyId) {
+            this.originX = payload.x();
+            this.originY = payload.y();
+            this.originZ = payload.z();
+            this.seed = payload.seed();
+            this.session = java.util.Objects.requireNonNull(
+                    com.urbanforma.fireworks.client.release_next.colorchange.ReleaseNextColorChangeClient
+                            .begin(com.urbanforma.fireworks.content.release_next.colorchange.ReleaseNextColorChangeCatalog
+                                    .REPLACEMENT_MAP.get(legacyId)),
+                    "Color-change route must resolve a reviewed recipe for " + legacyId);
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            if (minecraft.level == null) {
+                return true;
+            }
+            if (!emitted) {
+                emit(minecraft);
+                emitted = true;
+            }
+            age++;
+            boolean complete = session.tick();
+            if (age >= 16) {
+                session.seal();
+            }
+            return complete;
+        }
+
+        private void emit(Minecraft minecraft) {
+            for (int index = 0; index < 48; index++) {
+                double angle = index * (Math.PI * 2.0D / 48.0D);
+                double radius = 0.35D + 2.75D * ((index % 8) / 7.0D);
+                double wobble = Math.sin((seed & 31L) * 0.17D + angle * 3.0D) * 0.18D;
+                double x = originX + Math.cos(angle) * (radius + wobble);
+                double z = originZ + Math.sin(angle) * (radius + wobble);
+                double y = originY + 0.2D + 0.75D * Math.sin(angle * 2.0D + (seed & 15L));
+                double vx = Math.cos(angle) * 0.045D;
+                double vz = Math.sin(angle) * 0.045D;
+                Particle particle = minecraft.particleEngine.createParticle(
+                        ParticleTypes.FIREWORK, x, y, z, vx, 0.018D, vz);
+                if (particle != null) {
+                    particle.setLifetime(40);
+                    session.track(particle);
+                }
+            }
+        }
+    }
+
+    /** Explicit bridge for release-next programs; STANDARD metadata never selects an ordinary sphere here. */
+    private static final class ReleaseNextBurst implements SpecialBurst {
+        private final Object program;
+        private final GrandFireworkBurstPayload payload;
+        private int age;
+
+        private ReleaseNextBurst(GrandFireworkBurstPayload payload, ReleaseNextFireworkCatalog.Entry entry) {
+            this.payload = payload;
+            String id = entry.style().id();
+            this.program = switch (entry.kind()) {
+                case SMALL_SPHERE -> new com.urbanforma.fireworks.client.release_next.small_sphere.SmallSphereClientProgram(
+                        com.urbanforma.fireworks.content.release_next.small_sphere.SmallSphereCatalog.values().stream()
+                                .filter(value -> value.id().equals(id)).findFirst().orElseThrow(),
+                        new com.urbanforma.fireworks.client.release_next.small_sphere.SmallSphereClientProgram.Request(
+                                payload.x(), payload.y(), payload.z(), payload.seed()));
+                case SMALL_SHAPE -> new com.urbanforma.fireworks.client.release_next.small_shapes.SmallShapeClientProgram(id,
+                        new com.urbanforma.fireworks.client.release_next.small_shapes.SmallShapeClientProgram.Request(
+                                payload.x(), payload.y(), payload.z(), payload.seed()));
+                case MEDIUM -> medium(id);
+                case LARGE -> com.urbanforma.fireworks.client.release_next.large_extension.LargeExtensionClientPrograms.start(
+                        new com.urbanforma.fireworks.client.release_next.large_extension.LargeExtensionClientPrograms.Request(
+                                id, payload.x(), payload.y(), payload.z(), payload.seed()));
+                case GIANT_RADIAL -> new com.urbanforma.fireworks.client.release_next.giant_radial.GiantRadialReleaseNextClientProgram(
+                        com.urbanforma.fireworks.client.release_next.giant_radial.GiantRadialReleaseNextClientProgram.requestFor(
+                                id, payload.x(), payload.y(), payload.z(), payload.seed()));
+                case GIANT_WILLOW -> com.urbanforma.fireworks.client.release_next.giant_willow.GiantWillowReleaseNextClientProgram.forEntry(
+                        com.urbanforma.fireworks.content.release_next.giant_willow.GiantWillowReleaseNextCatalog.require(id),
+                        payload.x(), payload.y(), payload.z(), payload.seed());
+                case GIANT_MULTILAYER -> new com.urbanforma.fireworks.client.release_next.giant_multilayer.GiantMultilayerClientProgram(
+                        new com.urbanforma.fireworks.client.release_next.giant_multilayer.GiantMultilayerClientProgram.Request(
+                                payload.x(), payload.y(), payload.z(), payload.seed(),
+                                com.urbanforma.fireworks.content.release_next.giant_multilayer.GiantMultilayerItemDefinitions.values().stream()
+                                        .filter(value -> value.item().path().equals(id)).findFirst().orElseThrow().profile()));
+            };
+        }
+
+        private static com.urbanforma.fireworks.client.release_next.medium_extension.MediumExtensionClientProgram medium(String id) {
+            com.urbanforma.fireworks.content.release_next.medium_extension.MediumExtensionDefinition definition =
+                    com.urbanforma.fireworks.content.release_next.medium_extension.MediumExtensionCatalog.byId(id);
+            if (definition == null) throw new IllegalStateException("Missing medium release-next definition " + id);
+            return switch (definition.category()) {
+                case SPHERE -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumSphereClientProgram(definition);
+                case RADIAL -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumRadialClientProgram(definition);
+                case RING_CORE -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumRingCoreClientProgram(definition);
+                case SHORT_WILLOW -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumShortWillowClientProgram(definition);
+                case PULSE -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumPulseClientProgram(definition);
+                case INTERLEAVED_SHELL -> new com.urbanforma.fireworks.client.release_next.medium_extension.MediumInterleavedShellClientProgram(definition);
+            };
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            if (program instanceof com.urbanforma.fireworks.client.release_next.small_sphere.SmallSphereClientProgram value) return !value.tick(minecraft);
+            if (program instanceof com.urbanforma.fireworks.client.release_next.small_shapes.SmallShapeClientProgram value) return value.tick(minecraft);
+            if (program instanceof com.urbanforma.fireworks.client.release_next.medium_extension.MediumExtensionClientProgram value) {
+                boolean active = value.tick(minecraft, new com.urbanforma.fireworks.client.release_next.medium_extension.MediumExtensionClientProgram.Request(payload.x(), payload.y(), payload.z(), payload.seed()), age++);
+                return !active;
+            }
+            if (program instanceof com.urbanforma.fireworks.client.release_next.large_extension.LargeExtensionClientPrograms.Program value) return value.tick(minecraft);
+            if (program instanceof com.urbanforma.fireworks.client.release_next.giant_radial.GiantRadialReleaseNextClientProgram value) return value.tick(minecraft);
+            if (program instanceof com.urbanforma.fireworks.client.release_next.giant_willow.GiantWillowReleaseNextClientProgram value) return value.tick(minecraft);
+            if (program instanceof com.urbanforma.fireworks.client.release_next.giant_multilayer.GiantMultilayerClientProgram value) return value.tick(minecraft);
+            throw new IllegalStateException("Unsupported release-next client program " + program);
+        }
+    }
+
     private static final class MidsizeSphereBurst implements SpecialBurst {
         private final MidsizeDenseSphereClientProgram program;
 
@@ -394,6 +629,85 @@ public final class GrandFireworkClientEffects {
         @Override
         public boolean tick(Minecraft minecraft) {
             return program.tick(minecraft);
+        }
+    }
+
+    private static final class SmallSphereBurst implements SpecialBurst {
+        private final SmallLayeredSphereClientProgram program;
+
+        private SmallSphereBurst(GrandFireworkBurstPayload payload) {
+            this.program = new SmallLayeredSphereClientProgram(
+                    new SmallLayeredSphereClientProgram.Request(
+                            payload.x(), payload.y(), payload.z(), payload.seed()));
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            return this.program.tick(minecraft);
+        }
+    }
+
+    private static final class SmallRadialBurst implements SpecialBurst {
+        private final SmallCompactRadialClientProgram program;
+
+        private SmallRadialBurst(GrandFireworkBurstPayload payload) {
+            this.program = new SmallCompactRadialClientProgram(
+                    new SmallCompactRadialClientProgram.Request(
+                            payload.x(), payload.y(), payload.z(), payload.seed()));
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            return this.program.tick(minecraft);
+        }
+    }
+
+    private static final class MediumSphereTypedBurst implements SpecialBurst {
+        private final MediumSphereClientProgram program;
+
+        private MediumSphereTypedBurst(GrandFireworkBurstPayload payload) {
+            this.program = new MediumSphereClientProgram(
+                    new MediumSphereClientProgram.Request(
+                            payload.style().id(), payload.x(), payload.y(), payload.z(), payload.seed()));
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            return this.program.tick(minecraft);
+        }
+    }
+
+    private static final class MediumRadialTypedBurst implements SpecialBurst {
+        private final MidsizeRadialClientProgram program;
+
+        private MediumRadialTypedBurst(GrandFireworkBurstPayload payload) {
+            MidsizeRadialFireworkDefinition definition = MidsizeRadialFireworkCatalog.byId(payload.style().id());
+            if (definition == null) {
+                throw new IllegalStateException("Missing typed medium-radial definition for " + payload.style().id());
+            }
+            this.program = new MidsizeRadialClientProgram(
+                    new MidsizeRadialClientProgram.Request(
+                            definition, payload.x(), payload.y(), payload.z(), payload.seed()));
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            return this.program.tick(minecraft);
+        }
+    }
+
+    private static final class LargeExtraBurst implements SpecialBurst {
+        private final LargeExtraClientPrograms.Program program;
+
+        private LargeExtraBurst(GrandFireworkBurstPayload payload) {
+            this.program = LargeExtraClientContracts.start(
+                    payload.style().id(), payload.x(), payload.y(), payload.z(), payload.seed());
+        }
+
+        @Override
+        public boolean tick(Minecraft minecraft) {
+            this.program.tick(minecraft);
+            return this.program.complete();
         }
     }
 
@@ -500,7 +814,8 @@ public final class GrandFireworkClientEffects {
                     style.radiantProfile(),
                     style.primaryColor(),
                     style.secondaryColor(),
-                    style.accentColor());
+                    style.accentColor(),
+                    ColorChangeBallParticleAdapter.beginSession(style).orElse(null));
         }
 
         @Override
@@ -585,8 +900,7 @@ public final class GrandFireworkClientEffects {
         private final double y;
         private final double z;
         private final FireworkStyle style;
-        private final ColorChangeBallProgram.Profile colorChangeProfile;
-        private final List<ColorChangedParticle> colorChangedParticles = new ArrayList<>();
+        private final ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession;
         private final Random random;
         private final double phase;
         private final double secondaryPhase;
@@ -602,7 +916,7 @@ public final class GrandFireworkClientEffects {
             this.y = y;
             this.z = z;
             this.style = style;
-            this.colorChangeProfile = ColorChangeBallProgram.profileFor(style);
+            this.colorChangeSession = ColorChangeBallParticleAdapter.beginSession(style).orElse(null);
             this.random = new Random(seed);
             this.phase = this.random.nextDouble() * Math.PI * 2.0D;
             if (isGoldenDemonstration(style)) {
@@ -612,15 +926,16 @@ public final class GrandFireworkClientEffects {
             } else if (isWillowStyle(style)) {
                 this.secondaryPhase = 0.0D;
                 this.accentPhase = 0.0D;
-                this.branchProgram = new WillowBranchProgram(x, y, z, seed, style);
+                this.branchProgram = new WillowBranchProgram(x, y, z, seed, style, this.colorChangeSession);
             } else if (isRadiantStyle(style)) {
                 this.secondaryPhase = 0.0D;
                 this.accentPhase = 0.0D;
-                this.branchProgram = new RadiantBranchProgram(x, y, z, seed, style);
+                this.branchProgram = new RadiantBranchProgram(x, y, z, seed, style, this.colorChangeSession);
             } else if (isRadiantWillowStyle(style)) {
                 this.secondaryPhase = 0.0D;
                 this.accentPhase = 0.0D;
-                this.branchProgram = new RadiantWillowBranchProgram(x, y, z, seed, style);
+                this.branchProgram = new RadiantWillowBranchProgram(
+                        x, y, z, seed, style, this.colorChangeSession);
             } else {
                 this.secondaryPhase = (this.random.nextDouble() - 0.5D) * 0.42D;
                 this.accentPhase = (this.random.nextDouble() - 0.5D) * 0.74D;
@@ -635,7 +950,6 @@ public final class GrandFireworkClientEffects {
             if (this.branchProgram != null) {
                 this.branchProgram.beginTick();
             }
-            this.updateColorChangedParticles();
         }
 
         private boolean isBranchProgramBurst() {
@@ -651,6 +965,9 @@ public final class GrandFireworkClientEffects {
                 return 0;
             }
             int emitted = this.branchProgram.emitWholeSegment(minecraft);
+            if (this.colorChangeSession != null && this.branchProgram.emissionComplete()) {
+                this.colorChangeSession.seal();
+            }
             return emitted;
         }
 
@@ -676,6 +993,9 @@ public final class GrandFireworkClientEffects {
                     this.emittedByStage[stage.ordinal()]++;
                 }
                 emittedNow++;
+            }
+            if (this.complete() && this.colorChangeSession != null) {
+                this.colorChangeSession.seal();
             }
             return emittedNow;
         }
@@ -774,41 +1094,22 @@ public final class GrandFireworkClientEffects {
                     ? 1.48F
                     : stage == BurstStage.MAIN ? 1.48F : stage == BurstStage.SECONDARY ? 1.34F : 1.18F;
             FireworkParticleAppearance.applyVisibilityScale(spark, baseScale, coreHighlight);
-            spark.setLifetime(this.styledLifetime(stage));
+            int lifetime = this.styledLifetime(stage);
+            spark.setLifetime(lifetime);
             setVividColor(
                     spark, this.stageColor(stage), stage, this.random.nextFloat(), coreHighlight);
             if (!coreHighlight) {
                 enableRandomTwinkle(spark);
             }
-            if (this.colorChangeProfile != null) {
-                this.colorChangedParticles.add(new ColorChangedParticle(
+            if (this.colorChangeSession != null) {
+                this.colorChangeSession.trackExisting(
                         spark,
                         switch (stage) {
                             case MAIN -> ColorChangeBallProgram.Layer.PRIMARY;
                             case SECONDARY -> ColorChangeBallProgram.Layer.SECONDARY;
                             case ACCENT -> ColorChangeBallProgram.Layer.ACCENT;
                         },
-                        coreHighlight));
-            }
-        }
-
-        private void updateColorChangedParticles() {
-            if (this.colorChangeProfile == null || this.colorChangedParticles.isEmpty()) {
-                return;
-            }
-            Iterator<ColorChangedParticle> iterator = this.colorChangedParticles.iterator();
-            while (iterator.hasNext()) {
-                ColorChangedParticle tracked = iterator.next();
-                if (!tracked.particle().isAlive()) {
-                    iterator.remove();
-                    continue;
-                }
-                ColorChangeBallParticleAdapter.apply(
-                        tracked.particle(),
-                        this.colorChangeProfile,
-                        tracked.layer(),
-                        this.elapsedTicks,
-                        tracked.coreHighlight());
+                        lifetime);
             }
         }
 
@@ -915,6 +1216,10 @@ public final class GrandFireworkClientEffects {
         int emitWholeSegment(Minecraft minecraft);
 
         boolean complete();
+
+        default boolean emissionComplete() {
+            return this.complete();
+        }
     }
 
     /**
@@ -926,17 +1231,25 @@ public final class GrandFireworkClientEffects {
         private final double y;
         private final double z;
         private final FireworkStyle style;
+        private final ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession;
         private final FireworkStyle.WillowProfile profile;
         private final WillowTrajectory.Branch[] branches;
         private int currentSegment = -1;
         private int nextBranch;
         private int segmentDelayTicks;
 
-        private WillowBranchProgram(double x, double y, double z, long seed, FireworkStyle style) {
+        private WillowBranchProgram(
+                double x,
+                double y,
+                double z,
+                long seed,
+                FireworkStyle style,
+                ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.style = style;
+            this.colorChangeSession = colorChangeSession;
             this.profile = style.willowProfile();
             if (this.profile == null) {
                 throw new IllegalArgumentException("Willow style is missing its WillowProfile");
@@ -1052,6 +1365,17 @@ public final class GrandFireworkClientEffects {
             if (!coreHighlight && sample.twinkles()) {
                 enableTwinkle(spark);
             }
+            if (this.colorChangeSession != null) {
+                this.colorChangeSession.trackExisting(
+                        spark,
+                        switch (sample.colorBand()) {
+                            case PRIMARY -> ColorChangeBallProgram.Layer.PRIMARY;
+                            case SECONDARY -> ColorChangeBallProgram.Layer.SECONDARY;
+                            case ACCENT -> ColorChangeBallProgram.Layer.ACCENT;
+                        },
+                        sample.lifetime(),
+                        coreHighlight);
+            }
         }
 
         private BurstStage colorStage(WillowTrajectory.ColorBand colorBand) {
@@ -1081,16 +1405,24 @@ public final class GrandFireworkClientEffects {
         private final double y;
         private final double z;
         private final FireworkStyle style;
+        private final ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession;
         private final FireworkStyle.RadiantProfile profile;
         private final RadiantTrajectory.Branch[] branches;
         private int currentSegment = -1;
         private int nextBranch;
 
-        private RadiantBranchProgram(double x, double y, double z, long seed, FireworkStyle style) {
+        private RadiantBranchProgram(
+                double x,
+                double y,
+                double z,
+                long seed,
+                FireworkStyle style,
+                ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.style = style;
+            this.colorChangeSession = colorChangeSession;
             this.profile = style.radiantProfile();
             if (this.profile == null) {
                 throw new IllegalArgumentException("Radiant style is missing its RadiantProfile");
@@ -1145,6 +1477,11 @@ public final class GrandFireworkClientEffects {
         }
 
         @Override
+        public boolean emissionComplete() {
+            return this.currentSegment >= this.profile.segmentsPerBranch() - 1 && this.segmentComplete();
+        }
+
+        @Override
         public boolean complete() {
             int lastSegment = this.profile.segmentsPerBranch() - 1;
             return this.currentSegment >= lastSegment && this.segmentComplete();
@@ -1190,6 +1527,10 @@ public final class GrandFireworkClientEffects {
             if (sample.twinkles()) {
                 enableTwinkle(spark, sample.twinklePhase());
             }
+            if (this.colorChangeSession != null) {
+                this.colorChangeSession.trackExisting(
+                        spark, colorLayer(sample.colorBand()), sample.lifetime(), false);
+            }
         }
 
         private BurstStage colorStage(RadiantTrajectory.ColorBand colorBand) {
@@ -1205,6 +1546,14 @@ public final class GrandFireworkClientEffects {
                 case PRIMARY -> this.style.primaryColor();
                 case SECONDARY -> this.style.secondaryColor();
                 case ACCENT -> this.style.accentColor();
+            };
+        }
+
+        private static ColorChangeBallProgram.Layer colorLayer(RadiantTrajectory.ColorBand colorBand) {
+            return switch (colorBand) {
+                case PRIMARY -> ColorChangeBallProgram.Layer.PRIMARY;
+                case SECONDARY -> ColorChangeBallProgram.Layer.SECONDARY;
+                case ACCENT -> ColorChangeBallProgram.Layer.ACCENT;
             };
         }
     }
@@ -1227,6 +1576,7 @@ public final class GrandFireworkClientEffects {
         private final double y;
         private final double z;
         private final FireworkStyle style;
+        private final ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession;
         private final FireworkStyle.RadiantWillowProfile profile;
         private final int extensionDurationTicks;
         private final RadiantTrajectory.Branch[] radiantBranches;
@@ -1238,11 +1588,18 @@ public final class GrandFireworkClientEffects {
         private int extensionAgeTicks;
         private int drainAgeTicks;
 
-        private RadiantWillowBranchProgram(double x, double y, double z, long seed, FireworkStyle style) {
+        private RadiantWillowBranchProgram(
+                double x,
+                double y,
+                double z,
+                long seed,
+                FireworkStyle style,
+                ColorChangeBallParticleAdapter.AppearanceSession colorChangeSession) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.style = style;
+            this.colorChangeSession = colorChangeSession;
             this.profile = style.radiantWillowProfile();
             if (this.profile == null
                     || this.profile.branchCount() != RadiantWillowTrajectory.BRANCH_COUNT
@@ -1337,6 +1694,11 @@ public final class GrandFireworkClientEffects {
         }
 
         @Override
+        public boolean emissionComplete() {
+            return this.phase != Phase.RADIANT;
+        }
+
+        @Override
         public boolean complete() {
             return this.phase == Phase.COMPLETE;
         }
@@ -1382,6 +1744,13 @@ public final class GrandFireworkClientEffects {
                     spark, this.colorFor(sample.colorBand()), colorStage, sample.colorTone(), coreHighlight);
             if (!coreHighlight && sample.twinkles()) {
                 enableTwinkle(spark, sample.twinklePhase());
+            }
+            if (this.colorChangeSession != null) {
+                this.colorChangeSession.trackExisting(
+                        spark,
+                        colorLayer(sample.colorBand()),
+                        managed ? MANAGED_PARTICLE_LIFETIME : sample.lifetime(),
+                        coreHighlight);
             }
             if (managed) {
                 this.trackManagedSpark(spark, branch.index());
@@ -1515,6 +1884,14 @@ public final class GrandFireworkClientEffects {
             };
         }
 
+        private static ColorChangeBallProgram.Layer colorLayer(RadiantTrajectory.ColorBand colorBand) {
+            return switch (colorBand) {
+                case PRIMARY -> ColorChangeBallProgram.Layer.PRIMARY;
+                case SECONDARY -> ColorChangeBallProgram.Layer.SECONDARY;
+                case ACCENT -> ColorChangeBallProgram.Layer.ACCENT;
+            };
+        }
+
         private static final class ManagedRadiantSpark {
             private final Particle spark;
             private final int radiantSegment;
@@ -1559,10 +1936,6 @@ public final class GrandFireworkClientEffects {
                 }
             }
         }
-    }
-
-    private record ColorChangedParticle(
-            Particle particle, ColorChangeBallProgram.Layer layer, boolean coreHighlight) {
     }
 
     private static Vec3 fibonacciDirection(int index, int count, double phase, Random random) {

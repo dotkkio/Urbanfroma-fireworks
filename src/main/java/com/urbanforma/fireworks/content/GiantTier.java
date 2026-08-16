@@ -8,7 +8,11 @@ public enum GiantTier {
     SUPER_WILLOW,
     MULTI_RADIAL_II,
     THICK_RADIAL,
-    CASCADE;
+    CASCADE,
+    PALM,
+    SPIRAL,
+    CHRYSANTHEMUM_MULTI_SHELL,
+    INTERLACED_COMET_FIELD;
 
     public EffectCategory effectCategory() {
         return switch (this) {
@@ -19,6 +23,7 @@ public enum GiantTier {
             case MULTI_RADIAL_II -> EffectCategory.GIANT_MULTI_RADIAL_II;
             case THICK_RADIAL -> EffectCategory.GIANT_THICK_RADIAL;
             case CASCADE -> EffectCategory.GIANT_CASCADE;
+            case PALM, SPIRAL, CHRYSANTHEMUM_MULTI_SHELL, INTERLACED_COMET_FIELD -> EffectCategory.GIANT_LARGE;
         };
     }
 }

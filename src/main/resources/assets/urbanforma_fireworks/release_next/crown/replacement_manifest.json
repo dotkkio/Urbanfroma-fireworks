@@ -1,0 +1,29 @@
+{
+  "schema": "urbanforma_fireworks.release_next.crown.v1",
+  "replacementIds": [
+    "coral_rose_crown_sphere",
+    "glacier_teal_crown_sphere",
+    "opal_rose_crown_sphere",
+    "platinum_onyx_crown_sphere",
+    "emerald_silver_crown_sphere"
+  ],
+  "clientContract": {
+    "entryClass": "com.urbanforma.fireworks.client.release_next.crown.ReleaseNextCrownClientEffects",
+    "entryMethod": "enqueue(double,double,double,FireworkStyle,long)",
+    "tickMethod": "tick(Minecraft)",
+    "clearMethod": "clear()",
+    "serverParticleOrTickSimulation": false,
+    "directCreateParticleAtExplosion": true,
+    "visualLifetimeTicks": 300,
+    "particlesPerProgram": 384,
+    "maxActivePrograms": 1,
+    "maxOwnedParticles": 384,
+    "groundClearanceBlocks": 24
+  },
+  "integration": [
+    "Route the five IDs to ReleaseNextCrownClientEffects before the legacy crown branch.",
+    "Call tick(Minecraft) from the existing client post-tick hook.",
+    "Call clear() from the existing level-change and logout cleanup paths.",
+    "Remove or bypass the legacy CrownDescent queue only after this replacement is wired and verified."
+  ]
+}

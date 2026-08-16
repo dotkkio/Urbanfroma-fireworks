@@ -1,0 +1,287 @@
+{
+  "schema": "urbanforma_fireworks.large_extra.v1",
+  "batchId": "large_extra",
+  "seriesId": "large",
+  "integrationStatus": "ISOLATED_NOT_REGISTERED",
+  "stableIdPolicy": "large_extra_prefix_only_append_order_1_to_10",
+  "targetMatrix": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.234",
+    "java": 21,
+    "modId": "urbanforma_fireworks",
+    "modVersion": "0.3.1",
+    "urbanformaNeo": "[0.21,0.22)"
+  },
+  "sharedContracts": {
+    "itemModelParent": "minecraft:item/firework_rocket",
+    "hdSparkParticleType": "urbanforma_fireworks:hd_firework_spark",
+    "vanillaFallbackParticleType": "minecraft:firework",
+    "recipeTemplate": "normal_firework_rocket_3x3",
+    "recipePattern": [" P ", "FGF", " P "],
+    "recipeKey": {
+      "P": "minecraft:paper",
+      "F": "minecraft:firework_star",
+      "G": "minecraft:gunpowder"
+    },
+    "creativeTarget": {
+      "sectionKey": "large",
+      "translationKey": "gui.urbanforma_fireworks.section.fireworks.large",
+      "exclusiveOf": ["midsize", "other", "giant"]
+    },
+    "clientProgramOwner": "com.urbanforma.fireworks.client.large_extra.LargeExtraClientPrograms",
+    "clientContractOwner": "com.urbanforma.fireworks.client.large_extra.LargeExtraClientContracts",
+    "sharedWiringOwner": "019fcb85-80c3-7f70-97c4-7edd410f2327",
+    "serverParticleLoop": false,
+    "serverTrajectoryComputation": false,
+    "additionalNetworkPayload": false,
+    "newGlobalScheduler": false,
+    "newParticleType": false,
+    "newGlobalNumericIds": false
+  },
+  "largeFlightAndScale": {
+    "flightTicks": 100,
+    "burstCenterHeightBlocks": 100.0,
+    "maximumFullEnvelopeBlocks": 120,
+    "proof": "Every client sample is clamped with LargeExtraClientPrograms.clampToEnvelope(offset, maximumRadiusBlocks); emitted spark velocity is zero."
+  },
+  "localBudgetPolicy": {
+    "scope": "per_program_only",
+    "maximumParticlesPerTick": 160,
+    "maximumLiveParticles": 3000,
+    "maximumVisualTicks": 120,
+    "usesSharedGlobalParticleLimit": false,
+    "deterministicSeedSource": "compact burst seed plus stable id, tick, and sample index"
+  },
+  "coolColorLedger": {
+    "batchCount": 4,
+    "ids": [
+      "large_extra_aurora_globe_shell",
+      "large_extra_jade_dual_break",
+      "large_extra_cobalt_world_grid",
+      "large_extra_teal_orbital_nucleus"
+    ],
+    "purpleCountsAsCool": false,
+    "globalQuotaAssumption": "none"
+  },
+  "crossCatalogSignatureGate": {
+    "scanScope": "existing batch, other, midsize, and giant Java catalogs plus asset manifests, excluding large_extra",
+    "exactStableIdMatches": 0,
+    "exactEffectPathMatches": 0,
+    "exactStructureSignatureMatches": 0,
+    "localEntryCount": 10,
+    "localStructureSignatureCount": 10,
+    "requiredVisualAxes": ["geometry", "core", "layering", "cadence", "motion", "terminal"]
+  },
+  "entries": [
+    {
+      "stableOrder": 1,
+      "id": "large_extra_aurora_globe_shell",
+      "zhName": "\u6781\u5149\u5168\u7403\u58f3\u70df\u82b1",
+      "enName": "Aurora Globe Shell Firework",
+      "effectPath": "GLOBE_SHELL",
+      "clientProgram": "large_extra:globe_shell",
+      "palette": {"primary": "#19A8C9", "secondary": "#64E2D4", "accent": "#F0FFF8", "countsTowardCoolColorLedger": true},
+      "visualDifference": {
+        "geometry": "fibonacci globe shell with alternating latitude gaps",
+        "core": "quiet hollow pearl nucleus",
+        "layering": "one continuous meridian shell",
+        "cadence": "eighteen uniform globe frames",
+        "motion": "latitudinal outward sweep",
+        "terminal": "pale polar-cap twinkle",
+        "structureSignature": "fibonacci globe shell with alternating latitude gaps | quiet hollow pearl nucleus | one continuous meridian shell | eighteen uniform globe frames | latitudinal outward sweep | pale polar-cap twinkle"
+      },
+      "particleBudget": {"plannedParticles": 2160, "maxPerTick": 120, "maxLiveParticles": 2160, "lifetimeTicks": [38, 68], "totalVisualTicks": 86},
+      "envelope": {"nominalDiameterBlocks": 104, "fullEnvelopeBlocks": 112, "maximumRadiusBlocks": 56.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_aurora_globe_shell", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 2,
+      "id": "large_extra_cinnabar_triple_tier_radiance",
+      "zhName": "\u6731\u7802\u4e09\u5c42\u653e\u5c04\u70df\u82b1",
+      "enName": "Cinnabar Triple-Tier Radiance Firework",
+      "effectPath": "TRIPLE_TIER_RADIANCE",
+      "clientProgram": "large_extra:triple_tier_radiance",
+      "palette": {"primary": "#C9332C", "secondary": "#F06B32", "accent": "#FFE1A3", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "three staggered radial tiers",
+        "core": "amber three-point ignition",
+        "layering": "low middle and high radial crowns",
+        "cadence": "tier rotation on every frame",
+        "motion": "outward fan release by tier",
+        "terminal": "upper-rim spark closure",
+        "structureSignature": "three staggered radial tiers | amber three-point ignition | low middle and high radial crowns | tier rotation on every frame | outward fan release by tier | upper-rim spark closure"
+      },
+      "particleBudget": {"plannedParticles": 2592, "maxPerTick": 108, "maxLiveParticles": 2592, "lifetimeTicks": [40, 72], "totalVisualTicks": 96},
+      "envelope": {"nominalDiameterBlocks": 108, "fullEnvelopeBlocks": 116, "maximumRadiusBlocks": 58.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_cinnabar_triple_tier_radiance", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 3,
+      "id": "large_extra_jade_dual_break",
+      "zhName": "\u7fe1\u7fe0\u53cc\u6bb5\u7834\u88c2\u70df\u82b1",
+      "enName": "Jade Dual-Break Firework",
+      "effectPath": "DUAL_BREAK",
+      "clientProgram": "large_extra:dual_break",
+      "palette": {"primary": "#1E8E68", "secondary": "#8CD6A1", "accent": "#ECFFF0", "countsTowardCoolColorLedger": true},
+      "visualDifference": {
+        "geometry": "parent globe opening into opposed daughter shells",
+        "core": "brief twin jade cores",
+        "layering": "one parent shell then two offset children",
+        "cadence": "thirteen parent frames followed by thirteen split frames",
+        "motion": "two-center lateral bifurcation",
+        "terminal": "paired white closure points",
+        "structureSignature": "parent globe opening into opposed daughter shells | brief twin jade cores | one parent shell then two offset children | thirteen parent frames followed by thirteen split frames | two-center lateral bifurcation | paired white closure points"
+      },
+      "particleBudget": {"plannedParticles": 2496, "maxPerTick": 96, "maxLiveParticles": 2496, "lifetimeTicks": [42, 74], "totalVisualTicks": 100},
+      "envelope": {"nominalDiameterBlocks": 108, "fullEnvelopeBlocks": 116, "maximumRadiusBlocks": 58.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_jade_dual_break", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 4,
+      "id": "large_extra_cobalt_world_grid",
+      "zhName": "\u94b4\u84dd\u7ecf\u7eac\u5168\u7403\u70df\u82b1",
+      "enName": "Cobalt World-Grid Firework",
+      "effectPath": "WORLD_GRID",
+      "clientProgram": "large_extra:world_grid",
+      "palette": {"primary": "#2159B6", "secondary": "#5AA9F5", "accent": "#E4F4FF", "countsTowardCoolColorLedger": true},
+      "visualDifference": {
+        "geometry": "latitude-longitude globe lattice",
+        "core": "fixed sapphire pin",
+        "layering": "six latitude belts crossed by eight meridians",
+        "cadence": "alternating meridian and parallel frames",
+        "motion": "pole-to-equator grid closure",
+        "terminal": "equator flare",
+        "structureSignature": "latitude-longitude globe lattice | fixed sapphire pin | six latitude belts crossed by eight meridians | alternating meridian and parallel frames | pole-to-equator grid closure | equator flare"
+      },
+      "particleBudget": {"plannedParticles": 1920, "maxPerTick": 96, "maxLiveParticles": 1920, "lifetimeTicks": [40, 70], "totalVisualTicks": 90},
+      "envelope": {"nominalDiameterBlocks": 100, "fullEnvelopeBlocks": 108, "maximumRadiusBlocks": 54.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_cobalt_world_grid", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 5,
+      "id": "large_extra_amber_stout_comet",
+      "zhName": "\u7425\u73c0\u5bc6\u96c6\u77ed\u7c97\u5c04\u70df\u82b1",
+      "enName": "Amber Dense Stout-Comet Firework",
+      "effectPath": "STOUT_COMET",
+      "clientProgram": "large_extra:stout_comet",
+      "palette": {"primary": "#D96B16", "secondary": "#FFAF2E", "accent": "#FFF0B8", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "eighteen thick short comet bundles",
+        "core": "dense sunstone knot",
+        "layering": "compressed radial shafts with blunt tips",
+        "cadence": "rapid full-density barrage",
+        "motion": "short forward pulse without long tails",
+        "terminal": "pearl-ended bundle caps",
+        "structureSignature": "eighteen thick short comet bundles | dense sunstone knot | compressed radial shafts with blunt tips | rapid full-density barrage | short forward pulse without long tails | pearl-ended bundle caps"
+      },
+      "particleBudget": {"plannedParticles": 2592, "maxPerTick": 144, "maxLiveParticles": 2592, "lifetimeTicks": [34, 64], "totalVisualTicks": 82},
+      "envelope": {"nominalDiameterBlocks": 94, "fullEnvelopeBlocks": 102, "maximumRadiusBlocks": 51.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_amber_stout_comet", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 6,
+      "id": "large_extra_violet_aperture_hex_reveal",
+      "zhName": "\u7d2b\u6676\u516d\u74e3\u5f00\u7a97\u70df\u82b1",
+      "enName": "Violet Aperture-Hex Reveal Firework",
+      "effectPath": "APERTURE_HEX_REVEAL",
+      "clientProgram": "large_extra:aperture_hex_reveal",
+      "palette": {"primary": "#7840B8", "secondary": "#B57AE7", "accent": "#F3E6FF", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "six aperture petals framing a hexagonal reveal",
+        "core": "late central hex beacon",
+        "layering": "sliding aperture rim then exposed core",
+        "cadence": "sixteen aperture frames then twelve reveal frames",
+        "motion": "shutters unlock from rim to center",
+        "terminal": "lavender hex fade",
+        "structureSignature": "six aperture petals framing a hexagonal reveal | late central hex beacon | sliding aperture rim then exposed core | sixteen aperture frames then twelve reveal frames | shutters unlock from rim to center | lavender hex fade"
+      },
+      "particleBudget": {"plannedParticles": 2352, "maxPerTick": 84, "maxLiveParticles": 2352, "lifetimeTicks": [42, 76], "totalVisualTicks": 104},
+      "envelope": {"nominalDiameterBlocks": 104, "fullEnvelopeBlocks": 112, "maximumRadiusBlocks": 56.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_violet_aperture_hex_reveal", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 7,
+      "id": "large_extra_teal_orbital_nucleus",
+      "zhName": "\u9752\u78a7\u8f68\u9053\u6838\u70df\u82b1",
+      "enName": "Teal Orbital-Nucleus Firework",
+      "effectPath": "ORBITAL_NUCLEUS",
+      "clientProgram": "large_extra:orbital_nucleus",
+      "palette": {"primary": "#0B9E9B", "secondary": "#57DED0", "accent": "#E5FFF9", "countsTowardCoolColorLedger": true},
+      "visualDifference": {
+        "geometry": "three eccentric orbital knots around one nucleus",
+        "core": "stationary aqua nucleus",
+        "layering": "three inclined off-center loops",
+        "cadence": "eight orbit passes with phase offsets",
+        "motion": "counter-precessing node drift",
+        "terminal": "three satellite flashes",
+        "structureSignature": "three eccentric orbital knots around one nucleus | stationary aqua nucleus | three inclined off-center loops | eight orbit passes with phase offsets | counter-precessing node drift | three satellite flashes"
+      },
+      "particleBudget": {"plannedParticles": 2160, "maxPerTick": 90, "maxLiveParticles": 2160, "lifetimeTicks": [40, 74], "totalVisualTicks": 98},
+      "envelope": {"nominalDiameterBlocks": 102, "fullEnvelopeBlocks": 110, "maximumRadiusBlocks": 55.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_teal_orbital_nucleus", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 8,
+      "id": "large_extra_rose_interwoven_radiance",
+      "zhName": "\u73ab\u7470\u4ea4\u7ec7\u653e\u5c04\u70df\u82b1",
+      "enName": "Rose Interwoven-Radiance Firework",
+      "effectPath": "INTERWOVEN_RADIANCE",
+      "clientProgram": "large_extra:interwoven_radiance",
+      "palette": {"primary": "#D95C8A", "secondary": "#F39AB5", "accent": "#FFF0E9", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "paired counter-phased spherical weaving nets",
+        "core": "rose bridge seed",
+        "layering": "two intersecting latitude-free meshes",
+        "cadence": "alternating weave turns",
+        "motion": "opposed lateral crossings",
+        "terminal": "interlock flashes at mesh crossings",
+        "structureSignature": "paired counter-phased spherical weaving nets | rose bridge seed | two intersecting latitude-free meshes | alternating weave turns | opposed lateral crossings | interlock flashes at mesh crossings"
+      },
+      "particleBudget": {"plannedParticles": 2592, "maxPerTick": 108, "maxLiveParticles": 2592, "lifetimeTicks": [42, 76], "totalVisualTicks": 100},
+      "envelope": {"nominalDiameterBlocks": 106, "fullEnvelopeBlocks": 114, "maximumRadiusBlocks": 57.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_rose_interwoven_radiance", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 9,
+      "id": "large_extra_platinum_polar_lantern",
+      "zhName": "\u94c2\u91d1\u6781\u51a0\u706f\u7b3c\u70df\u82b1",
+      "enName": "Platinum Polar-Lantern Firework",
+      "effectPath": "POLAR_LANTERN",
+      "clientProgram": "large_extra:polar_lantern",
+      "palette": {"primary": "#BCC9D7", "secondary": "#F5E8A8", "accent": "#FFFFFF", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "mirrored polar lantern lobes",
+        "core": "dual north-south anchors",
+        "layering": "eight pinched vertical lobes",
+        "cadence": "top-bottom alternation",
+        "motion": "pole-to-equator unfurling",
+        "terminal": "equatorial silver bead belt",
+        "structureSignature": "mirrored polar lantern lobes | dual north-south anchors | eight pinched vertical lobes | top-bottom alternation | pole-to-equator unfurling | equatorial silver bead belt"
+      },
+      "particleBudget": {"plannedParticles": 2112, "maxPerTick": 96, "maxLiveParticles": 2112, "lifetimeTicks": [38, 70], "totalVisualTicks": 92},
+      "envelope": {"nominalDiameterBlocks": 98, "fullEnvelopeBlocks": 106, "maximumRadiusBlocks": 53.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_platinum_polar_lantern", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    },
+    {
+      "stableOrder": 10,
+      "id": "large_extra_copper_eclipse_arc_split",
+      "zhName": "\u8d64\u94dc\u8680\u73af\u5206\u88c2\u70df\u82b1",
+      "enName": "Copper Eclipse-Arc Split Firework",
+      "effectPath": "ECLIPSE_ARC_SPLIT",
+      "clientProgram": "large_extra:eclipse_arc_split",
+      "palette": {"primary": "#A94D27", "secondary": "#E28B39", "accent": "#FFE2AE", "countsTowardCoolColorLedger": false},
+      "visualDifference": {
+        "geometry": "two eclipsing crescent arcs that split at their endpoints",
+        "core": "off-axis copper eclipse knot",
+        "layering": "overlapping crescents then four endpoint fragments",
+        "cadence": "seventeen arc frames then nine endpoint-split frames",
+        "motion": "opposed arc closure",
+        "terminal": "four amber split tips",
+        "structureSignature": "two eclipsing crescent arcs that split at their endpoints | off-axis copper eclipse knot | overlapping crescents then four endpoint fragments | seventeen arc frames then nine endpoint-split frames | opposed arc closure | four amber split tips"
+      },
+      "particleBudget": {"plannedParticles": 2184, "maxPerTick": 84, "maxLiveParticles": 2184, "lifetimeTicks": [40, 72], "totalVisualTicks": 98},
+      "envelope": {"nominalDiameterBlocks": 100, "fullEnvelopeBlocks": 108, "maximumRadiusBlocks": 54.0},
+      "wiring": {"creativeSection": "large", "recipeResult": "urbanforma_fireworks:large_extra_copper_eclipse_arc_split", "effectCategory": "STANDARD", "serverParticleLoop": false}
+    }
+  ]
+}
